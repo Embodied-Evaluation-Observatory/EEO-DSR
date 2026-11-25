@@ -35,7 +35,7 @@ SPDX = {"mit", "apache-2.0", "cc-by-4.0", "cc-by-sa-4.0", "bsd-3-clause", "gpl-3
 
 
 def fetch(url):
-    req = urllib.request.Request(url, headers={"User-Agent": "EEO-DSR/0.2 phase0"})
+    req = urllib.request.Request(url, headers={"User-Agent": "EEO-DSR/0.3 phase0"})
     with urllib.request.urlopen(req, timeout=30) as r:
         return r.read()
 

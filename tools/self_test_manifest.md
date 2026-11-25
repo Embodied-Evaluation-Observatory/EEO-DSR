@@ -2,7 +2,7 @@
 
 `tools/validate_record.py --self-test` 的每个证伪用例给一个 ID；下表把校验规则与用例对上，供审查者核对"规则写了但没测"的缺口。
 
-**覆盖率声明**：本表覆盖校验器规则 36 组，全部有对应证伪用例（记录 139 个 R01–R139、观测件 8 个 O01–O08）；另有 1 条语义项——对齐规则是否真的可执行——无自动用例，依赖人工复核标记 `applicable`，校验器只检查字段是否填了。
+**覆盖率声明**：本表覆盖校验器规则 37 组，全部有对应证伪用例（记录 142 个 R01–R142、观测件 8 个 O01–O08）；另有 1 条语义项——对齐规则是否真的可执行——无自动用例，依赖人工复核标记 `applicable`，校验器只检查字段是否填了。
 
 | 规则（方法层口径） | 证伪用例 ID |
 |---|---|
@@ -22,13 +22,15 @@
 | 对齐规则：类型 + 出处 + 哈希 + 可适用性 | R77, R78, R79 |
 | 链条四字段必须齐、逐个复算、未核验可见 | R24, R25, R26, R27 |
 | 未核验不得超过池子 | R118 |
-| 去重检测器标定门：夹具、对数、上界、已执行、哈希、runner 可执行 | R119, R120, R121, R122, R123, R124, R130 |
-| 度量身份与 W 绑定（family 枚举 / threshold_binding 对象） | R125, R126, R131 |
-| 流连续性发现：计数与边界成对、只作附件、摘要可见 | R132, R133, R139 |
-| 范围收缩显式声明：标注一致性、D1b、维度代码 DSR- 前缀 | R134, R135, R136 |
-| 分散度决策映射：支持什么、不支持什么 | R137, R138 |
-| 链条闭合等式 sync_filtered = n_pass + n_unverified | R127 |
-| 全局 τ 注记必须印偏向 | R129 |
+| 去重标定状态：未建立必须为空、不得夹带对象、建立必须给对象、绑定不得单独命名夹具 | R119, R120, R121, R122 |
+| 去重检测器标定门（仅 established 分支）：夹具、对数、上界、已执行、哈希、runner 可执行 | R123, R124, R125, R126, R127, R133 |
+| 度量身份与 W 绑定（family 枚举 / threshold_binding 对象） | R128, R129, R134 |
+| 流连续性发现：计数与边界成对、只作附件、摘要可见 | R135, R136, R142 |
+| 范围收缩显式声明：标注一致性、D1b、维度代码 DSR- 前缀 | R137, R138, R139 |
+| 分散度决策映射：支持什么、不支持什么 | R140, R141 |
+| 链条闭合等式 sync_filtered = n_pass + n_unverified | R130 |
+| 全局 τ 注记必须印偏向 | R132 |
+
 | 不清洗：去重不执行、计数可复算 | R28, R30, R31, R32 |
 | 封顶：ρ 区间下端、按式重算、买方语言 | R45, R46, R47, R48, R85, R49, R43, R44 |
 | NEES 状态与边界 | R50, R51, R52, R57, R58, R59, R60 |
@@ -164,27 +166,30 @@
 | R116 | default package notice omits the acceptance bar |
 | R117 | default package without a sensitivity headline |
 | R118 | chain unverified exceeds the pool |
-| R119 | calibration gate missing |
-| R120 | calibration below the positive-pair floor |
-| R121 | calibration merging distinct episodes |
-| R122 | calibration upper bound above five percent |
-| R123 | calibration not actually executed |
-| R124 | calibration fixture hash missing |
-| R125 | threshold binding disagrees with family |
-| R126 | threshold binding W drifts from thresholds |
-| R127 | chain filtered not an equation |
-| R128 | dimension code without its prefix |
-| R129 | global tau note hides its bias |
-| R130 | calibration not passed |
-| R131 | metric family unnamed |
-| R132 | stream continuity count without boundaries |
-| R133 | continuity note claims a NEES effect |
-| R134 | scope declaration dropped |
-| R135 | label consistency quietly assumed |
-| R136 | dimension codes reused as a crosswalk |
-| R137 | decision mapping dropped |
-| R138 | decision overreach |
-| R139 | spike crossing leaves no continuity trace |
+| R119 | calibration status missing |
+| R120 | unestablished calibration claims an object |
+| R121 | established calibration missing |
+| R122 | binding names a fixture without a calibration |
+| R123 | calibration below the positive-pair floor |
+| R124 | calibration merging distinct episodes |
+| R125 | calibration upper bound above five percent |
+| R126 | calibration not actually executed |
+| R127 | calibration fixture hash missing |
+| R128 | threshold binding disagrees with family |
+| R129 | threshold binding W drifts from thresholds |
+| R130 | chain filtered not an equation |
+| R131 | dimension code without its prefix |
+| R132 | global tau note hides its bias |
+| R133 | calibration not passed |
+| R134 | metric family unnamed |
+| R135 | stream continuity count without boundaries |
+| R136 | continuity note claims a NEES effect |
+| R137 | scope declaration dropped |
+| R138 | label consistency quietly assumed |
+| R139 | dimension codes reused as a crosswalk |
+| R140 | decision mapping dropped |
+| R141 | decision overreach |
+| R142 | spike crossing leaves no continuity trace |
 
 ## 用例索引（观测件）
 

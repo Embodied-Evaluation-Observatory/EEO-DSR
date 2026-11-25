@@ -8,7 +8,7 @@ Usage:
 
 Exit codes: 0 valid (or self-test passed), 1 invalid (or self-test failed), 2 usage error.
 
-The normative forms are schema/record.schema.json (eeo-dataset-review/0.2) and
+The normative forms are schema/record.schema.json (eeo-dataset-review/0.3) and
 schema/sync-observation.schema.json (eeo-sync-observation/0.1). This validator re-implements
 them with no third-party dependency and adds the cross-field rules that carry the method:
 
@@ -38,9 +38,9 @@ import json
 import os
 import sys
 
-SCHEMA_VERSION = "eeo-dataset-review/0.2"
+SCHEMA_VERSION = "eeo-dataset-review/0.3"
 OBS_VERSION = "eeo-sync-observation/0.1"
-METHOD_VERSION = "EEO-DSR-V0.2"
+METHOD_VERSION = "EEO-DSR-V0.3"
 
 UL_VERSION = "EEO-DUL-2"
 UL_EN = ("This review reports a statistical-usability reading at the episode level. It does not "
@@ -645,22 +645,36 @@ def check(rec):
          "one enum, no synonyms, or records cannot be compared")
     bind = mt.get("threshold_binding") if isinstance(mt, dict) else None
     need(isinstance(bind, dict),
-         "neev.dedup.metric.threshold_binding must be an object binding the metric, W and the "
-         "calibration fixture id")
+         "neev.dedup.metric.threshold_binding must be an object binding the metric and W")
+    status = de.get("calibration_status")
+    need(status in ("not_established", "established"),
+         "neev.dedup.calibration_status must be not_established or established: no detector "
+         "means no calibration claim")
     if isinstance(bind, dict):
         need(bind.get("metric") == fam,
              "metric.threshold_binding.metric must equal metric.family")
         wdecl = (th.get("dedup") or {}).get("w")
         need(is_num(bind.get("w")) and bind.get("w") == wdecl,
              "metric.threshold_binding.w must equal thresholds.dedup.w: W is bound to its metric")
-        need(isinstance(bind.get("calibration_fixture_id"), str)
-             and bind.get("calibration_fixture_id"),
-             "metric.threshold_binding.calibration_fixture_id is required")
+        if status == "not_established":
+            need(bind.get("calibration_fixture_id") is None,
+                 "metric.threshold_binding.calibration_fixture_id must be null while "
+                 "calibration_status is not_established")
+        elif status == "established":
+            need(isinstance(bind.get("calibration_fixture_id"), str)
+                 and bind.get("calibration_fixture_id"),
+                 "metric.threshold_binding.calibration_fixture_id is required when a real "
+                 "calibration exists")
     cal = de.get("calibration")
-    need(isinstance(cal, dict),
-         "neev.dedup.calibration is required: the dedup detector is EEO's own measurement and "
-         "carries the same known-truth gate as the clock model")
-    if isinstance(cal, dict):
+    if status == "not_established":
+        need(cal is None,
+             "neev.dedup.calibration must be null while calibration_status is not_established: "
+             "the cosine smoke test is not a detector gate")
+    if status == "established":
+        need(isinstance(cal, dict),
+             "neev.dedup.calibration is required when calibration_status is established: the "
+             "detector is EEO's own measurement and carries a known-truth gate")
+    if status == "established" and isinstance(cal, dict):
         need(isinstance(cal.get("fixture_id"), str) and cal.get("fixture_id"),
              "dedup.calibration.fixture_id is required")
         need(isinstance(cal.get("fixture_version"), str) and cal.get("fixture_version"),
@@ -1397,6 +1411,27 @@ def run_self_test(example_dir):
         obs_base = json.load(fh)
 
     base = docs["record-example"]
+    gate = copy.deepcopy(base)
+    gate["neev"]["dedup"]["calibration_status"] = "established"
+    gate["neev"]["dedup"]["metric"]["threshold_binding"]["calibration_fixture_id"] = "dedup-calib-synthetic"
+    gate["neev"]["dedup"]["calibration"] = {
+        "fixture_id": "dedup-calib-synthetic",
+        "fixture_version": "0.1",
+        "fixture_hash": "9cdd7d4ad826a44c5bad35f4e0f766819c058a7324b16294386f94574dea6bbc",
+        "runner": "tools/validate_record.py",
+        "executed": True,
+        "n_positive_pairs": 59,
+        "n_negative_pairs": 59,
+        "n_false_merge": 0,
+        "n_false_split": 0,
+        "false_merge_rate": 0.0,
+        "false_split_rate": 0.0,
+        "upper95_false_merge_rate": 0.049508,
+        "upper95_false_split_rate": 0.049508,
+        "passed": True,
+        "result_hash": "f72752b4d6e922ca88e09d59a5a82148789cc41afe39b457145f247673ea9dd7",
+        "run_date": "2026-11-25",
+    }
     unest = docs["record-example-unestimable"]
     degraded = docs["record-example-degraded"]
     seg = docs["record-example-alignment-segment"]
@@ -1788,23 +1823,33 @@ def run_self_test(example_dir):
     case("chain unverified exceeds the pool", base,
          lambda r: r["neev"]["chain"].update({"sync_unverified": 1300}),
          "cannot exceed chain.sync_filtered")
-    case("calibration gate missing", base, delp(["neev", "dedup", "calibration"]),
-         "dedup.calibration is required")
-    case("calibration below the positive-pair floor", base,
+    case("calibration status missing", base,
+         delp(["neev", "dedup", "calibration_status"]), "calibration_status")
+    case("unestablished calibration claims an object", base,
+         lambda r: (r["neev"]["dedup"].update({"calibration_status": "not_established"}),
+                    r["neev"]["dedup"].update({"calibration": gate["neev"]["dedup"]["calibration"]})),
+         "must be null while calibration_status is not_established")
+    case("established calibration missing", gate,
+         setp(["neev", "dedup", "calibration"], None),
+         "calibration is required when calibration_status is established")
+    case("binding names a fixture without a calibration", base,
+         setp(["neev", "dedup", "metric", "threshold_binding", "calibration_fixture_id"],
+              "dedup-calib-synthetic"), "must be null while")
+    case("calibration below the positive-pair floor", gate,
          setp(["neev", "dedup", "calibration", "n_positive_pairs"], 20),
          "at least 59 known duplicate pairs")
-    case("calibration merging distinct episodes", base,
+    case("calibration merging distinct episodes", gate,
          lambda r: r["neev"]["dedup"]["calibration"].update(
              {"n_false_merge": 12, "false_merge_rate": 0.2}),
          "false_merge_rate must equal")
-    case("calibration upper bound above five percent", base,
+    case("calibration upper bound above five percent", gate,
          lambda r: r["neev"]["dedup"]["calibration"].update(
              {"n_false_merge": 1, "false_merge_rate": 0.016949,
               "upper95_false_merge_rate": 0.08}),
          "upper95_false_merge_rate")
-    case("calibration not actually executed", base,
+    case("calibration not actually executed", gate,
          setp(["neev", "dedup", "calibration", "executed"], False), "executed must be true")
-    case("calibration fixture hash missing", base,
+    case("calibration fixture hash missing", gate,
          delp(["neev", "dedup", "calibration", "fixture_hash"]), "fixture_hash is required")
     case("threshold binding disagrees with family", base,
          setp(["neev", "dedup", "metric", "threshold_binding", "metric"], "perceptual_hash"),
@@ -1823,7 +1868,7 @@ def run_self_test(example_dir):
     case("global tau note hides its bias", base,
          lambda r: r["thresholds"]["sync"].update({"global_tau_note": "全局 τ 是简化。"}),
          "direction of the bias")
-    case("calibration not passed", base,
+    case("calibration not passed", gate,
          setp(["neev", "dedup", "calibration", "passed"], False), "passed must be true")
     case("metric family unnamed", base,
          delp(["neev", "dedup", "metric", "family"]), "family")

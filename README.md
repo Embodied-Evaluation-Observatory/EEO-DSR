@@ -1,4 +1,4 @@
-# EEO-DSR / 具身数据集核验（V0.2）
+# EEO-DSR / 具身数据集核验（V0.3）
 
 EEO 的数据集侧模块，卖读数不卖结论：一个语料一份记录，一个数——**净有效 episode 量（NEES）**，
 带区间、带封顶、带不可算边界；数下面压着五个维度、六个检查项，每一项都能被第三方按同一口径复算。
@@ -12,8 +12,9 @@ EEO 的数据集侧模块，卖读数不卖结论：一个语料一份记录，�
 
 | 部分 | 状态 |
 |---|---|
-| schema 与跨字段规则 | 已完成（`eeo-dataset-review/0.2`、`eeo-sync-observation/0.1`） |
-| 校验器 | 可运行，`--self-test` 147 例全部按预期拒绝 |
+| schema 与跨字段规则 | 已完成（`eeo-dataset-review/0.3`、`eeo-sync-observation/0.1`） |
+| 校验器 | 可运行，`--self-test` 150 例全部按预期拒绝 |
+| 去重检测器 | **不存在**：没有 `episode-embedding-cosine-v1` 实现，也没有硬负例夹具；`calibration_status` 只能写 `not_established` |
 | 时钟模型 | **只有规格与观测件格式，没有实现代码** |
 | 故障注入夹具 `clock_model_selfcheck.py` | **未写**：跑不过夹具，就不存在合法的 verified 记录 |
 | episode 指纹 / 簇级 bootstrap | 未写 |
@@ -25,7 +26,7 @@ EEO 的数据集侧模块，卖读数不卖结论：一个语料一份记录，�
 
 **现在能交付什么**：
 
-- 可运行、可复算：方法文本（`METHOD.md`、`checks/README.md`）、记录与观测件规范（0.2 / 0.1）、
+- 可运行、可复算：方法文本（`METHOD.md`、`checks/README.md`）、记录与观测件规范（0.3 / 0.1）、
   校验器（`validate_record.py --self-test`、`run_all_checks.py`）、阈值声明表（`thresholds-declaration.md`）。
   今天就能用来校验一份记录草稿是否合规，或让买方先把 τ、W、m 声明下来。
 - 已跑：卡片自洽性初筛（Phase 0，2026-11-25）。脚本 `checks/phase0_screen.py` 入库并可复算；
@@ -81,10 +82,12 @@ m=2、m=3，以及声明的 m（若声明值不是 2 或 3）。
 `{metric, w, calibration_fixture_id}`，写明 W 切在哪个度量上。余弦 0.95 与感知哈希 0.95 不是一回事，
 不写度量，W 就只是一个裸常量。若让买方挑度量，就等于允许挑一个少算重复的度量。
 
-**去重检测器也要过已知真值夹具。** 与时钟模型同门：≥59 对已知重复、≥59 对已知相异，
-FPR（误合并）与 FNR（漏判）分开报，各自的 95% 上界 ≤0.05；`executed = true`、`passed = true`，
-夹具哈希与结果哈希入记录，runner 必须存在且已执行。20 对撑不起 5%：0/20 的上界是 13.9%。
-跑不过不许写"去重已核验"。
+**去重检测器尚不存在，本版不宣称已过门。** 记录字段 `neev.dedup.calibration_status` 只有两值：
+`not_established`（默认，`calibration` 必须为 `null`，`threshold_binding.calibration_fixture_id` 也为 `null`）
+或 `established`（仅当真实检测器与夹具存在时才可出现，届时须 ≥59 对已知重复、≥59 对已知相异，
+FPR 与 FNR 分开报，各自印 Clopper–Pearson 95% 上界，runner 已执行并带夹具哈希与结果哈希）。
+`tools/cosine_threshold_smoke.py` 只是余弦阈值 helper 的冒烟测试：随机单位向量加抖动，任何种子都会通过，
+它不测检测器，也不测 `episode-embedding-cosine-v1` 的真实分布，不得引用为标定证据。
 
 ## 同步：自己算，六类判定
 
@@ -235,7 +238,7 @@ NEES 说买到了多少独立证据；轨迹分散度说这些证据的形状有
 入表背书没有入口。
 
 开源三段式：代码 MIT、本模块计算产出 CC-BY-4.0、第三方字段依源方条款。方法、schema、校验器、
-纯算术、初筛脚本、时钟模型与去重检测器连同夹具、观测件格式全部开源——"每一项都能被第三方按同一口径
+纯算术、初筛脚本、观测件格式，以及实现后的时钟模型与去重检测器连同夹具，全部开源——"每一项都能被第三方按同一口径
 复算"就是产品本身。语料与样本、买方私有件、未发出草稿、委托报价不公开。
 
 付费买的是"在委托方样本上、按委托方声明的阈值、出一份带日期、可复算、委托方具名的记录"。
@@ -247,7 +250,7 @@ fork 防伪靠三层可验证性：用途限定必填且校验器拒收剥掉的
 | 路径 | 内容 |
 |---|---|
 | `METHOD.md` | 方法：单元、切分、五维与 NEES 的关系、阈值归属、六类同步判定与结构性故障映射、去重发现、NEES 数学、封顶公式、精确零失败界、轨迹分散度、引用规则、放弃条件 |
-| `schema/record.schema.json` | 记录规范形式（`eeo-dataset-review/0.2`） |
+| `schema/record.schema.json` | 记录规范形式（`eeo-dataset-review/0.3`） |
 | `schema/sync-observation.schema.json` | 时钟观测件（`eeo-sync-observation/0.1`） |
 | `schema/examples/record-example.json` | 全量、同步已核验、可算 |
 | `schema/examples/record-example-unestimable.json` | 不可算（零方差占优），分散度仍可算 |
@@ -259,9 +262,15 @@ fork 防伪靠三层可验证性：用途限定必填且校验器拒收剥掉的
 | `schema/examples/sync-observation-example.json` | 观测件示例 |
 | `tools/validate_record.py` | 执行层：0 通过、1 不合法、2 用法；`--self-test` 跑证伪用例 |
 | `tools/run_all_checks.py` | 一次跑完自检、全部示例、观测件与 JSON Schema 交叉验证 |
-| `tools/dedup_calibration.py` | 去重检测器的已知真值标定，按声明 W 报误判率 |
+| `tools/cosine_threshold_smoke.py` | 余弦阈值 helper 的冒烟测试；不是去重检测器标定，不带门 |
 | `thresholds-declaration.md` | 一页阈值声明表，验收方自行声明阈值后重跑 |
 | `tools/self_test_manifest.md` | 规则与证伪用例的对照表：哪条规则由哪个用例守住 |
+| `STATUS.md` | 当前存在什么、不存在什么、各版本状态与纠正政策 |
+| `RELEASE_GATE.md` | 发布门：冻结清单、预检记录、tag 不移、纠错发新版本 |
+| `tools/freeze_release.py` | 冻结一个版本的逐文件清单；已存在则拒绝 |
+| `tools/release_preflight.py` | 发布前复算冻结清单、全量检查，写 `preflight.json` |
+| `releases/v0.3/manifest.json` | V0.3 冻结清单 |
+| `.github/workflows/reproduce.yml` | CI：每次 push/PR 跑自检、示例与 schema |
 | `ENTRY.md` | 三个入口、界面硬约束、开源范围与 fork 防伪 |
 | `LICENSE` | MIT（代码）；名称与记录格式标识不在授权范围内 |
 | `CITATION.md` | 引用必给四项：方法版本、语料 id 与版本、日期、记录哈希 |
@@ -281,7 +290,7 @@ python3 tools/validate_record.py --self-test
 python3 tools/run_all_checks.py   # 自检 + 全部示例 + 观测件 + jsonschema，CI 用这一条
 ```
 
-`run_all_checks.py` 是 CI 入口：任一示例或自检不过即非零退出。
+`run_all_checks.py` 是 CI 入口：`.github/workflows/reproduce.yml` 在每次 push 与 PR 上跑这一条，任一示例或自检不过即非零退出。
 
 schema 管不了、由校验器执行的规则：阈值（含 m）由谁定、声明值必须进敏感性档、同步敏感性缺 m=2/m=3/声明值、
 度量不得下放给买方、时钟模型不得声明外部依赖、已核验却未跑夹具或覆盖不全、六类计数必须闭合、

@@ -1,51 +1,49 @@
-EEO-DSR V0.2: dataset-side review spec, validator, and first Phase 0 screen
+EEO-DSR V0.3: withdraw the dedup gate, add release discipline and CI
 
-This release ships the method, the record and observation schemas, the validator, the threshold
-declaration, and the first dated card screen. It does not ship any NEES reading of any corpus and
-does not state whether any corpus is usable.
+This release ships the method, schemas, validator, release gate and the 2026-11-25 Phase 0 card
+screen. It does not ship any NEES reading of any corpus and does not state whether any corpus is
+usable.
 
-Dedup gate
-- Known-truth calibration needs at least 59 known duplicate and 59 known distinct pairs per class,
-  not 20: 0/20 has a 95% upper bound of 13.9%; 0/59 is 4.95%.
-- False merge and false split are reported separately, each with its point estimate and exact
-  Clopper-Pearson 95% upper bound. They move NEES in opposite directions and are not pooled.
-- A record carries executed, fixture_hash and result_hash; the runner file must exist, must have
-  executed, and must have passed. Existence alone is not a gate.
+Dedup gate withdrawn
+- The dedup detector does not exist. The V0.2 calibration fixture was random unit vectors with
+  small jitter against independent random vectors; at W=0.95 in 32 dimensions it cannot produce a
+  false merge or a false split, so it was a gate that could not fail.
+- neev.dedup.calibration_status is added. It is not_established in every current record; calibration
+  is null and threshold_binding.calibration_fixture_id is null.
+- The established branch is kept for the future detector: at least 59 pairs per class, false merge
+  and false split reported separately with exact one-sided bounds, runner executed, fixture hash
+  and result hash in the record.
+- tools/dedup_calibration.py is replaced by tools/cosine_threshold_smoke.py. It takes W on the
+  command line, prints counts and illustrative bounds, and labels itself gate false. It is not a
+  calibration and is not cited as one.
 
-Metric identity
-- The dedup metric family is one enum without synonyms: embedding_cosine, perceptual_hash,
-  exact_byte.
-- W is bound through an object {metric, w, calibration_fixture_id}; the bound metric must equal the
-  family, the bound W must equal thresholds.dedup.w, and the fixture id must equal the calibration
-  fixture id.
+Method text
+- m default 3 is no longer justified as "3x tolerance covers most jitter". The release states that
+  no reproducible basis exists; a default use carries m_origin eeo_default and basis
+  no_declared_basis, and may not serve as an acceptance finding.
+- neev.chain stays four fields and is recomputed field by field, including
+  sync_filtered = n_pass + n_unverified and sync_unverified <= sync_filtered.
 
-Counting
-- The chain is an equation: sync_filtered = n_pass + n_unverified, and sync_unverified <=
-  sync_filtered.
-- Stream continuity findings stay out of the NEES formula, but every buyer summary carries one line
-  with the count, so the finding is visible to a summary reader.
-- global_tau_note states that the global tau takes the strict end and that this can only lower
-  NEES. The global tau remains a simplification; per-pair tau is the ideal.
+Release discipline
+- STATUS.md states what exists and what does not, the release table and the correction policy.
+- RELEASE_GATE.md requires a frozen manifest and a preflight record before a tag. Tags are
+  annotated and never moved, deleted or force-pushed; corrections are new versions.
+- tools/freeze_release.py writes releases/<version>/manifest.json and refuses to overwrite.
+- tools/release_preflight.py verifies manifest hashes, SHA256SUMS, self-test, examples and the
+  cosine smoke test, then writes releases/<version>/preflight.json.
 
-Scope
-- Dimension codes carry the DSR- prefix: DSR-D1 through DSR-D5b. They are a namespace, not a
-  crosswalk with earlier materials.
-- Label consistency and D1b are still declared as not done, with the condition for their return.
-
-Phase 0
-- checks/phase0_screen.py fetches 12 public Hugging Face LeRobot cards that need no login or
-  approval, records each raw README sha256, and checks S1 to S6.
-- Result dated 2026-11-25: 12 of 12 cards fail at least one check. S1, S2 and S4 pass on all 12;
-  S3, S5 and S6 are MISSING on all 12. This is card arithmetic, not a verification finding.
+CI
+- .github/workflows/reproduce.yml runs tools/run_all_checks.py and the cosine smoke test on every
+  push and pull request. A claim that run_all_checks.py is the CI entry point now has a workflow
+  behind it.
 
 Verification
-- tools/validate_record.py: 147 self-test cases.
+- tools/validate_record.py: 150 self-test cases.
 - tools/run_all_checks.py: self-test, seven example records, the observation example and a JSON
   Schema cross-check.
-- tools/dedup_calibration.py: 59 known duplicate and 59 known distinct pairs, zero false merges and
-  zero false splits, upper bound 0.049508 per class.
-- checks/phase0_screen.py: deterministic on repeat runs for the same date.
+- checks/phase0_screen.py: 12 cards, 12 of 12 fail at least one check; S1, S2 and S4 pass on all 12,
+  S3, S5 and S6 are MISSING on all 12. This is card arithmetic, not a verification finding.
 
 Release boundary
-- Published files are listed in RELEASE.md and hashed in SHA256SUMS.
-- Corrections ship as a new version; no silent edits, and old tags remain.
+- Published files are listed in releases/v0.3/manifest.json and hashed in SHA256SUMS.
+- V0.2 stays at 4e2defb and tag v0.2 stays at ce6c109. No history rewrite.

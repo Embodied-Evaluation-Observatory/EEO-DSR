@@ -1,7 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://eeo.local/schema/record/0.2",
-  "title": "EEO-DSR record (eeo-dataset-review/0.2)",
+  "$id": "https://eeo.local/schema/record/0.3",
+  "title": "EEO-DSR record (eeo-dataset-review/0.3)",
   "type": "object",
   "additionalProperties": false,
   "required": [
@@ -22,7 +22,7 @@
   ],
   "properties": {
     "schema_version": {
-      "const": "eeo-dataset-review/0.2"
+      "const": "eeo-dataset-review/0.3"
     },
     "module": {
       "const": "EEO-DSR"
@@ -845,7 +845,7 @@
             "n_cross_split_copies",
             "leakage_rate",
             "n_distinct_est",
-            "calibration"
+            "calibration_status"
           ],
           "properties": {
             "executed": {
@@ -919,8 +919,16 @@
                       "maximum": 1
                     },
                     "calibration_fixture_id": {
-                      "type": "string",
-                      "minLength": 1
+                      "anyOf": [
+                        {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        {
+                          "type": "null"
+                        }
+                      ],
+                      "description": "Fixture id when a real calibration exists; null while calibration_status is not_established."
                     }
                   }
                 }
@@ -932,9 +940,12 @@
               "minLength": 1
             },
             "calibration": {
-              "type": "object",
+              "type": [
+                "object",
+                "null"
+              ],
               "additionalProperties": false,
-              "description": "Known-truth calibration of the dedup detector, the same gate the clock model carries.",
+              "description": "Known-truth calibration of the dedup detector, only when one exists. Null while calibration_status is not_established.",
               "required": [
                 "fixture_id",
                 "fixture_version",
@@ -1021,8 +1032,52 @@
                   "pattern": "^[0-9a-f]{64}$"
                 }
               }
+            },
+            "calibration_status": {
+              "enum": [
+                "not_established",
+                "established"
+              ],
+              "description": "Whether a real detector calibration exists. not_established means no detector and no gate; calibration must then be null."
             }
-          }
+          },
+          "allOf": [
+            {
+              "if": {
+                "properties": {
+                  "calibration_status": {
+                    "const": "established"
+                  }
+                }
+              },
+              "then": {
+                "required": [
+                  "calibration"
+                ],
+                "properties": {
+                  "calibration": {
+                    "type": "object"
+                  }
+                }
+              }
+            },
+            {
+              "if": {
+                "properties": {
+                  "calibration_status": {
+                    "const": "not_established"
+                  }
+                }
+              },
+              "then": {
+                "properties": {
+                  "calibration": {
+                    "type": "null"
+                  }
+                }
+              }
+            }
+          ]
         },
         "chain": {
           "type": "object",

@@ -1,5 +1,5 @@
 {
-  "schema_version": "eeo-dataset-review/0.2",
+  "schema_version": "eeo-dataset-review/0.3",
   "module": "EEO-DSR",
   "dataset": {
     "dataset_id": "droid-1k-sample",
@@ -14,7 +14,7 @@
   "review": {
     "stage": "pre_purchase",
     "tier": "T2_full",
-    "method_version": "EEO-DSR-V0.2",
+    "method_version": "EEO-DSR-V0.3",
     "started_at": "2026-11-22T10:00:00Z",
     "frame": "committed",
     "frame_rule_sha256": "00000000000000000000000000000000000000000000000078dde6e5fd29f054",
@@ -200,7 +200,7 @@
         "threshold_binding": {
           "metric": "embedding_cosine",
           "w": 0.95,
-          "calibration_fixture_id": "dedup-calib-synthetic"
+          "calibration_fixture_id": null
         }
       },
       "metric_note": "度量由方法固定，买方只声明 W。",
@@ -209,24 +209,8 @@
       "n_cross_split_copies": 4,
       "leakage_rate": 0.019,
       "n_distinct_est": 211,
-      "calibration": {
-        "fixture_id": "dedup-calib-synthetic",
-        "fixture_version": "0.1",
-        "fixture_hash": "9cdd7d4ad826a44c5bad35f4e0f766819c058a7324b16294386f94574dea6bbc",
-        "runner": "tools/dedup_calibration.py",
-        "executed": true,
-        "n_positive_pairs": 59,
-        "n_negative_pairs": 59,
-        "n_false_merge": 0,
-        "n_false_split": 0,
-        "false_merge_rate": 0.0,
-        "false_split_rate": 0.0,
-        "upper95_false_merge_rate": 0.049508,
-        "upper95_false_split_rate": 0.049508,
-        "passed": true,
-        "result_hash": "f72752b4d6e922ca88e09d59a5a82148789cc41afe39b457145f247673ea9dd7",
-        "run_date": "2026-11-25"
-      }
+      "calibration": null,
+      "calibration_status": "not_established"
     },
     "chain": {
       "sync_filtered": 220,

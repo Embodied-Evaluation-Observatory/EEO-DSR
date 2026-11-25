@@ -1,7 +1,7 @@
-# 方法：EEO-Dataset-Review V0.2（EEO-DSR）
+# 方法：EEO-Dataset-Review V0.3（EEO-DSR）
 
 本文件规定记录怎么产生、数字怎么算、什么情况下不给数。规范形式见 `schema/record.schema.json`
-（`eeo-dataset-review/0.2`）与 `schema/sync-observation.schema.json`（`eeo-sync-observation/0.1`）；
+（`eeo-dataset-review/0.3`）与 `schema/sync-observation.schema.json`（`eeo-sync-observation/0.1`）；
 `tools/validate_record.py` 执行 schema 之外的跨字段规则。
 
 **实现状态**：本仓库目前只有规格、校验器与示例，没有时钟模型、episode 指纹、簇级 bootstrap 与
@@ -116,12 +116,19 @@ schema 的夹具，不是发出的记录。
    又被度量判为重复时只计一次，字节相同副本单列只用于审计，不改变总数。`n_duplicate_copies` 必须能由
    `n_distinct_est = 池子 - n_duplicate_copies` 复算。
 
-**去重检测器与时钟模型同门。** 两者都是 EEO 自己的测量，凭什么一个必须过已知真值夹具、另一个不用：
-`neev.dedup.calibration` 必填——夹具 id/版本与哈希、可执行 runner、**已执行**、≥59 对已知重复、
-≥59 对已知相异、FPR（`false_merge_rate`，误合并）与 FNR（`false_split_rate`，漏判）分开报，
-各自的 95% 上界（Clopper-Pearson）≤0.05、`passed = true`、结果哈希与运行日期。
-20 对不够：0/20 的 95% 上界是 13.9%，不是 5%；0/59 才是 4.95%。跑不过就不许用这份去重计数，
-也不许写"去重已核验"。runner 必须存在、已执行且通过，校验器会查文件与字段。
+**去重检测器尚不存在，本版不建立标定门。** 真实检测器（`episode-embedding-cosine-v1`，关键帧均值池化）
+与硬负例夹具都未实现，因此记录里的 `neev.dedup.calibration_status` 只能是 `not_established`：
+`calibration` 为 `null`，`threshold_binding.calibration_fixture_id` 也为 `null`。这不是措辞退让，是
+把"未建立"写成机器可查的状态。
+
+`tools/cosine_threshold_smoke.py` 只是余弦阈值 helper 的冒烟测试：32 维随机单位向量，正例加 σ=0.005
+抖动，负例为两个独立随机向量。32 维下负例余弦标准差约 0.177，到 0.95 要 5.4 个标准差；正例余弦约
+0.9996。任何种子都通过，所以它不是门，也不测真实嵌入分布；不得引用为标定证据。n=59 只保证"若真跑出
+0/59"，上界才是 4.95%；随机向量构造连失败的机会都没有，这个上界不成立。
+
+真门等检测器写出来再建：硬负例至少覆盖同任务不同 episode、同场景不同任务、时移副本、重编码副本；
+W 由 CLI 传入；每类 ≥59 对；FPR 与 FNR 分开，各印点值与 Clopper–Pearson 95% 上界；runner 已执行，
+夹具哈希与结果哈希入记录。此前不得写"去重已核验"。
 
 EEO 只数副本，不删（§7）。
 
@@ -148,9 +155,10 @@ NEES：同一内容被算两遍，信息量已由 DSR-D5a 扣过一次；泄漏�
 
 ### 5.1 m 的默认值与署名
 
-m 的默认值是 3，依据是 3 倍容差覆盖多数非结构性抖动。若买方未声明 m，记录用 `m_origin: eeo_default`
-写明"用的是 EEO 默认值 3"，并在 basis 里写这一点——默认值也要有署名。若买方或卖方另行声明，
-`m_origin` 记 buyer / supplier / joint。
+m 的默认值是 3，但这**不是**由"3 倍容差覆盖多数抖动"推出来的：本版没有可复算的依据，不能把经验
+写成推导。若买方未声明 m，记录用 `m_origin: eeo_default` 写明"用的是 EEO 默认值 3"，`basis` 写
+`no_declared_basis`，并在摘要里说明这是未获声明的默认值，不得作为验收依据。若买方或卖方另行声明，
+`m_origin` 记 buyer / supplier / joint，`basis` 记来源文件或口头约定。
 
 ### 5.2 敏感性的下限
 
@@ -657,6 +665,6 @@ DATA_TERMS）、全量（深度核验，另加数据协议与算力）。委托�
 "m 份卡中 n 份至少一项不平"。
 
 代码 MIT，本模块计算产出 CC-BY-4.0，第三方字段依源方条款。方法、schema、校验器、纯算术、初筛脚本、
-时钟模型与去重检测器连同已知真值夹具、观测件格式必须开源；语料与样本、买方私有件、未发出草稿、
+观测件格式，以及实现后的时钟模型与去重检测器连同夹具必须开源；语料与样本、买方私有件、未发出草稿、
 委托报价不公开。付费买的是在委托方样本上按声明阈值出的一份带日期、可复算、委托方具名的记录。
 fork 防伪靠 schema 与校验器、引用四项、名称与记录格式标识三层，不靠限制性许可。详见 `ENTRY.md`。
