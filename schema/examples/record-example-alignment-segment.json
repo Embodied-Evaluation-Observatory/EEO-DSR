@@ -1,5 +1,5 @@
 {
-  "schema_version": "eeo-dataset-review/0.1",
+  "schema_version": "eeo-dataset-review/0.2",
   "module": "EEO-DSR",
   "dataset": {
     "dataset_id": "droid-1k-sample",
@@ -14,7 +14,7 @@
   "review": {
     "stage": "pre_purchase",
     "tier": "T2_full",
-    "method_version": "EEO-DSR-V0.1",
+    "method_version": "EEO-DSR-V0.2",
     "started_at": "2026-11-22T10:00:00Z",
     "frame": "committed",
     "frame_rule_sha256": "00000000000000000000000000000000000000000000000078dde6e5fd29f054",
@@ -22,32 +22,32 @@
   },
   "dimensions": [
     {
-      "id": "D1",
+      "id": "DSR-D1",
       "status": "checked",
       "readout": "声明 500 = 430 + 40 + 20 + 10 结构性段。"
     },
     {
-      "id": "D2",
+      "id": "DSR-D2",
       "status": "partial",
       "readout": "430 合格、40 降级、20 不合格；10 条时钟重置且受影响段可定位，整段出池；未执行对齐。"
     },
     {
-      "id": "D3",
+      "id": "DSR-D3",
       "status": "checked",
       "readout": "14 场景，覆盖 9 工位。"
     },
     {
-      "id": "D4",
+      "id": "DSR-D4",
       "status": "checked",
       "readout": "revision 已 pin。"
     },
     {
-      "id": "D5a",
+      "id": "DSR-D5a",
       "status": "checked",
       "readout": "w=0.95 下 12 条副本（4 条字节相同）。"
     },
     {
-      "id": "D5b",
+      "id": "DSR-D5b",
       "status": "partial",
       "readout": "跨 split 重叠 9 条；切分按场景声明。"
     }
@@ -100,7 +100,7 @@
       "pairing_direction": "camera_frames_to_state_samples",
       "sampled_stream_period_ms": 80.0,
       "tau_scope": "global_simplified",
-      "global_tau_note": "全局单一 τ 把最严的一对流强加给所有流对，是简化；理想形态是逐流对的 τ，后续版本再拆。"
+      "global_tau_note": "全局单一 τ 取最严的一对流强加给所有流对：可能多剔合格 episode，NEES 偏低；这是简化，理想形态是逐流对 τ。"
     },
     "dedup": {
       "w": 0.95,
@@ -199,8 +199,11 @@
         "id": "eeo-dedup-metric/episode-embedding-cosine-v1",
         "defined_in": "METHOD 4.5",
         "family": "embedding_cosine",
-        "statistic": "cosine_similarity",
-        "threshold_binding": "W 是 episode 嵌入余弦相似度的切点；换度量则 W 的含义随之改变。"
+        "threshold_binding": {
+          "metric": "embedding_cosine",
+          "w": 0.95,
+          "calibration_fixture_id": "dedup-calib-synthetic"
+        }
       },
       "metric_note": "度量由方法固定，买方只声明 W。",
       "n_duplicate_copies": 12,
@@ -211,12 +214,19 @@
       "calibration": {
         "fixture_id": "dedup-calib-synthetic",
         "fixture_version": "0.1",
+        "fixture_hash": "9cdd7d4ad826a44c5bad35f4e0f766819c058a7324b16294386f94574dea6bbc",
         "runner": "tools/dedup_calibration.py",
-        "n_positive_pairs": 40,
-        "n_negative_pairs": 40,
+        "executed": true,
+        "n_positive_pairs": 59,
+        "n_negative_pairs": 59,
+        "n_false_merge": 0,
+        "n_false_split": 0,
         "false_merge_rate": 0.0,
         "false_split_rate": 0.0,
+        "upper95_false_merge_rate": 0.049508,
+        "upper95_false_split_rate": 0.049508,
         "passed": true,
+        "result_hash": "f72752b4d6e922ca88e09d59a5a82148789cc41afe39b457145f247673ea9dd7",
         "run_date": "2026-11-25"
       }
     },
@@ -315,7 +325,8 @@
   "buyer_summary": [
     "去重后净有效 episode 量 46.0（区间 35–61）。",
     "前提一：10 条因时间轴断裂整段出池（段已知），未执行对齐；τ=40 ms、m=3。",
-    "前提二：W=0.95 下 12 条副本已计为重复；未执行清洗。"
+    "前提二：W=0.95 下 12 条副本已计为重复；未执行清洗。",
+    "流连续性发现 0 条（不进 NEES，仅作附件）。"
   ],
   "buyer_summary_use_limitation": {
     "text_version": "EEO-DUL-2",
@@ -343,8 +354,8 @@
     },
     "card_index_crosscheck": {
       "status": "not_assessed",
-      "reason": "D1b 需要索引与卡片逐项对照，本版不提供；索引抓取脚本入库后再补。"
+      "reason": "DSR-D1b 需要索引与卡片逐项对照，本版不提供；索引抓取脚本入库后再补。"
     },
-    "dimension_code_note": "D1–D5b 是本模块六个检查项的局部代号，不是与早期材料的 crosswalk，也不对应任何外部维度体系。"
+    "dimension_code_note": "DSR-D1–DSR-D5b 是本模块六个检查项的局部代号，不是与早期材料的 crosswalk，也不对应任何外部维度体系。"
   }
 }

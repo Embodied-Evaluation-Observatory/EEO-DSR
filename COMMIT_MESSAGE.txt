@@ -1,68 +1,51 @@
-EEO-DSR V0.1: entry points by material, open licensing, and the dataset-side review module
+EEO-DSR V0.2: dataset-side review spec, validator, and first Phase 0 screen
 
-One record per corpus, one reading (NEES), with interval, cap and the unestimable boundary;
-five dimensions and six card checks underneath. This is the starting release; the version series
-begins at V0; V0.1 adds the entry and licensing layer.
+This release ships the method, the record and observation schemas, the validator, the threshold
+declaration, and the first dated card screen. It does not ship any NEES reading of any corpus and
+does not state whether any corpus is usable.
 
-Thresholds and measurement
-- tau is derived, not picked: nearest-neighbour pairing bounds matching error at half a period
-  (0.5), zero-order hold at a full period (1.0). Records state pairing_policy, tau_factor,
-  pairing_direction and period_basis. The period is the sampled stream's (camera frames paired to
-  nearest state samples), not a free choice; an unknown direction takes the shortest period as the
-  strict end. One global tau is a simplification and the record says so; per-pair tau is the ideal.
-- W is bound to its metric: family embedding_cosine, statistic cosine_similarity, plus
-  threshold_binding. Cosine 0.95 is not perceptual-hash 0.95, so W without a metric is a bare
-  constant.
-- The dedup detector carries the same known-truth gate as the clock model: at least 20 known
-  duplicate and 20 known distinct pairs, false merge and split rates at most 0.05, passed true, and
-  a runner that exists. A gate that cannot run is not a gate.
-- The default package records acceptance_use not_declared_by_buyer, prints that it may not serve as
-  an acceptance finding, and that the accepting party must declare thresholds and rerun.
+Dedup gate
+- Known-truth calibration needs at least 59 known duplicate and 59 known distinct pairs per class,
+  not 20: 0/20 has a 95% upper bound of 13.9%; 0/59 is 4.95%.
+- False merge and false split are reported separately, each with its point estimate and exact
+  Clopper-Pearson 95% upper bound. They move NEES in opposite directions and are not pooled.
+- A record carries executed, fixture_hash and result_hash; the runner file must exist, must have
+  executed, and must have passed. Existence alone is not a gate.
+
+Metric identity
+- The dedup metric family is one enum without synonyms: embedding_cosine, perceptual_hash,
+  exact_byte.
+- W is bound through an object {metric, w, calibration_fixture_id}; the bound metric must equal the
+  family, the bound W must equal thresholds.dedup.w, and the fixture id must equal the calibration
+  fixture id.
 
 Counting
-- The pool is pass + unverified; degraded carries zero weight and never enters NEES.
-- Structural faults are typed; an identified fault never enters unverified. unverified means only
-  that timing cannot be measured; a detected break that cannot be classified routes to
-  alignment_unlocatable.
-- A spike that crosses a boundary with no internal break leaves a trace in
-  stream_continuity_findings (count plus episode boundaries). It does not enter NEES or any
-  dimension reading; it exists so a third party can recheck why the effect was zero.
-- The chain prints four fields: sync_filtered, sync_unverified, dedup_count, nees; null rather than
-  omission, and sync_unverified may not exceed sync_filtered.
-- Dedup count is the union of metric-and-W duplicates and byte-identical copies, without double
-  subtraction.
+- The chain is an equation: sync_filtered = n_pass + n_unverified, and sync_unverified <=
+  sync_filtered.
+- Stream continuity findings stay out of the NEES formula, but every buyer summary carries one line
+  with the count, so the finding is visible to a summary reader.
+- global_tau_note states that the global tau takes the strict end and that this can only lower
+  NEES. The global tau remains a simplification; per-pair tau is the ideal.
 
 Scope
-- This version does not assess label consistency and does not run D1b (cards versus an index).
-  Both are declared in scope_declaration with the reason and when they return, rather than dropped
-  silently. D1-D5b are local codes, not a crosswalk with earlier materials.
-- Diversity supports one decision (whether to ask for more practice variation within a task) and
-  explicitly does not support whether the corpus trains a better policy. Multi-task records are
-  stratified; no bare pooled value.
+- Dimension codes carry the DSR- prefix: DSR-D1 through DSR-D5b. They are a namespace, not a
+  crosswalk with earlier materials.
+- Label consistency and D1b are still declared as not done, with the condition for their return.
+
+Phase 0
+- checks/phase0_screen.py fetches 12 public Hugging Face LeRobot cards that need no login or
+  approval, records each raw README sha256, and checks S1 to S6.
+- Result dated 2026-11-25: 12 of 12 cards fail at least one check. S1, S2 and S4 pass on all 12;
+  S3, S5 and S6 are MISSING on all 12. This is card arithmetic, not a verification finding.
 
 Verification
-- tools/validate_record.py: 138 self-test cases; tools/run_all_checks.py runs the self-test, all
-  seven example records, the observation and a JSON Schema cross-check.
-- tools/dedup_calibration.py: deterministic known-truth calibration at the declared W.
-- checks/README.md prints EEO-RN-3: screening is arithmetic on cards, not a conformity check.
+- tools/validate_record.py: 147 self-test cases.
+- tools/run_all_checks.py: self-test, seven example records, the observation example and a JSON
+  Schema cross-check.
+- tools/dedup_calibration.py: 59 known duplicate and 59 known distinct pairs, zero false merges and
+  zero false splits, upper bound 0.049508 per class.
+- checks/phase0_screen.py: deterministic on repeat runs for the same date.
 
-Entry points and licensing
-- Three gates by material, not identity: public cards (free screen, no login or permission),
-  commissioned sample (paid pre-purchase check; thresholds declaration, sampling frame and
-  DATA_TERMS first), full corpus (deep verification; plus data agreement and compute).
-  Commissioned records are public and name the commissioning party; certification, rating and
-  endorsement have no gate at all.
-- Interfaces carry no score, rating, ranking or adjective; a FAIL cell shows the declared and
-  recomputed values; rows sort by letter or date, never by failure count; aggregates say only
-  "n of m cards fail at least one check"; every page prints the use limitation before any number.
-- Code is MIT, this module's computed output is CC-BY-4.0, third-party fields stay under source
-  terms. Method, schema, validator, pure arithmetic, screening script, clock model and dedup
-  detector with their known-truth fixtures, and the observation format are open. Corpora, samples,
-  buyer-private documents, unpublished drafts and quotes are not.
-- Paid work is a dated, reproducible, named record on the client's sample at declared thresholds,
-  not code. Fork defence is verifiable, not legal: a stripped record fails the official schema and
-  validator, citations require method_version, corpus id and version, date and record hash, and
-  the name and record-format identity are not licensed.
-
-Implementation order is set by falsifiability: card screening first, then the dataset-side driver
-with pure arithmetic, then cluster bootstrap, clock model, dedup and diversity.
+Release boundary
+- Published files are listed in RELEASE.md and hashed in SHA256SUMS.
+- Corrections ship as a new version; no silent edits, and old tags remain.

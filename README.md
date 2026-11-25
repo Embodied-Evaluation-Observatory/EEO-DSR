@@ -1,4 +1,4 @@
-# EEO-DSR / 具身数据集核验（V0.1）
+# EEO-DSR / 具身数据集核验（V0.2）
 
 EEO 的数据集侧模块，卖读数不卖结论：一个语料一份记录，一个数——**净有效 episode 量（NEES）**，
 带区间、带封顶、带不可算边界；数下面压着五个维度、六个检查项，每一项都能被第三方按同一口径复算。
@@ -12,23 +12,24 @@ EEO 的数据集侧模块，卖读数不卖结论：一个语料一份记录，�
 
 | 部分 | 状态 |
 |---|---|
-| schema 与跨字段规则 | 已完成（`eeo-dataset-review/0.1`、`eeo-sync-observation/0.1`） |
-| 校验器 | 可运行，`--self-test` 覆盖证伪用例 |
+| schema 与跨字段规则 | 已完成（`eeo-dataset-review/0.2`、`eeo-sync-observation/0.1`） |
+| 校验器 | 可运行，`--self-test` 147 例全部按预期拒绝 |
 | 时钟模型 | **只有规格与观测件格式，没有实现代码** |
 | 故障注入夹具 `clock_model_selfcheck.py` | **未写**：跑不过夹具，就不存在合法的 verified 记录 |
 | episode 指纹 / 簇级 bootstrap | 未写 |
 | NEES 端到端 | **尚不可算**：任何真实语料目前都给不出数 |
 | 轨迹分散度 | 只有字段定义，未写 |
-| Phase 0 初筛 | 规则已定，脚本未入库；脚本跑通前不产出任何初筛结果 |
+| Phase 0 初筛 | **已跑（2026-11-25）**：12 张公开卡片，12 张至少一项不通过；S1/S2/S4 各 12 张通过，S3/S5/S6 各 12 张 MISSING |
 
 `schema/examples/` 里的七份记录是合成的校验夹具，用来证明 schema 能拒什么、收什么，**不是发出的记录**。
 
 **现在能交付什么**：
 
-- 可运行、可复算：方法文本（`METHOD.md`、`checks/README.md`）、记录与观测件规范（0.1 / 0.1）、
+- 可运行、可复算：方法文本（`METHOD.md`、`checks/README.md`）、记录与观测件规范（0.2 / 0.1）、
   校验器（`validate_record.py --self-test`、`run_all_checks.py`）、阈值声明表（`thresholds-declaration.md`）。
   今天就能用来校验一份记录草稿是否合规，或让买方先把 τ、W、m 声明下来。
-- 规则已定、脚本未入库：卡片自洽性初筛（Phase 0）。脚本入库并跑通前，不产出任何初筛结果。
+- 已跑：卡片自洽性初筛（Phase 0，2026-11-25）。脚本 `checks/phase0_screen.py` 入库并可复算；
+  结果在 `checks/dataset/2026-11-25/`。
 - 尚不可用：任何真实语料的 NEES 读数（时钟模型、episode 指纹、簇级 bootstrap 未写）、轨迹分散度数值
   （仅字段定义）。
 - `schema/examples/` 是合成校验夹具，不是发出的记录；本模块至今未发出任何记录。
@@ -67,19 +68,23 @@ m=2、m=3，以及声明的 m（若声明值不是 2 或 3）。
 方向不明时取最短并写"取最严"。卡片未声明策略时降回明示约定并封顶。敏感性保留 0.5 与 1.0 两档，
 作为两种策略的对照，不是任意两点。
 
-一个全局 τ 是简化：30 Hz↔250 Hz 与 30 Hz↔30 Hz 的自然容差不同，全局 τ 把最严的那对强加给所有对；
-记录写 `tau_scope: global_simplified` 与 `global_tau_note`，理想形态是逐流对 τ。
+一个全局 τ 是简化，且有方向：30 Hz↔250 Hz 与 30 Hz↔30 Hz 的自然容差不同，全局 τ 取最严的那对强加给
+所有对，可能多剔合格 episode，**NEES 偏低**；记录写 `tau_scope: global_simplified` 与 `global_tau_note`，
+把偏向印出来，理想形态是逐流对 τ。
 
 套餐记录写 `acceptance_use: not_declared_by_buyer`，印"本记录阈值系默认套餐，未获买方声明，不得作为验收
 判定依据；验收方须自行声明阈值后重跑"，摘要显著位置印敏感性移动量。阻断按用途做，不按阶段做；
 仓库附一页 `thresholds-declaration.md` 声明表，套餐是罕用兜底。
 
-**W 与度量绑定。** 去重度量由方法固定（`neev.dedup.metric.family/statistic`），买方只声明 W；
-`threshold_binding` 写明 W 是哪个统计量上的切点。余弦 0.95 与感知哈希 0.95 不是一回事，不写度量，
-W 就只是一个裸常量。若让买方挑度量，就等于允许挑一个少算重复的度量。
+**W 与度量绑定。** 去重度量由方法固定：`neev.dedup.metric.family` 是互不同义的枚举
+（`embedding_cosine` / `perceptual_hash` / `exact_byte`）；`threshold_binding` 是绑定对象
+`{metric, w, calibration_fixture_id}`，写明 W 切在哪个度量上。余弦 0.95 与感知哈希 0.95 不是一回事，
+不写度量，W 就只是一个裸常量。若让买方挑度量，就等于允许挑一个少算重复的度量。
 
-**去重检测器也要过已知真值夹具。** 与时钟模型同门：≥20 对已知重复、≥20 对已知相异，报该工作点的
-误合并/误拆分率（均 ≤0.05）并 `passed = true`，runner 必须存在且可跑；跑不过不许写"去重已核验"。
+**去重检测器也要过已知真值夹具。** 与时钟模型同门：≥59 对已知重复、≥59 对已知相异，
+FPR（误合并）与 FNR（漏判）分开报，各自的 95% 上界 ≤0.05；`executed = true`、`passed = true`，
+夹具哈希与结果哈希入记录，runner 必须存在且已执行。20 对撑不起 5%：0/20 的上界是 13.9%。
+跑不过不许写"去重已核验"。
 
 ## 同步：自己算，六类判定
 
@@ -116,32 +121,31 @@ W 就只是一个裸常量。若让买方挑度量，就等于允许挑一个少
 `neev.dedup.executed` 恒为 `false`，`nees.cleaning` 恒为 `not_performed`。EEO 数出重复、报出重叠，
 但不在语料上删任何一条。
 
-"同一内容"按写死的口径判：一个方法固定的度量、一个买方声明的 W，D5a 与 D5b 共用；字节完全相同的副本
+"同一内容"按写死的口径判：一个方法固定的度量、一个买方声明的 W，DSR-D5a 与 DSR-D5b 共用；字节完全相同的副本
 单列为 `n_exact_copies`，是副本总数的子集。
 
 | 项 | 问什么 | 去向 |
 |---|---|---|
-| D5a 语料内重复 | 有多少条是同一内容算了两遍 | 进 NEES 计数 |
-| D5b 跨 split 泄漏 | 有多少重复横跨训练与测试 | 评测有效性发现，不进 NEES |
+| DSR-D5a 语料内重复 | 有多少条是同一内容算了两遍 | 进 NEES 计数 |
+| DSR-D5b 跨 split 泄漏 | 有多少重复横跨训练与测试 | 评测有效性发现，不进 NEES |
 
 ## 五个维度、六个检查项
 
 | 项 | 问什么 |
 |---|---|
-| D1 声明自洽 | 卡片上的数能不能自己算平 |
-| D2 时序合格 | 各模态是否在描述同一时刻 |
-| D3 覆盖 | 覆盖了哪些工位、物体、失败模式，哪些是空格 |
-| D4 溯源 | 这批字节可不可复算 |
-| D5a 语料内重复 | 多少条是同一内容算了两遍 |
-| D5b 跨 split 泄漏 | 多少重复横跨训练与测试 |
+| DSR-D1 声明自洽 | 卡片上的数能不能自己算平 |
+| DSR-D2 时序合格 | 各模态是否在描述同一时刻 |
+| DSR-D3 覆盖 | 覆盖了哪些工位、物体、失败模式，哪些是空格 |
+| DSR-D4 溯源 | 这批字节可不可复算 |
+| DSR-D5a 语料内重复 | 多少条是同一内容算了两遍 |
+| DSR-D5b 跨 split 泄漏 | 多少重复横跨训练与测试 |
 
-只有 D2 与 D5a 进 NEES；D1、D3、D4、D5b 是与 NEES 并列的读数。D1 不是 Phase 0 的结果：
-Phase 0 的 linter 独立发布，记录里的 D1 是在记录语境下重新跑的卡片检查。
+只有 DSR-D2 与 DSR-D5a 进 NEES；DSR-D1、DSR-D3、DSR-D4、DSR-D5b 是与 NEES 并列的读数。DSR-D1 不是 Phase 0 的结果：
+Phase 0 的 linter 独立发布，记录里的 DSR-D1 是在记录语境下重新跑的卡片检查。
 
-**本版不做标注一致性，也不做 D1b（卡片对索引）。** 六项里没有一项碰标签，所以"标签能否直接进训练管线"
+**本版不做标注一致性，也不做 DSR-D1b（卡片对索引）。** 六项里没有一项碰标签，所以"标签能否直接进训练管线"
 本版没有读数；这是产品范围的收缩，不是措辞调整，写在记录的 `scope_declaration` 里，并说明理由与何时补。
-D1–D5b 是本模块局部代号，不与早期材料做 crosswalk。
-Phase 0 的 linter 独立发布，记录里的 D1 是在记录语境下重新跑的卡片检查。
+DSR-D1–DSR-D5b 是本模块局部代号，不与早期材料做 crosswalk。
 
 ## 两个级别，两种措辞
 
@@ -196,6 +200,7 @@ NEES 说买到了多少独立证据；轨迹分散度说这些证据的形状有
   技术段若要印 `pooled_total`，必须同时印 `between_task_share`。
 - **样本门槛**：`n_dedup ≥ 50` 才算；单任务按池判，多任务**按层判**，不达标的层标 `insufficient_sample`。
 - **本体边界**：只允许单一 embodiment；`mixed` 标 `not_computable_mixed_embodiment`，不输出数值。
+- **摘要可见**：流连续性发现不进 NEES 算式，但摘要必须有一行 `流连续性发现 n 条`，不许只藏在技术段。
 - **决策映射**：支持"是否要求供应商在某个任务内增加做法变化"，不支持"这份语料能否训出更好的策略"；
   两句都写进记录，否则这个数无处可用。
 - **两句固定说明**：不是 NEES 的替代；主口径固定是跨记录可比的必要条件，不是充分条件，跨语料比较仍受
@@ -242,7 +247,7 @@ fork 防伪靠三层可验证性：用途限定必填且校验器拒收剥掉的
 | 路径 | 内容 |
 |---|---|
 | `METHOD.md` | 方法：单元、切分、五维与 NEES 的关系、阈值归属、六类同步判定与结构性故障映射、去重发现、NEES 数学、封顶公式、精确零失败界、轨迹分散度、引用规则、放弃条件 |
-| `schema/record.schema.json` | 记录规范形式（`eeo-dataset-review/0.1`） |
+| `schema/record.schema.json` | 记录规范形式（`eeo-dataset-review/0.2`） |
 | `schema/sync-observation.schema.json` | 时钟观测件（`eeo-sync-observation/0.1`） |
 | `schema/examples/record-example.json` | 全量、同步已核验、可算 |
 | `schema/examples/record-example-unestimable.json` | 不可算（零方差占优），分散度仍可算 |
@@ -263,6 +268,8 @@ fork 防伪靠三层可验证性：用途限定必填且校验器拒收剥掉的
 | `entry/DATA_TERMS.md` | 委托样本文档模板：要文件不要链接、用后删除、禁止再分发 |
 | `entry/sampling-frame.md` | 样本框模板：committed（规则哈希与种子）或 supplier-provided（封顶） |
 | `checks/README.md` | Phase 0 初筛规则 |
+| `checks/phase0_screen.py` | 按固定 URL 清单抓卡、哈希、跑 S1–S6，写出 CSV/HTML |
+| `checks/dataset/2026-11-25/` | Phase 0 首次结果：12 张卡片、URL 与哈希、逐项状态 |
 
 ## 校验
 
@@ -279,7 +286,7 @@ python3 tools/run_all_checks.py   # 自检 + 全部示例 + 观测件 + jsonsche
 schema 管不了、由校验器执行的规则：阈值（含 m）由谁定、声明值必须进敏感性档、同步敏感性缺 m=2/m=3/声明值、
 度量不得下放给买方、时钟模型不得声明外部依赖、已核验却未跑夹具或覆盖不全、六类计数必须闭合、
 降级不得计入且不得出现加权比例、对齐不得执行、结构性故障后果必须与可界定性一致、
-四个链条字段必须齐（空值写 `null` 不省略，且 `sync_unverified ≤ sync_filtered`）、
+四个链条字段必须齐（空值写 `null` 不省略，且 `sync_filtered = n_pass + n_unverified`、`sync_unverified ≤ sync_filtered`）、
 不可算必须给带口径的独立读数且不得印点值、封顶 ρ 必须取区间下端并按式重算、
 零失败必须两端都印并合精确式、轨迹分散度必须在去重后池上、单一本体且按任务分层、样本级不得替整份语料说话。
 

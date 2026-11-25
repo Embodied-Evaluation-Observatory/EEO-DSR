@@ -8,7 +8,7 @@ Usage:
 
 Exit codes: 0 valid (or self-test passed), 1 invalid (or self-test failed), 2 usage error.
 
-The normative forms are schema/record.schema.json (eeo-dataset-review/0.1) and
+The normative forms are schema/record.schema.json (eeo-dataset-review/0.2) and
 schema/sync-observation.schema.json (eeo-sync-observation/0.1). This validator re-implements
 them with no third-party dependency and adds the cross-field rules that carry the method:
 
@@ -38,9 +38,9 @@ import json
 import os
 import sys
 
-SCHEMA_VERSION = "eeo-dataset-review/0.1"
+SCHEMA_VERSION = "eeo-dataset-review/0.2"
 OBS_VERSION = "eeo-sync-observation/0.1"
-METHOD_VERSION = "EEO-DSR-V0.1"
+METHOD_VERSION = "EEO-DSR-V0.2"
 
 UL_VERSION = "EEO-DUL-2"
 UL_EN = ("This review reports a statistical-usability reading at the episode level. It does not "
@@ -66,7 +66,7 @@ TRAJ_NOTE = "轨迹分散度不是 NEES 的替代读数：NEES 说独立证据�
 
 STAGES = ("screen", "pre_purchase", "deep")
 TIERS = ("T1_sample", "T2_full")
-DIMS = ("D1", "D2", "D3", "D4", "D5a", "D5b")
+DIMS = ("DSR-D1", "DSR-D2", "DSR-D3", "DSR-D4", "DSR-D5a", "DSR-D5b")
 DIM_STATUS = ("checked", "partial", "not_checkable")
 DIM_REASONS = (
     "card_has_no_breakdown", "unit_conversion_absent", "licence_not_machine_readable",
@@ -575,9 +575,11 @@ def check(rec):
                  f"period_basis {pb} requires its period in ms")
             need(ts.get("tau_scope") == "global_simplified",
                  "tau_scope must be global_simplified: one tau for all pairs is a simplification")
-            need(isinstance(ts.get("global_tau_note"), str) and ts.get("global_tau_note"),
-                 "global_tau_note must state that one global tau imposes the strictest pair on "
-                 "all pairs, and that per-pair tau is the ideal form")
+            note = ts.get("global_tau_note") or ""
+            need(isinstance(note, str) and note
+                 and "偏低" in note and "取最严" in note,
+                 "global_tau_note must print the direction of the bias: taking the strictest pair "
+                 "can over-exclude and push NEES low; per-pair tau is the ideal form")
             if is_num(period) and is_num(factor) and is_num(tau):
                 need(abs(tau - factor * period) <= max(1e-6, 1e-6 * tau),
                      f"tau {tau} does not recompute: tau_factor {factor} x period {period} = "
@@ -632,18 +634,28 @@ def check(rec):
     need(de.get("executed") is False,
          "neev.dedup.executed must be false: EEO estimates duplicates, it does not clean the corpus")
     mt = de.get("metric") or {}
-    need(isinstance(mt, dict) and mt.get("id") == DEDUP_METRIC_ID,
-         f"neev.dedup.metric.id must be {DEDUP_METRIC_ID}: the metric is fixed by EEO, only W moves")
+    METRICS = ("embedding_cosine", "perceptual_hash", "exact_byte")
+    need(isinstance(mt, dict) and isinstance(mt.get("id"), str) and mt.get("id"),
+         "neev.dedup.metric.id is required: one id per named metric")
     need(isinstance(mt, dict) and isinstance(mt.get("defined_in"), str) and mt.get("defined_in"),
          "neev.dedup.metric must point at where the metric is defined (defined_in)")
-    need(isinstance(mt, dict) and mt.get("family") == "embedding_cosine",
-         "neev.dedup.metric must name its family (embedding_cosine): W=0.95 means nothing until the "
-         "metric is named, and cosine 0.95 is not perceptual-hash 0.95")
-    need(isinstance(mt, dict) and mt.get("statistic") == "cosine_similarity",
-         "neev.dedup.metric.statistic must be cosine_similarity")
-    need(isinstance(mt, dict) and isinstance(mt.get("threshold_binding"), str)
-         and mt.get("threshold_binding"),
-         "neev.dedup.metric.threshold_binding must state what W is a cut on")
+    fam = mt.get("family") if isinstance(mt, dict) else None
+    need(fam in METRICS,
+         "neev.dedup.metric.family must be one of embedding_cosine / perceptual_hash / exact_byte: "
+         "one enum, no synonyms, or records cannot be compared")
+    bind = mt.get("threshold_binding") if isinstance(mt, dict) else None
+    need(isinstance(bind, dict),
+         "neev.dedup.metric.threshold_binding must be an object binding the metric, W and the "
+         "calibration fixture id")
+    if isinstance(bind, dict):
+        need(bind.get("metric") == fam,
+             "metric.threshold_binding.metric must equal metric.family")
+        wdecl = (th.get("dedup") or {}).get("w")
+        need(is_num(bind.get("w")) and bind.get("w") == wdecl,
+             "metric.threshold_binding.w must equal thresholds.dedup.w: W is bound to its metric")
+        need(isinstance(bind.get("calibration_fixture_id"), str)
+             and bind.get("calibration_fixture_id"),
+             "metric.threshold_binding.calibration_fixture_id is required")
     cal = de.get("calibration")
     need(isinstance(cal, dict),
          "neev.dedup.calibration is required: the dedup detector is EEO's own measurement and "
@@ -662,19 +674,53 @@ def check(rec):
             need(_os.path.isfile(_p),
                  f"dedup.calibration.runner {cal.get('runner')} must exist: a gate that cannot be "
                  f"run is not a gate")
-        need(is_int(cal.get("n_positive_pairs")) and cal.get("n_positive_pairs") >= 20,
-             "dedup.calibration needs at least 20 known duplicate pairs")
-        need(is_int(cal.get("n_negative_pairs")) and cal.get("n_negative_pairs") >= 20,
-             "dedup.calibration needs at least 20 known distinct pairs")
-        need(is_num(cal.get("false_merge_rate")) and cal.get("false_merge_rate") <= 0.05,
-             "dedup.calibration.false_merge_rate must be measured and at most 0.05: a detector "
-             "that merges distinct episodes cannot be used for counting")
-        need(is_num(cal.get("false_split_rate")) and cal.get("false_split_rate") <= 0.05,
-             "dedup.calibration.false_split_rate must be measured and at most 0.05")
+        need(cal.get("executed") is True,
+             "dedup.calibration.executed must be true: a runner that exists but was never run is "
+             "not evidence")
+        npos = cal.get("n_positive_pairs")
+        nneg = cal.get("n_negative_pairs")
+        need(is_int(npos) and npos >= 59,
+             "dedup.calibration needs at least 59 known duplicate pairs: 0/59 gives a 95% upper "
+             "bound just under 5%; 20 pairs cannot support a 5% claim")
+        need(is_int(nneg) and nneg >= 59,
+             "dedup.calibration needs at least 59 known distinct pairs, for the same reason")
+        def _cp(k, n):
+            if k >= n:
+                return 1.0
+            def cdf(p):
+                return sum(math.comb(n, i) * p ** i * (1 - p) ** (n - i) for i in range(k + 1))
+            lo, hi = 0.0, 1.0
+            for _ in range(60):
+                mid = (lo + hi) / 2
+                if cdf(mid) > 0.05:
+                    lo = mid
+                else:
+                    hi = mid
+            return (lo + hi) / 2
+        for side, n in (("merge", npos), ("split", nneg)):
+            k = cal.get(f"n_false_{side}")
+            need(is_int(k) and is_int(n) and 0 <= k <= n,
+                 f"dedup.calibration.n_false_{side} must be the observed count")
+            rate = cal.get(f"false_{side}_rate")
+            need(is_num(rate) and abs(rate - (k / n if is_int(n) and n else -1)) < 1e-6,
+                 f"dedup.calibration.false_{side}_rate must equal n_false_{side}/n")
+            ub = cal.get(f"upper95_false_{side}_rate")
+            need(is_num(ub) and is_int(k) and is_int(n) and abs(ub - _cp(k, n)) < 5e-4,
+                 f"upper95_false_{side}_rate must be the exact Clopper-Pearson upper bound")
+            need(is_num(ub) and ub <= 0.05,
+                 f"upper95_false_{side}_rate must be at most 0.05: the point rate is not the "
+                 f"evidence")
+        need(isinstance(cal.get("fixture_hash"), str) and len(cal.get("fixture_hash")) == 64,
+             "dedup.calibration.fixture_hash is required")
+        need(isinstance(cal.get("result_hash"), str) and len(cal.get("result_hash")) == 64,
+             "dedup.calibration.result_hash is required")
         need(cal.get("passed") is True, "dedup.calibration.passed must be true before a dedup "
                                         "count is used")
         need(isinstance(cal.get("run_date"), str) and len(cal.get("run_date")) == 10,
              "dedup.calibration.run_date is required")
+        if isinstance(bind, dict):
+            need(bind.get("calibration_fixture_id") == cal.get("fixture_id"),
+                 "threshold_binding.calibration_fixture_id must equal calibration.fixture_id")
     for k in ("n_duplicate_copies", "n_exact_copies", "n_cross_split_copies", "n_distinct_est"):
         need(is_int(de.get(k)) and de.get(k) >= 0,
              f"neev.dedup.{k} must be a non-negative integer")
@@ -714,11 +760,12 @@ def check(rec):
         v = ch.get(k)
         need(v is None or is_num(v), f"neev.chain.{k} must be a number or null")
     if all(is_int(v) for v in cv):
-        need(is_num(ch.get("sync_filtered")) and ch.get("sync_filtered") == pool_in,
-             f"chain.sync_filtered must be the eligible pool {pool_in} (pass + unverified)")
+
         need(is_num(ch.get("sync_unverified")) and ch.get("sync_unverified") == cv[5],
              f"chain.sync_unverified must be the unverified share {cv[5]} of the pool, so the "
              f"reader can see what inside sync_filtered was not measured")
+        need(is_num(ch.get("sync_filtered")) and ch.get("sync_filtered") == cv[0] + cv[5],
+             f"chain.sync_filtered must equal n_pass + n_unverified = {cv[0] + cv[5]}")
         if is_num(ch.get("sync_unverified")) and is_num(ch.get("sync_filtered")):
             need(ch.get("sync_unverified") <= ch.get("sync_filtered"),
                  "chain.sync_unverified cannot exceed chain.sync_filtered: the unverified share is "
@@ -1194,9 +1241,9 @@ def check(rec):
              "an undeclared split forbids a NEES point value: reason split_not_declared")
 
     bs = rec.get("buyer_summary")
-    if not isinstance(bs, list) or len(bs) != 3:
-        errs.append("buyer_summary must have exactly three lines: one number (or 'not computable') "
-                    "and two premises")
+    if not isinstance(bs, list) or not 3 <= len(bs) <= 5:
+        errs.append("buyer_summary must have three to five lines: one reading and two premises, "
+                    "plus a stream-continuity line when findings exist")
     else:
         need(all(isinstance(x, str) and x for x in bs),
              "each buyer_summary line must be a non-empty string")
@@ -1208,6 +1255,12 @@ def check(rec):
                  "T1_sample buyer_summary must not speak about the whole corpus")
             need(any("上界" in x or "upper bound" in x for x in bs),
                  "T1_sample buyer_summary must say the reading is an upper bound")
+        joined = " ".join(bs)
+        scf = ((ne.get("sync") or {}).get("stream_continuity_findings") or {})
+        cnt = scf.get("count")
+        need(is_int(cnt) and any("流连续性发现" in x and str(cnt) in x for x in bs),
+             "buyer_summary must carry a line naming the stream-continuity finding count, so a "
+             "summary reader sees it without opening the technical section")
         if nst in ("unestimable_zero_variance", "unestimable_alignment", "unestimable_other"):
             joined = " ".join(bs)
             need("无法" in joined or "不可计算" in joined or "not computable" in joined,
@@ -1234,10 +1287,10 @@ def check(rec):
             need(isinstance(v.get("reason"), str) and v.get("reason"),
                  f"scope_declaration.{key}.reason must say why it is out of scope and when it "
                  f"returns")
-        need("不是" in (sd.get("dimension_code_note") or "")
-             and "crosswalk" in (sd.get("dimension_code_note") or ""),
-             "scope_declaration.dimension_code_note must say the six codes are local to this "
-             "module and are not a crosswalk with earlier materials")
+        note = sd.get("dimension_code_note") or ""
+        need("DSR-D" in note and "不是" in note and "crosswalk" in note,
+             "scope_declaration.dimension_code_note must use the DSR- prefix and say the codes are "
+             "local, not a crosswalk: a prefix removes the clash instead of declaring it away")
 
     ul = rec.get("use_limitation") or {}
     need(ul.get("text_version") == UL_VERSION, f"use_limitation.text_version must be {UL_VERSION}")
@@ -1449,7 +1502,7 @@ def run_self_test(example_dir):
          setp(["neev", "chain", "sync_unverified"], 5), "must be the unverified share")
     case("dedup executed on the corpus", base, setp(["neev", "dedup", "executed"], True),
          "does not clean the corpus")
-    case("dedup metric removed", base, delp(["neev", "dedup", "metric"]), "metric.id must be")
+    case("dedup metric removed", base, delp(["neev", "dedup", "metric"]), "metric.id is required")
     case("distinct count does not recompute", base, setp(["neev", "dedup", "n_distinct_est"], 960),
          "does not recompute")
     case("exact copies exceed all copies", base,
@@ -1640,8 +1693,10 @@ def run_self_test(example_dir):
          setp(["use_limitation", "zh"], "本核验结论可作为采购依据。"), "canonical sentence")
     case("reference note dropped", base,
          setp(["reference_note", "zh"], "本记录符合 YD/T 6771—2026。"), "canonical sentence")
-    case("four lines in the buyer summary", base,
-         setp(["buyer_summary"], ["a", "b", "c", "d"]), "exactly three lines")
+    case("buyer summary without a continuity line", base,
+         lambda r: r["buyer_summary"].pop(), "stream-continuity")
+    case("six lines in the buyer summary", base,
+         setp(["buyer_summary"], ["a", "b", "c", "d", "e", "f"]), "three to five")
     case("unknown top-level field", base, setp(["score"], 88), "unknown top-level fields")
 
     case("multi-task corpus published pooled", base,
@@ -1736,11 +1791,38 @@ def run_self_test(example_dir):
     case("calibration gate missing", base, delp(["neev", "dedup", "calibration"]),
          "dedup.calibration is required")
     case("calibration below the positive-pair floor", base,
-         setp(["neev", "dedup", "calibration", "n_positive_pairs"], 5),
-         "at least 20 known duplicate pairs")
+         setp(["neev", "dedup", "calibration", "n_positive_pairs"], 20),
+         "at least 59 known duplicate pairs")
     case("calibration merging distinct episodes", base,
-         setp(["neev", "dedup", "calibration", "false_merge_rate"], 0.2),
-         "false_merge_rate")
+         lambda r: r["neev"]["dedup"]["calibration"].update(
+             {"n_false_merge": 12, "false_merge_rate": 0.2}),
+         "false_merge_rate must equal")
+    case("calibration upper bound above five percent", base,
+         lambda r: r["neev"]["dedup"]["calibration"].update(
+             {"n_false_merge": 1, "false_merge_rate": 0.016949,
+              "upper95_false_merge_rate": 0.08}),
+         "upper95_false_merge_rate")
+    case("calibration not actually executed", base,
+         setp(["neev", "dedup", "calibration", "executed"], False), "executed must be true")
+    case("calibration fixture hash missing", base,
+         delp(["neev", "dedup", "calibration", "fixture_hash"]), "fixture_hash is required")
+    case("threshold binding disagrees with family", base,
+         setp(["neev", "dedup", "metric", "threshold_binding", "metric"], "perceptual_hash"),
+         "must equal metric.family")
+    case("threshold binding W drifts from thresholds", base,
+         setp(["neev", "dedup", "metric", "threshold_binding", "w"], 0.97),
+         "must equal thresholds.dedup.w")
+    case("chain filtered not an equation", base,
+         lambda r: (r["neev"]["chain"].update({"sync_filtered": 1035}),
+                    r["neev"]["sync"].update({"n_pass": 1025, "n_unverified": 5})),
+         "must equal n_pass + n_unverified")
+    case("dimension code without its prefix", base,
+         lambda r: (r["dimensions"][0].update({"id": "D1"}),
+                    r["scope_declaration"].update({"dimension_code_note": "D1–D5b 局部代号，不是 crosswalk。"})),
+         "DSR- prefix")
+    case("global tau note hides its bias", base,
+         lambda r: r["thresholds"]["sync"].update({"global_tau_note": "全局 τ 是简化。"}),
+         "direction of the bias")
     case("calibration not passed", base,
          setp(["neev", "dedup", "calibration", "passed"], False), "passed must be true")
     case("metric family unnamed", base,

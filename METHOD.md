@@ -1,7 +1,7 @@
-# 方法：EEO-Dataset-Review V0.1（EEO-DSR）
+# 方法：EEO-Dataset-Review V0.2（EEO-DSR）
 
 本文件规定记录怎么产生、数字怎么算、什么情况下不给数。规范形式见 `schema/record.schema.json`
-（`eeo-dataset-review/0.1`）与 `schema/sync-observation.schema.json`（`eeo-sync-observation/0.1`）；
+（`eeo-dataset-review/0.2`）与 `schema/sync-observation.schema.json`（`eeo-sync-observation/0.1`）；
 `tools/validate_record.py` 执行 schema 之外的跨字段规则。
 
 **实现状态**：本仓库目前只有规格、校验器与示例，没有时钟模型、episode 指纹、簇级 bootstrap 与
@@ -50,64 +50,66 @@ schema 的夹具，不是发出的记录。
 
 每项三态：`checked` / `partial` / `not_checkable`（后者必须写原因码）。不下"合格/不合格"，不打分。
 
-**六项不全进 NEES。D2 与 D5a 进入计算链；D1、D3、D4、D5b 是与 NEES 并列的独立读数，不参与其数值。**
-买方若问"D4 溯源不合格，NEES 为什么没变"，答案就是 D4 本不在 NEES 的算式里（§4.7）。
+**六项不全进 NEES。DSR-D2 与 DSR-D5a 进入计算链；DSR-D1、DSR-D3、DSR-D4、DSR-D5b 是与 NEES 并列的独立读数，不参与其数值。**
+买方若问"DSR-D4 溯源不合格，NEES 为什么没变"，答案就是 DSR-D4 本不在 NEES 的算式里（§4.7）。
 
 **本版明确不做两件事，写在这里而不是让它们消失：**
 
 1. **标注一致性不评估。** 六个检查项没有一项碰标签，本版给不出"标签能否直接进训练管线"的读数。
    理由：判定标注正确性需要标签语义、金标准或抽样人工复核，成本和责任都超出当前方法层；
-   本版只卖统计可用性。补的时机：D1–D5 稳定、初筛与数据集侧驱动跑通之后，再单独立项，并另立用途限定标签。
+   本版只卖统计可用性。补的时机：DSR-D1–DSR-D5 稳定、初筛与数据集侧驱动跑通之后，再单独立项，并另立用途限定标签。
    记录用 `scope_declaration.label_consistency.status = not_assessed` 显式声明，不许默删。
-2. **D1b（卡片对索引）不做。** D1 只复算卡片自身，卡片与外部索引是否一致需要抓索引，本版不抓；
+2. **DSR-D1b（卡片对索引）不做。** DSR-D1 只复算卡片自身，卡片与外部索引是否一致需要抓索引，本版不抓；
    同样在 `scope_declaration.card_index_crosscheck` 写明，索引脚本入库后再补。
 
-**维度代码是本模块局部的。** D1–D5b 是本版六个检查项的代号，与早期材料、与任何外部维度体系**不是 crosswalk**；
-不得把本版的 D3 直接对到别处的"多样性"或标准条款。记录写 `scope_declaration.dimension_code_note`，
+**维度代码是本模块局部的。** DSR-D1–DSR-D5b 是本版六个检查项的代号，与早期材料、与任何外部维度体系**不是 crosswalk**；
+不得把本版的 DSR-D3 直接对到别处的"多样性"或标准条款。记录写 `scope_declaration.dimension_code_note`，
 校验器拒收把它写成对照关系的文本。
 
 | 项 | 问什么 | 输出 | 不可判的硬边界 |
 |---|---|---|---|
-| D1 声明自洽 | 卡片上的数能不能算平 | 六项声明的复算值 | 无分项、无换算率 |
-| D2 时序合格 | 各模态是否描述同一时刻 | 六类判定计数（§6） | 无记录时钟 |
-| D3 覆盖 | 覆盖了哪些工位、物体、失败模式 | 矩阵与空格清单 | 无任务标签 |
-| D4 溯源 | 字节可不可复算 | 可复算 / 仅声明 / 缺项 | revision 未 pin |
-| D5a 语料内重复 | 有多少条是同一内容算了两遍 | 副本数估计（喂 NEES 计数） | 无 episode 指纹 |
-| D5b 跨 split 泄漏 | 有多少重复横跨训练与测试 | 重叠条数与比例（评测有效性发现） | 切分未声明 |
+| DSR-D1 声明自洽 | 卡片上的数能不能算平 | 六项声明的复算值 | 无分项、无换算率 |
+| DSR-D2 时序合格 | 各模态是否描述同一时刻 | 六类判定计数（§6） | 无记录时钟 |
+| DSR-D3 覆盖 | 覆盖了哪些工位、物体、失败模式 | 矩阵与空格清单 | 无任务标签 |
+| DSR-D4 溯源 | 字节可不可复算 | 可复算 / 仅声明 / 缺项 | revision 未 pin |
+| DSR-D5a 语料内重复 | 有多少条是同一内容算了两遍 | 副本数估计（喂 NEES 计数） | 无 episode 指纹 |
+| DSR-D5b 跨 split 泄漏 | 有多少重复横跨训练与测试 | 重叠条数与比例（评测有效性发现） | 切分未声明 |
 
-### 4.1 D1 声明自洽
+### 4.1 DSR-D1 声明自洽
 
 总数与分项求和一致；单位可换算且换算率已声明；版本与日期自洽；许可机器可读；校验和存在；场景/工位标识
 可跨表 join。
 
-**D1 不是 Phase 0 的结果。** Phase 0 的 linter 输出独立发布，不进入 T1/T2 记录；记录里的 D1 是在该记录
+**DSR-D1 不是 Phase 0 的结果。** Phase 0 的 linter 输出独立发布，不进入 T1/T2 记录；记录里的 DSR-D1 是在该记录
 语境下重新执行的卡片自洽性检查，不直接引用 Phase 0 的清单。
 
-### 4.2 D2 时序合格
+### 4.2 DSR-D2 时序合格
 
 逐流的 offset、drift、jitter、gap 与 episode 级判定，由本模块自实现的时钟模型负责（§6）。
 不接外部工具，也不把任何外部报告当判定来源。
 
-### 4.3 D3 覆盖
+### 4.3 DSR-D3 覆盖
 
 输出矩阵与空格清单：每格报 episode 计数，空格报 0，不报"够/不够"。够不够取决于买方部署，本模块没有这个信息。
 
-### 4.4 D4 溯源
+### 4.4 DSR-D4 溯源
 
 快照是否 pin 到具体修订；manifest 哈希是否覆盖到文件级；采集方与生成方式是否有声明；检索日期是否记录且
 当日可访问、无需审批。
 
-### 4.5 D5a 语料内重复（喂 NEES 计数）
+### 4.5 DSR-D5a 语料内重复（喂 NEES 计数）
 
 "同一内容"必须能被第三方按同一口径复算，所以口径写死：
 
 1. **度量由 EEO 在方法层固定，不由买方选。** 本次为 `eeo-dedup-metric/episode-embedding-cosine-v1`：
-   episode 级嵌入（关键帧均值池化），family = `embedding_cosine`，statistic = `cosine_similarity`。
-   该 id、family、统计量与"W 是这个统计量上的切点"（`threshold_binding`）都写在 `neev.dedup.metric`。
+   episode 级嵌入（关键帧均值池化），family = `embedding_cosine`。`family` 是互不同义的枚举：
+   `embedding_cosine` / `perceptual_hash` / `exact_byte`；`threshold_binding` 是绑定对象
+   `{metric, w, calibration_fixture_id}`，不是第三个度量名。id、family 与绑定对象都写在
+   `neev.dedup.metric`。
    **W 与度量绑定之后才谈敏感性**：余弦 0.95 与感知哈希 0.95 不是一回事，换了度量 W 的含义就变。
-   度量不是阈值；若把它交给买方声明，买方就能挑一个少算重复的度量，D5a 从此不可比。
+   度量不是阈值；若把它交给买方声明，买方就能挑一个少算重复的度量，DSR-D5a 从此不可比。
 2. **W 由买方声明**，写在 `thresholds.dedup`；声明依据必须说明它与上述度量绑定。
-3. 判定：两条 episode 的相似度 s ≥ W 即为同一内容；s < W 不是。D5a 与 D5b 共用这个度量与同一个 W。
+3. 判定：两条 episode 的相似度 s ≥ W 即为同一内容；s < W 不是。DSR-D5a 与 DSR-D5b 共用这个度量与同一个 W。
 4. 字节完全相同的 episode 作为特例单列，不依赖度量与 W：计入 `n_exact_copies`，并作为
    `n_duplicate_copies` 的子集。
 5. **并集口径**：去重计数 = 按度量与 W 判定的重复 ∪ 字节相同副本，**不重复扣减**；两条 episode 既字节相同
@@ -115,24 +117,26 @@ schema 的夹具，不是发出的记录。
    `n_distinct_est = 池子 - n_duplicate_copies` 复算。
 
 **去重检测器与时钟模型同门。** 两者都是 EEO 自己的测量，凭什么一个必须过已知真值夹具、另一个不用：
-`neev.dedup.calibration` 必填——夹具 id/版本、可执行 runner、≥20 对已知重复、≥20 对已知相异、
-该工作点的 `false_merge_rate` 与 `false_split_rate` 都 ≤0.05、`passed = true`、运行日期。
-跑不过就不许用这份去重计数，也不许写"去重已核验"。runner 路径必须真实存在，校验器会查文件。
+`neev.dedup.calibration` 必填——夹具 id/版本与哈希、可执行 runner、**已执行**、≥59 对已知重复、
+≥59 对已知相异、FPR（`false_merge_rate`，误合并）与 FNR（`false_split_rate`，漏判）分开报，
+各自的 95% 上界（Clopper-Pearson）≤0.05、`passed = true`、结果哈希与运行日期。
+20 对不够：0/20 的 95% 上界是 13.9%，不是 5%；0/59 才是 4.95%。跑不过就不许用这份去重计数，
+也不许写"去重已核验"。runner 必须存在、已执行且通过，校验器会查文件与字段。
 
 EEO 只数副本，不删（§7）。
 
-### 4.6 D5b 跨 split 泄漏（评测有效性发现）
+### 4.6 DSR-D5b 跨 split 泄漏（评测有效性发现）
 
-在 D5a 的重复集合里，数出横跨训练与测试边界的那一部分，报条数与比例。它不改变 D5a 的计数，也不改变
-NEES：同一内容被算两遍，信息量已由 D5a 扣过一次；泄漏是另一个问题——卖方的 benchmark 分数是否还成立。
+在 DSR-D5a 的重复集合里，数出横跨训练与测试边界的那一部分，报条数与比例。它不改变 DSR-D5a 的计数，也不改变
+NEES：同一内容被算两遍，信息量已由 DSR-D5a 扣过一次；泄漏是另一个问题——卖方的 benchmark 分数是否还成立。
 
 ### 4.7 六项读数与 NEES 的关系
 
 | 分组 | 项 | 与 NEES 的关系 |
 |---|---|---|
-| 进入 NEES | D2、D5a | D2 决定谁进池；D5a 的副本数从池里扣。二者改变 N 与 m |
-| 与 NEES 并列、不进入 | D3、D4 | 各自报读数；D3 空格与 D4 溯源不改变 NEES 数值 |
-| 卡片级前置检查 / 评测有效性 | D1、D5b | D1 只在卡片层面做算术；D5b 是评测有效性发现，不进 NEES，但影响买方对该 benchmark 的信任 |
+| 进入 NEES | DSR-D2、DSR-D5a | DSR-D2 决定谁进池；DSR-D5a 的副本数从池里扣。二者改变 N 与 m |
+| 与 NEES 并列、不进入 | DSR-D3、DSR-D4 | 各自报读数；DSR-D3 空格与 DSR-D4 溯源不改变 NEES 数值 |
+| 卡片级前置检查 / 评测有效性 | DSR-D1、DSR-D5b | DSR-D1 只在卡片层面做算术；DSR-D5b 是评测有效性发现，不进 NEES，但影响买方对该 benchmark 的信任 |
 
 ## 5 阈值：τ、W、m 由谁定
 
@@ -179,9 +183,9 @@ m 的默认值是 3，依据是 3 倍容差覆盖多数非结构性抖动。若�
 方向不明时取最短周期（`shortest_stream`），并在 `tau_convention_note` 写明"取最严"。
 记录写 `sampled_stream_period_ms` 或 `shortest_stream_period_ms`，校验器按 `τ = tau_factor × 该周期` 复算。
 
-**一个全局 τ 是简化。** 30 Hz↔250 Hz 与 30 Hz↔30 Hz 的自然容差本就不同，全局单一 τ 会把最严的那对流强加给
-所有流对；本版接受这一点，记录写 `tau_scope: global_simplified` 与 `global_tau_note` 说明，理想形态是逐流对
-的 τ，后续版本再拆。
+**一个全局 τ 是简化，而且有方向。** 30 Hz↔250 Hz 与 30 Hz↔30 Hz 的自然容差本就不同，全局单一 τ 取最严的
+那对流强加给所有流对：可能多剔合格 episode，**NEES 偏低**。记录写 `tau_scope: global_simplified` 与
+`global_tau_note`，把偏向印出来；理想形态是逐流对的 τ，后续版本再拆。
 
 敏感性保留 0.5 与 1.0 两档——它们是两种策略的对照，不是任意两点。
 
@@ -325,7 +329,7 @@ EEO 的错，所以留到核心链跑通之后的版本。
 
 - `neev.dedup.executed` 恒为 `false`；`nees.cleaning` 恒为 `not_performed`；
 - `nees.basis` 恒为 `post_dedup_estimate`；
-- D5a 的副本数进入 NEES 计数；D5b 的重叠数只作为评测有效性发现；
+- DSR-D5a 的副本数进入 NEES 计数；DSR-D5b 的重叠数只作为评测有效性发现；
 - 两者同用一个度量与同一个 W（§4.5）；字节相同的副本单列为 `n_exact_copies`。
 
 买方拿到的是一份记录，语料本身没有被改动。
@@ -435,7 +439,7 @@ K=1 或 m̄=1：无簇结构，NEES=N_c，注明"单簇/单例"；ρ<0：截断�
 
 ## 9 链条透明
 
-记录必须给四步序列，不只给终值；并且"印出来"要是**结构化字段**，不是一段散文。`neev.chain` 固定三个字段：
+记录必须给四步序列，不只给终值；并且"印出来"要是**结构化字段**，不是一段散文。`neev.chain` 固定四个字段：
 
 | 字段 | 含义 | 约束 |
 |---|---|---|
@@ -446,7 +450,8 @@ K=1 或 m̄=1：无簇结构，NEES=N_c，注明"单簇/单例"；ρ<0：截断�
 
 三步的 `removed` 与 `reason` 在 `sync`/`dedup` 各自的 `basis` 里说明：sync 的 `removed` 等于总量减池子
 （降级、不合格、两类结构性出池都计入）。`raw` 由 `n_declared` 给出。空值写 `null`，不许省略字段。
-校验器按字段逐个复算，不靠读者从文字里拼；并要求 `sync_unverified ≤ sync_filtered`——未核验是池子的一部分，
+校验器按字段逐个复算，不靠读者从文字里拼；并要求闭合等式
+`sync_filtered = n_pass + n_unverified`，且 `sync_unverified ≤ sync_filtered`——未核验是池子的一部分，
 不是另一个总数。
 
 ## 10 分级封顶
@@ -478,7 +483,7 @@ T1 的 `n_declared` 是**抽样量**，不是语料总量。T1 的买方摘要�
 | `neev.diagnostics` | 零方差占比与去重后条数，各带口径 |
 | `neev.failure_observations` | 失败数、n、n_ind 及取法、精确上界；对齐不可算时为 null |
 | `split` | 声明的切分规则，须与簇轴一致 |
-| `buyer_summary` | 三行 |
+| `buyer_summary` | 三至五行：读数、两条前提，及流连续性发现一行 |
 | `use_limitation` / `reference_note` | `EEO-DUL-2` / `EEO-RN-3` 固定句，逐字 |
 
 **降级条数**：只报 `n_degraded` 的计数，不报比例。降级是二值处理——留在语料、零权重、不计入 NEES；
@@ -487,7 +492,8 @@ T1 的 `n_declared` 是**抽样量**，不是语料总量。T1 的买方摘要�
 ## 12 买方表述
 
 摘要页顶部先印 `EEO-DUL-2` 全文（`buyer_summary_use_limitation`，与记录中 `use_limitation` 同文），
-再给读数。买方先看摘要，限制句不能只藏在记录里。
+再给读数。摘要里必须有一行 `流连续性发现 n 条`：它不进 NEES 算式，但要进报告；否则摘要读者永远看不到
+这个发现。买方先看摘要，限制句不能只藏在记录里。
 
 可传播的一句：
 
@@ -534,7 +540,7 @@ T1 的 `n_declared` 是**抽样量**，不是语料总量。T1 的买方摘要�
 多品类拣选的数据集，20 维可能仍偏窄。给一个全局阈值，等于替买方做任务多样性判断，越过"卖读数不卖结论"。
 
 所以：**分散度不给阈值；买方应结合自己的任务多样性需求解读该数字。EEO 报告的是"去重后池子在策略空间中
-的有效维度数"，不报告"够不够分散"。** 这与 D3 的措辞同构（覆盖够不够取决于买方任务与买方声明的阈值）。
+的有效维度数"，不报告"够不够分散"。** 这与 DSR-D3 的措辞同构（覆盖够不够取决于买方任务与买方声明的阈值）。
 不给阈值不等于这个数字没有意义，只是它的解读权在买方。
 
 ### 14.2 数维度的方法参数要声明
@@ -616,8 +622,8 @@ DROID"站点是粗混合"的教训同源。所以 `trajectory_diversity_signal.s
 
 | 阶段 | 做的事 | 产物 |
 |---|---|---|
-| screen | 只读卡片：D1 与 D4 的算术部分 | 初筛，叫"初筛"，不叫"体检" |
-| pre_purchase | D1–D5b + NEES（ρ 可假定，须写依据） | 一份记录 |
+| screen | 只读卡片：DSR-D1 与 DSR-D4 的算术部分 | 初筛，叫"初筛"，不叫"体检" |
+| pre_purchase | DSR-D1–DSR-D5b + NEES（ρ 可假定，须写依据） | 一份记录 |
 | deep | 实测 ρ、全量扫描、多阈值敏感性、可选重执行 | 一份记录 + 证据包 |
 
 按一次核验计价，不随 episode 条数线性计价。价格不出现在本仓库任何文件里。
@@ -628,7 +634,7 @@ DROID"站点是粗混合"的教训同源。所以 `trajectory_diversity_signal.s
 2. 无任何簇标识（工位、场景、环境三者皆无）；
 3. 语料无可用时间戳——退为"同步未核验 + 上界"；
 4. 存在断裂时间轴且重置点不可定位——NEES 不可算（`unestimable_alignment`），不折价、不估算；
-5. 切分规则拒绝声明，或明确按帧切分——只报 D5a 的计数；
+5. 切分规则拒绝声明，或明确按帧切分——只报 DSR-D5a 的计数；
 6. 要求出等级、出合格结论、出排名、出资产估值——不做；
 7. 要求与任何标准做符合性对照——按 §13 不做。
 
