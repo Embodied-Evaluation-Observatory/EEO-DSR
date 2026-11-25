@@ -1,0 +1,84 @@
+{
+  "contract_version": "eeo-sync-observation/0.1",
+  "producer": {
+    "model_id": "eeo-clock",
+    "model_version": "1.0",
+    "self_implemented": true,
+    "external_dependency": false,
+    "computed_at": "2026-11-19T12:30:00Z",
+    "fixture_id": "eeo-clock-fixture",
+    "fixture_version": "1.0",
+    "params_sha256": "0000000000000000000000000000000000000000000000009f3d2b71c4a58e60"
+  },
+  "tolerance_ms": 40,
+  "degraded_band_multiplier": 3,
+  "streams": [
+    {
+      "name": "cam_front",
+      "role": "primary",
+      "median_skew_ms": 3.2,
+      "p95_skew_ms": 11.4,
+      "missing_rate": 0.004
+    },
+    {
+      "name": "tactile_left",
+      "role": "tactile",
+      "median_skew_ms": -1.8,
+      "p95_skew_ms": 6.1,
+      "missing_rate": 0.011
+    },
+    {
+      "name": "joint_state",
+      "role": "state",
+      "median_skew_ms": 0.6,
+      "p95_skew_ms": 4.2,
+      "missing_rate": 0.001
+    }
+  ],
+  "episodes": [
+    {
+      "episode_id": "ep-0001",
+      "verdict": "pass",
+      "worst_skew_ms": 12.0,
+      "violations": [
+        {
+          "type": "late_packet",
+          "count": 3
+        }
+      ]
+    },
+    {
+      "episode_id": "ep-0002",
+      "verdict": "degraded",
+      "worst_skew_ms": 63.0,
+      "violations": [
+        {
+          "type": "missing_frame",
+          "count": 12
+        }
+      ]
+    },
+    {
+      "episode_id": "ep-0003",
+      "verdict": "fail",
+      "worst_skew_ms": 140.0,
+      "violations": [
+        {
+          "type": "stall",
+          "count": 2
+        }
+      ]
+    },
+    {
+      "episode_id": "ep-0004",
+      "verdict": "alignment_unlocatable",
+      "worst_skew_ms": 35.0,
+      "violations": [
+        {
+          "type": "clock_reset",
+          "count": 1
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,190 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://eeo.local/schema/eeo-sync-observation/0.1",
+  "title": "EEO clock observation (internal module output)",
+  "description": "What EEO's own clock model emits for one dataset revision: per-stream timing statistics, the tau it was run at, and one verdict per episode. This is an internal artefact kept so a third party can recompute a record's sync step; it is not a contract with any external timing tool.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "contract_version",
+    "producer",
+    "tolerance_ms",
+    "degraded_band_multiplier",
+    "streams",
+    "episodes"
+  ],
+  "properties": {
+    "contract_version": {
+      "const": "eeo-sync-observation/0.1"
+    },
+    "producer": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "model_id",
+        "model_version",
+        "self_implemented",
+        "external_dependency"
+      ],
+      "properties": {
+        "model_id": {
+          "const": "eeo-clock"
+        },
+        "model_version": {
+          "type": "string",
+          "minLength": 1
+        },
+        "self_implemented": {
+          "const": true
+        },
+        "external_dependency": {
+          "const": false
+        },
+        "computed_at": {
+          "type": "string"
+        },
+        "params_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "fixture_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "fixture_version": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "tolerance_ms": {
+      "type": "number",
+      "exclusiveMinimum": 0,
+      "description": "The tau declared for this review. Must equal the record's thresholds.sync.tau_ms."
+    },
+    "streams": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "name",
+          "role",
+          "median_skew_ms",
+          "p95_skew_ms",
+          "missing_rate"
+        ],
+        "properties": {
+          "name": {
+            "type": "string",
+            "minLength": 1
+          },
+          "role": {
+            "enum": [
+              "primary",
+              "secondary",
+              "state",
+              "tactile",
+              "audio",
+              "other"
+            ]
+          },
+          "clock_domain": {
+            "type": "string"
+          },
+          "nominal_hz": {
+            "type": "number",
+            "exclusiveMinimum": 0
+          },
+          "median_skew_ms": {
+            "type": "number"
+          },
+          "p95_skew_ms": {
+            "type": "number",
+            "minimum": 0
+          },
+          "max_skew_ms": {
+            "type": "number",
+            "minimum": 0
+          },
+          "drift_ppm": {
+            "type": "number"
+          },
+          "missing_rate": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1
+          }
+        }
+      }
+    },
+    "episodes": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "episode_id",
+          "verdict",
+          "worst_skew_ms"
+        ],
+        "properties": {
+          "episode_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "verdict": {
+            "enum": [
+              "pass",
+              "degraded",
+              "fail",
+              "alignment_excluded",
+              "alignment_unlocatable",
+              "unverified"
+            ]
+          },
+          "worst_skew_ms": {
+            "type": "number",
+            "minimum": 0
+          },
+          "violations": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "type",
+                "count"
+              ],
+              "properties": {
+                "type": {
+                  "enum": [
+                    "late_packet",
+                    "missing_frame",
+                    "clock_drift",
+                    "clock_reset",
+                    "duplicate_timestamp",
+                    "non_monotonic",
+                    "stall",
+                    "out_of_order"
+                  ]
+                },
+                "count": {
+                  "type": "integer",
+                  "minimum": 1
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "degraded_band_multiplier": {
+      "type": "number",
+      "exclusiveMinimum": 1,
+      "description": "Top of the degraded band as a multiple of tau, matching the record's declared m."
+    }
+  }
+}

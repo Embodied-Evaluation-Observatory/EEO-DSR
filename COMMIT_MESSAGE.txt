@@ -1,0 +1,68 @@
+EEO-DSR V0.1: entry points by material, open licensing, and the dataset-side review module
+
+One record per corpus, one reading (NEES), with interval, cap and the unestimable boundary;
+five dimensions and six card checks underneath. This is the starting release; the version series
+begins at V0; V0.1 adds the entry and licensing layer.
+
+Thresholds and measurement
+- tau is derived, not picked: nearest-neighbour pairing bounds matching error at half a period
+  (0.5), zero-order hold at a full period (1.0). Records state pairing_policy, tau_factor,
+  pairing_direction and period_basis. The period is the sampled stream's (camera frames paired to
+  nearest state samples), not a free choice; an unknown direction takes the shortest period as the
+  strict end. One global tau is a simplification and the record says so; per-pair tau is the ideal.
+- W is bound to its metric: family embedding_cosine, statistic cosine_similarity, plus
+  threshold_binding. Cosine 0.95 is not perceptual-hash 0.95, so W without a metric is a bare
+  constant.
+- The dedup detector carries the same known-truth gate as the clock model: at least 20 known
+  duplicate and 20 known distinct pairs, false merge and split rates at most 0.05, passed true, and
+  a runner that exists. A gate that cannot run is not a gate.
+- The default package records acceptance_use not_declared_by_buyer, prints that it may not serve as
+  an acceptance finding, and that the accepting party must declare thresholds and rerun.
+
+Counting
+- The pool is pass + unverified; degraded carries zero weight and never enters NEES.
+- Structural faults are typed; an identified fault never enters unverified. unverified means only
+  that timing cannot be measured; a detected break that cannot be classified routes to
+  alignment_unlocatable.
+- A spike that crosses a boundary with no internal break leaves a trace in
+  stream_continuity_findings (count plus episode boundaries). It does not enter NEES or any
+  dimension reading; it exists so a third party can recheck why the effect was zero.
+- The chain prints four fields: sync_filtered, sync_unverified, dedup_count, nees; null rather than
+  omission, and sync_unverified may not exceed sync_filtered.
+- Dedup count is the union of metric-and-W duplicates and byte-identical copies, without double
+  subtraction.
+
+Scope
+- This version does not assess label consistency and does not run D1b (cards versus an index).
+  Both are declared in scope_declaration with the reason and when they return, rather than dropped
+  silently. D1-D5b are local codes, not a crosswalk with earlier materials.
+- Diversity supports one decision (whether to ask for more practice variation within a task) and
+  explicitly does not support whether the corpus trains a better policy. Multi-task records are
+  stratified; no bare pooled value.
+
+Verification
+- tools/validate_record.py: 138 self-test cases; tools/run_all_checks.py runs the self-test, all
+  seven example records, the observation and a JSON Schema cross-check.
+- tools/dedup_calibration.py: deterministic known-truth calibration at the declared W.
+- checks/README.md prints EEO-RN-3: screening is arithmetic on cards, not a conformity check.
+
+Entry points and licensing
+- Three gates by material, not identity: public cards (free screen, no login or permission),
+  commissioned sample (paid pre-purchase check; thresholds declaration, sampling frame and
+  DATA_TERMS first), full corpus (deep verification; plus data agreement and compute).
+  Commissioned records are public and name the commissioning party; certification, rating and
+  endorsement have no gate at all.
+- Interfaces carry no score, rating, ranking or adjective; a FAIL cell shows the declared and
+  recomputed values; rows sort by letter or date, never by failure count; aggregates say only
+  "n of m cards fail at least one check"; every page prints the use limitation before any number.
+- Code is MIT, this module's computed output is CC-BY-4.0, third-party fields stay under source
+  terms. Method, schema, validator, pure arithmetic, screening script, clock model and dedup
+  detector with their known-truth fixtures, and the observation format are open. Corpora, samples,
+  buyer-private documents, unpublished drafts and quotes are not.
+- Paid work is a dated, reproducible, named record on the client's sample at declared thresholds,
+  not code. Fork defence is verifiable, not legal: a stripped record fails the official schema and
+  validator, citations require method_version, corpus id and version, date and record hash, and
+  the name and record-format identity are not licensed.
+
+Implementation order is set by falsifiability: card screening first, then the dataset-side driver
+with pure arithmetic, then cluster bootstrap, clock model, dedup and diversity.

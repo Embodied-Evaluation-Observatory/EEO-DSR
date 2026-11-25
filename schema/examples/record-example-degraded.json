@@ -1,0 +1,359 @@
+{
+  "schema_version": "eeo-dataset-review/0.1",
+  "module": "EEO-DSR",
+  "dataset": {
+    "dataset_id": "droid-1k-sample",
+    "version": "2026-09-r1",
+    "licence": "CC-BY-4.0",
+    "card_url": "https://example.org/datasets/droid-1k-sample",
+    "retrieval_date": "2026-11-20",
+    "card_sha256": "0000000000000000000000000000000000000000000000009e3779b97f4a7c15",
+    "page_sha256": "0000000000000000000000000000000000000000000000003c6ef372fe94f82a",
+    "manifest_sha256": "000000000000000000000000000000000000000000000000daa66d2c7ddf743f"
+  },
+  "review": {
+    "stage": "pre_purchase",
+    "tier": "T1_sample",
+    "method_version": "EEO-DSR-V0.1",
+    "started_at": "2026-11-22T10:00:00Z",
+    "frame": "committed",
+    "frame_rule_sha256": "00000000000000000000000000000000000000000000000078dde6e5fd29f054",
+    "frame_seed": "sha256(page) mod 1",
+    "scope_statement": "抽到 150 条 episode（卖方声明的抽样框），未对剩余部分声称。"
+  },
+  "dimensions": [
+    {
+      "id": "D1",
+      "status": "checked",
+      "readout": "声明 150；无分项，按抽样框计。"
+    },
+    {
+      "id": "D2",
+      "status": "not_checkable",
+      "readout": "无记录时钟，时间戳不足以计算偏移与漂移。",
+      "reason_code": "no_recorded_clock"
+    },
+    {
+      "id": "D3",
+      "status": "partial",
+      "readout": "6 簇，覆盖 4 工位；失败模式未标注。"
+    },
+    {
+      "id": "D4",
+      "status": "checked",
+      "readout": "revision 已 pin，manifest 覆盖到文件级。"
+    },
+    {
+      "id": "D5a",
+      "status": "checked",
+      "readout": "w=0.95 下 2 条副本（1 条字节相同）。"
+    },
+    {
+      "id": "D5b",
+      "status": "checked",
+      "readout": "跨 split 重叠 0 条。"
+    }
+  ],
+  "thresholds": {
+    "thresholds_origin": "buyer_declared",
+    "eeo_sets_thresholds": false,
+    "sync": {
+      "tau_ms": 40,
+      "m": 3,
+      "declared_by": "buyer",
+      "m_origin": "eeo_default",
+      "basis": "买方招标文件第 4.2 条：相机与本体 40 ms，触觉 20 ms；m 买方未声明，采用 EEO 默认值 3（3 倍容差覆盖多数非结构性抖动）。",
+      "sensitivity": [
+        {
+          "tau_ms": 40,
+          "w": 0.95,
+          "m": 3,
+          "n_fail": 250,
+          "n_degraded": 120
+        },
+        {
+          "tau_ms": 80,
+          "w": 0.95,
+          "m": 3,
+          "n_fail": 250,
+          "n_degraded": 120
+        },
+        {
+          "tau_ms": 40,
+          "w": 0.95,
+          "m": 2,
+          "n_fail": 230,
+          "n_degraded": 110
+        },
+        {
+          "tau_ms": 40,
+          "w": 0.9,
+          "m": 3,
+          "n_fail": 220,
+          "n_degraded": 105
+        }
+      ],
+      "tau_rule": "derived_from_pairing_policy",
+      "pairing_policy": "nearest_neighbor",
+      "tau_factor": 0.5,
+      "period_basis": "sampled_stream",
+      "tau_convention_note": null,
+      "sensitivity_headline": null,
+      "pairing_direction": "camera_frames_to_state_samples",
+      "sampled_stream_period_ms": 80.0,
+      "tau_scope": "global_simplified",
+      "global_tau_note": "全局单一 τ 把最严的一对流强加给所有流对，是简化；理想形态是逐流对的 τ，后续版本再拆。"
+    },
+    "dedup": {
+      "w": 0.95,
+      "declared_by": "buyer",
+      "basis": "买方指定 0.95；0.90 与 0.97 作为敏感性档一并公布。",
+      "fingerprint": "episode embedding, mean-pooled keyframes, 1024-d",
+      "sensitivity": [
+        {
+          "w": 0.9,
+          "n_duplicate_copies": 25
+        },
+        {
+          "w": 0.95,
+          "n_duplicate_copies": 2
+        },
+        {
+          "w": 0.97,
+          "n_duplicate_copies": 0
+        }
+      ]
+    },
+    "acceptance_use": "buyer_declared"
+  },
+  "neev": {
+    "n_declared": 150,
+    "sync": {
+      "status": "unverified",
+      "clock_model": {
+        "model_id": "eeo-clock",
+        "version": "1.0",
+        "self_implemented": true,
+        "external_dependency": false,
+        "features": [
+          "offset",
+          "jitter",
+          "drift",
+          "gap"
+        ]
+      },
+      "scope_note": {
+        "zh": "本核验只核验记录时间线自洽，不认定采集时物理同步。",
+        "en": "This review checks that the recorded timeline is self-consistent; it does not certify that the sensors were physically synchronised at capture."
+      },
+      "n_pass": 0,
+      "n_degraded": 0,
+      "n_fail": 0,
+      "n_alignment_excluded": 0,
+      "n_alignment_unlocatable": 0,
+      "n_unverified": 150,
+      "degraded_policy": "excluded_from_nees",
+      "structural_fault": {
+        "type": "none",
+        "affected_episodes": 0,
+        "range_basis": "none",
+        "n_events": 0,
+        "stream_continuity_finding": false
+      },
+      "alignment": {
+        "executed": false,
+        "outcome": "not_required",
+        "rule": {
+          "rule_type": "none",
+          "source": null,
+          "rule_hash": null,
+          "applicable": false
+        }
+      },
+      "reason_code": "no_recorded_clock",
+      "stream_continuity_findings": {
+        "count": 0,
+        "boundaries": null,
+        "basis": "按内部配对是否被破坏判定；本期无跨边界异常对。",
+        "note": "流连续性发现不进 NEES、不进任何维度读数，只作为可复算附件随记录发布。"
+      }
+    },
+    "dedup": {
+      "executed": false,
+      "metric": {
+        "id": "eeo-dedup-metric/episode-embedding-cosine-v1",
+        "defined_in": "METHOD 4.5",
+        "family": "embedding_cosine",
+        "statistic": "cosine_similarity",
+        "threshold_binding": "W 是 episode 嵌入余弦相似度的切点；换度量则 W 的含义随之改变。"
+      },
+      "metric_note": "度量由方法固定，买方只声明 W。",
+      "n_duplicate_copies": 2,
+      "n_exact_copies": 1,
+      "n_cross_split_copies": 0,
+      "leakage_rate": 0.0,
+      "n_distinct_est": 148,
+      "calibration": {
+        "fixture_id": "dedup-calib-synthetic",
+        "fixture_version": "0.1",
+        "runner": "tools/dedup_calibration.py",
+        "n_positive_pairs": 40,
+        "n_negative_pairs": 40,
+        "false_merge_rate": 0.0,
+        "false_split_rate": 0.0,
+        "passed": true,
+        "run_date": "2026-11-25"
+      }
+    },
+    "chain": {
+      "sync_filtered": 150,
+      "dedup_count": 148,
+      "nees": 25.82,
+      "sync_unverified": 150
+    },
+    "cluster": {
+      "axis": "scene",
+      "level": "scene",
+      "count": 6,
+      "mean_size": 24.6667
+    },
+    "rho": {
+      "status": "assumed",
+      "estimator": "outcome_icc",
+      "value": 0.3,
+      "interval": [
+        0.2,
+        0.4
+      ],
+      "basis": {
+        "kind": "sensitivity_range",
+        "range": [
+          0.2,
+          0.4
+        ]
+      }
+    },
+    "nees": {
+      "status": "upper_bound",
+      "unit": "episode",
+      "basis": "post_dedup_estimate",
+      "cleaning": "not_performed",
+      "value": 25.82,
+      "interval": null,
+      "cap": {
+        "applied": true,
+        "bases": [
+          "sync_unverified",
+          "sample_scope"
+        ],
+        "direction": "upper_bound",
+        "value": 25.82,
+        "formula": "bound = n_dedup / (1 + (mean_cluster_size - 1) * rho)",
+        "rho": 0.2,
+        "rho_source": "interval_low",
+        "mean_size_def": "mean_cluster_size = n_dedup / n_clusters",
+        "basis_note": "ρ 取区间下端 0.20；ρ 越小读数越大，故这是上界。实际上界只会更低。",
+        "buyer_note": "封顶值假设 ρ 取区间下端；若实际 ρ 更高，真实 NEES 会更低。封顶是上界，不是估计值。"
+      }
+    },
+    "trajectory_diversity_signal": {
+      "status": "not_computed",
+      "pool": "post_dedup",
+      "n_dedup": 148,
+      "dim_rule": "participation_ratio",
+      "embodiment_scope": "single",
+      "embodiment": {
+        "mode": "within",
+        "embodiment_id": "franka_panda_1"
+      },
+      "basis": "not computed: 本批次未提供 episode 嵌入，T1 初筛不估算分散度",
+      "note": "轨迹分散度不是 NEES 的替代读数：NEES 说独立证据有多少，它说这些证据的形状有多分散；本值仅在单一 embodiment 内可解释，不可跨语料直接比较。",
+      "effective_dim": null,
+      "spectral_entropy": null,
+      "stratification": {
+        "mode": "pooled",
+        "unit": "dataset",
+        "task_count": 1,
+        "n_strata": 1,
+        "per_stratum": null
+      },
+      "stratum_summary": null,
+      "pooled_total": null,
+      "between_task_share": null,
+      "decision_supports": "支持决定：是否要求供应商在某个任务内增加做法变化。",
+      "decision_does_not_support": "不支持决定：这份语料能否训出更好的策略。"
+    },
+    "failure_observations": {
+      "failures": 0,
+      "n": 148,
+      "n_ind": 6,
+      "n_ind_basis": "cluster_count",
+      "formula": "upper95 = 1 - 0.05^(1/n_ind)",
+      "basis": "0 次失败；n_ind 主口径 取簇数 6（保守）；1-0.05^(1/n) 精确单侧 95% 上界。；同时印按簇与按条两端。",
+      "upper95_by_cluster": 0.393038,
+      "upper95_by_dedup": 0.020038,
+      "cluster_budget": [
+        {
+          "target_rate": 0.1,
+          "clusters_required": 29
+        },
+        {
+          "target_rate": 0.05,
+          "clusters_required": 59
+        },
+        {
+          "target_rate": 0.01,
+          "clusters_required": 299
+        }
+      ],
+      "decision_note": "即使观测到零失败，也排除不了高达 39.3% 的失败率，不足以支撑任何低于该值的失败率声称。"
+    },
+    "diagnostics": {
+      "zero_variance_share": {
+        "status": "computed",
+        "value": 0.55,
+        "basis": "簇内成功率方差；簇=场景 × 工位单元格"
+      },
+      "n_dedup": {
+        "value": 148,
+        "basis": "池 150 减副本 2，为估计值"
+      }
+    }
+  },
+  "split": "scene",
+  "buyer_summary": [
+    "抽到的 150 条里，净有效 episode 量上界 25.82。",
+    "前提一：同步未核验，读数按上界处理，不代表质量好于降级。",
+    "前提二：W=0.95 下 2 条副本已计为重复；未执行清洗。"
+  ],
+  "buyer_summary_use_limitation": {
+    "text_version": "EEO-DUL-2",
+    "zh": "本核验只给出该数据集在 episode 层面的统计可用性读数，不说明任务难度匹配、不说明标注正确性、不构成资产估值、不构成采购建议。",
+    "en": "This review reports a statistical-usability reading at the episode level. It does not speak to task-difficulty match, label correctness, asset valuation, or a purchase recommendation."
+  },
+  "submitter": {
+    "organisation": "EEO",
+    "role": "independent"
+  },
+  "use_limitation": {
+    "text_version": "EEO-DUL-2",
+    "zh": "本核验只给出该数据集在 episode 层面的统计可用性读数，不说明任务难度匹配、不说明标注正确性、不构成资产估值、不构成采购建议。",
+    "en": "This review reports a statistical-usability reading at the episode level. It does not speak to task-difficulty match, label correctness, asset valuation, or a purchase recommendation."
+  },
+  "reference_note": {
+    "text_version": "EEO-RN-3",
+    "zh": "本记录不以任何标准为判定依据。YD/T 6771—2026 的维度划分仅作为思路参考；本模块的五个维度独立定义，与该标准不构成对照关系。不引其条款与阈值，也不声明与该标准或任何其他标准相符。",
+    "en": "No standard is cited as a basis for this record. The dimension split of YD/T 6771-2026 informed the thinking behind this module's own five dimensions; those dimensions are defined independently and form no mapping to it. Its clauses and thresholds are not cited, and nothing here asserts conformity with it or with any other standard."
+  },
+  "scope_declaration": {
+    "label_consistency": {
+      "status": "not_assessed",
+      "reason": "标注一致性需要标签语义与金标准，本版不提供该读数；标签与索引核对安排在卡片初筛与数据集侧驱动之后。"
+    },
+    "card_index_crosscheck": {
+      "status": "not_assessed",
+      "reason": "D1b 需要索引与卡片逐项对照，本版不提供；索引抓取脚本入库后再补。"
+    },
+    "dimension_code_note": "D1–D5b 是本模块六个检查项的局部代号，不是与早期材料的 crosswalk，也不对应任何外部维度体系。"
+  }
+}
