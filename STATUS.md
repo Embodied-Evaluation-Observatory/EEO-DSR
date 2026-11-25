@@ -4,11 +4,11 @@
   institutional backing, no funding, no staff. The name describes an intention — to keep a
   dataset-side record of what a public dataset card actually supports — not an existing
   organisation.
-- Current version: `EEO-DSR-V0.3`, schema `eeo-dataset-review/0.3`, observation
+- Current version: `EEO-DSR-V0.4`, schema `eeo-dataset-review/0.4`, observation
   `eeo-sync-observation/0.1`.
 - What exists: method, record and observation schemas, validator with 150 self-test cases,
-  threshold declaration, entry/licensing text, Phase 0 card screen with one dated result
-  (2026-11-25), and the cosine threshold helper smoke test.
+  threshold declaration, entry/licensing text, Phase 0 card screen with two dated results
+  (2026-11-25 and 2026-11-25-r2), and the cosine threshold helper smoke test.
 - What does not exist: the dedup detector (`episode-embedding-cosine-v1`), the clock model
   implementation, episode fingerprints, cluster-level bootstrap, any real-corpus NEES reading,
   label-consistency verification, and D1b (cards versus an index). None of these are promised.
@@ -34,7 +34,8 @@
 | V0 | no commit by design | none | package credential only | kept as a recorded artifact, not a git release |
 | V0.1 | `284f42ebfb52b815e5e852ea809c7a484f3e9252` | `v0.1` → `03d1874c98588072353e9e3d4880c8a3048a41b1` | entry and licensing layer, 0.1 schemas | published, still citable |
 | V0.2 | `4e2defbd88dfe44246f7182a8197fc2eb0b947ce` | `v0.2` → `ce6c10976f0e1b38fada799f354e8ed500a185b6` | 0.2 schemas, Phase 0 first result | published, superseded by V0.3, not rewritten |
-| V0.3 | see `RELEASE.md` after push | `v0.3` | 0.3 schemas, withdrawn dedup gate, release gate, CI | current |
+| V0.3 | `298cbf58f1f812df33f3f7e7249e8fddda0d3af6` | `v0.3` → `6882a76c54f293851aac99586b6db92668b72de8` | 0.3 schemas, withdrawn dedup gate, release gate, CI | published, superseded by V0.4, not rewritten |
+| V0.4 | see `RELEASE.md` after push | `v0.4` | 0.4 schemas, Phase 0 source list and dual hash, FAIL/MISSING split summary | current |
 
 The V0.2 tag stays where it is. Corrections are published as a new version; earlier releases
 stay citable and are not rewritten.

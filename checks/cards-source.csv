@@ -1,0 +1,13 @@
+dataset_id,url
+lerobot/aloha_mobile_cabinet,https://huggingface.co/datasets/lerobot/aloha_mobile_cabinet/raw/main/README.md
+lerobot/berkeley_cable_routing,https://huggingface.co/datasets/lerobot/berkeley_cable_routing/raw/main/README.md
+lerobot/berkeley_gnm_sac_son,https://huggingface.co/datasets/lerobot/berkeley_gnm_sac_son/raw/main/README.md
+lerobot/jaco_play,https://huggingface.co/datasets/lerobot/jaco_play/raw/main/README.md
+lerobot/libero,https://huggingface.co/datasets/lerobot/libero/raw/main/README.md
+lerobot/nyu_rot_dataset,https://huggingface.co/datasets/lerobot/nyu_rot_dataset/raw/main/README.md
+lerobot/pusht,https://huggingface.co/datasets/lerobot/pusht/raw/main/README.md
+lerobot/roboturk,https://huggingface.co/datasets/lerobot/roboturk/raw/main/README.md
+lerobot/stanford_hydra_dataset,https://huggingface.co/datasets/lerobot/stanford_hydra_dataset/raw/main/README.md
+lerobot/svla_so101_pickplace,https://huggingface.co/datasets/lerobot/svla_so101_pickplace/raw/main/README.md
+lerobot/taco_play,https://huggingface.co/datasets/lerobot/taco_play/raw/main/README.md
+lerobot/xarm_lift_medium,https://huggingface.co/datasets/lerobot/xarm_lift_medium/raw/main/README.md

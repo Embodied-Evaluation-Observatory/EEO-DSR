@@ -1,49 +1,42 @@
-EEO-DSR V0.3: withdraw the dedup gate, add release discipline and CI
+EEO-DSR V0.4: make Phase 0 a reproducible two-file screen and split FAIL from MISSING
 
 This release ships the method, schemas, validator, release gate and the 2026-11-25 Phase 0 card
 screen. It does not ship any NEES reading of any corpus and does not state whether any corpus is
 usable.
 
-Dedup gate withdrawn
-- The dedup detector does not exist. The V0.2 calibration fixture was random unit vectors with
-  small jitter against independent random vectors; at W=0.95 in 32 dimensions it cannot produce a
-  false merge or a false split, so it was a gate that could not fail.
-- neev.dedup.calibration_status is added. It is not_established in every current record; calibration
-  is null and threshold_binding.calibration_fixture_id is null.
-- The established branch is kept for the future detector: at least 59 pairs per class, false merge
-  and false split reported separately with exact one-sided bounds, runner executed, fixture hash
-  and result hash in the record.
-- tools/dedup_calibration.py is replaced by tools/cosine_threshold_smoke.py. It takes W on the
-  command line, prints counts and illustrative bounds, and labels itself gate false. It is not a
-  calibration and is not cited as one.
+Phase 0 input
+- checks/cards-source.csv is the only card list: dataset_id and url, 12 cards to start, 10-20 in
+  scope. URLs are no longer hardcoded in the script.
+- tools/screen_cards.py fetches each card, stores the raw page bytes as page_sha256, parses a fixed
+  structured field set into card_sha256, runs S1-S6, and writes cards.csv, index.html, README.md,
+  manifest.json and manifest.sha256 under checks/dataset/<YYYY-MM-DD>/.
+- The first version parses fields automatically from the pinned page bytes. It does not claim
+  manual transcription; the directory README says so.
+- Existing output directories are refused. A second run on the same day uses -r2, then -r3, so
+  earlier results are not rewritten.
 
-Method text
-- m default 3 is no longer justified as "3x tolerance covers most jitter". The release states that
-  no reproducible basis exists; a default use carries m_origin eeo_default and basis
-  no_declared_basis, and may not serve as an acceptance finding.
-- neev.chain stays four fields and is recomputed field by field, including
-  sync_filtered = n_pass + n_unverified and sync_unverified <= sync_filtered.
+S1 corrected
+- checks/README.md defined S1 as the sum of per-scene counts against the declared total, but the
+  V0.3 script measured contiguous split ranges. Those are not the same check.
+- S1 now reads scene_count and per_scene_episodes. Without a per-scene count it is MISSING; with a
+  count that does not sum to the total it is FAIL.
 
-Release discipline
-- STATUS.md states what exists and what does not, the release table and the correction policy.
-- RELEASE_GATE.md requires a frozen manifest and a preflight record before a tag. Tags are
-  annotated and never moved, deleted or force-pushed; corrections are new versions.
-- tools/freeze_release.py writes releases/<version>/manifest.json and refuses to overwrite.
-- tools/release_preflight.py verifies manifest hashes, SHA256SUMS, self-test, examples and the
-  cosine smoke test, then writes releases/<version>/preflight.json.
-
-CI
-- .github/workflows/reproduce.yml runs tools/run_all_checks.py and the cosine smoke test on every
-  push and pull request. A claim that run_all_checks.py is the CI entry point now has a workflow
-  behind it.
+Summary corrected
+- The summary no longer says only "n cards fail at least one check". It reports two set
+  distributions: n cards with at least one FAIL, k cards with at least one MISSING, and j cards
+  with both.
+- MISSING means the field is not published; FAIL means the published arithmetic does not balance.
+  The abandonment condition is about the FAIL subset, so the two cannot be merged.
 
 Verification
 - tools/validate_record.py: 150 self-test cases.
 - tools/run_all_checks.py: self-test, seven example records, the observation example and a JSON
   Schema cross-check.
-- checks/phase0_screen.py: 12 cards, 12 of 12 fail at least one check; S1, S2 and S4 pass on all 12,
-  S3, S5 and S6 are MISSING on all 12. This is card arithmetic, not a verification finding.
+- checks/dataset/2026-11-25-r2: 12 cards, 0 with at least one FAIL, 12 with at least one MISSING,
+  0 with both. S2 and S4 pass on all 12; S1, S3, S5 and S6 are MISSING on all 12. This is card
+  arithmetic, not a verification finding.
 
 Release boundary
-- Published files are listed in releases/v0.3/manifest.json and hashed in SHA256SUMS.
-- V0.2 stays at 4e2defb and tag v0.2 stays at ce6c109. No history rewrite.
+- Published files are listed in releases/v0.4/manifest.json and hashed in SHA256SUMS.
+- V0.3 stays at 298cbf5 and tag v0.3 stays at 6882a76. The V0.3 Phase 0 directory and script remain
+  in that tag; V0.4 uses a new directory and a new script.

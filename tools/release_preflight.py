@@ -29,7 +29,7 @@ def run(args):
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--version", required=True, help="release id, e.g. v0.3")
+    ap.add_argument("--version", required=True, help="release id, e.g. v0.4")
     ap.add_argument("--w", type=float, default=0.95)
     args = ap.parse_args()
 

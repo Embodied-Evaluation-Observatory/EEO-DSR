@@ -1,7 +1,7 @@
-# 方法：EEO-Dataset-Review V0.3（EEO-DSR）
+# 方法：EEO-Dataset-Review V0.4（EEO-DSR）
 
 本文件规定记录怎么产生、数字怎么算、什么情况下不给数。规范形式见 `schema/record.schema.json`
-（`eeo-dataset-review/0.3`）与 `schema/sync-observation.schema.json`（`eeo-sync-observation/0.1`）；
+（`eeo-dataset-review/0.4`）与 `schema/sync-observation.schema.json`（`eeo-sync-observation/0.1`）；
 `tools/validate_record.py` 执行 schema 之外的跨字段规则。
 
 **实现状态**：本仓库目前只有规格、校验器与示例，没有时钟模型、episode 指纹、簇级 bootstrap 与

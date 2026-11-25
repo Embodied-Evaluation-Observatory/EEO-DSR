@@ -33,9 +33,9 @@ def tracked():
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--version", required=True, help="release id, e.g. v0.3")
-    ap.add_argument("--tag", required=True, help="annotated tag name, e.g. v0.3")
-    ap.add_argument("--method", default="EEO-DSR-V0.3")
+    ap.add_argument("--version", required=True, help="release id, e.g. v0.4")
+    ap.add_argument("--tag", required=True, help="annotated tag name, e.g. v0.4")
+    ap.add_argument("--method", default="EEO-DSR-V0.4")
     args = ap.parse_args()
 
     rel_dir = os.path.join(ROOT, "releases", args.version)

@@ -11,15 +11,15 @@ not a claim.
 
 ## Order
 
-1. `python3 tools/freeze_release.py --version v0.3 --tag v0.3`
-   Writes `releases/v0.3/manifest.json`, hashing every tracked file except `releases/` and
+1. `python3 tools/freeze_release.py --version v0.4 --tag v0.4`
+   Writes `releases/v0.4/manifest.json`, hashing every tracked file except `releases/` and
    `SHA256SUMS`. It refuses to overwrite an existing release directory.
-2. `python3 tools/release_preflight.py --version v0.3`
+2. `python3 tools/release_preflight.py --version v0.4`
    Recomputes every manifest hash and size, checks `SHA256SUMS`, runs the validator self-test,
    the full example/schema check set, and the cosine smoke test. Writes
-   `releases/v0.3/preflight.json`; refuses to overwrite an existing record.
+   `releases/v0.4/preflight.json`; refuses to overwrite an existing record.
 3. Commit the manifest and the gate record. Confirm `main` carries what you think it carries.
-4. Create the annotated tag (`git tag -a v0.3 -m ...`).
+4. Create the annotated tag (`git tag -a v0.4 -m ...`).
 5. Push `main`, then the tag. Do not push any other tag from a bundle.
 6. Read back what the remote serves: `git ls-remote` for `main`, the tag object and its peeled
    commit. Compare the tag's tree with the local tree.
@@ -31,7 +31,7 @@ not a claim.
   force-pushed.
 - A correction is a new version and a new tag. The earlier tag stays citable; its files are not
   rewritten.
-- Enforce on the remote with a tag ruleset: target `v*`, restrict deletions, block force pushes.
+- Enforce on the remote with a tag ruleset: target `v*`, restrict updates, restrict deletions, block force pushes.
   This is separate from branch protection on `main`. If the ruleset is absent, the policy still
   binds the maintainer, but the remote does not enforce it.
 - Never rewrite a commit to add a signature or fix metadata. `SIGNING.md` in the Archive records

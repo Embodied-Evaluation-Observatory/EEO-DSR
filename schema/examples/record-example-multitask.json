@@ -1,5 +1,5 @@
 {
-  "schema_version": "eeo-dataset-review/0.3",
+  "schema_version": "eeo-dataset-review/0.4",
   "module": "EEO-DSR",
   "dataset": {
     "dataset_id": "fixture-multitask",
@@ -14,7 +14,7 @@
   "review": {
     "stage": "pre_purchase",
     "tier": "T2_full",
-    "method_version": "EEO-DSR-V0.3",
+    "method_version": "EEO-DSR-V0.4",
     "started_at": "2026-11-22T10:00:00Z",
     "frame": "committed",
     "frame_rule_sha256": "00000000000000000000000000000000000000000000000078dde6e5fd29f054",

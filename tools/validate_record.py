@@ -8,7 +8,7 @@ Usage:
 
 Exit codes: 0 valid (or self-test passed), 1 invalid (or self-test failed), 2 usage error.
 
-The normative forms are schema/record.schema.json (eeo-dataset-review/0.3) and
+The normative forms are schema/record.schema.json (eeo-dataset-review/0.4) and
 schema/sync-observation.schema.json (eeo-sync-observation/0.1). This validator re-implements
 them with no third-party dependency and adds the cross-field rules that carry the method:
 
@@ -38,9 +38,9 @@ import json
 import os
 import sys
 
-SCHEMA_VERSION = "eeo-dataset-review/0.3"
+SCHEMA_VERSION = "eeo-dataset-review/0.4"
 OBS_VERSION = "eeo-sync-observation/0.1"
-METHOD_VERSION = "EEO-DSR-V0.3"
+METHOD_VERSION = "EEO-DSR-V0.4"
 
 UL_VERSION = "EEO-DUL-2"
 UL_EN = ("This review reports a statistical-usability reading at the episode level. It does not "
