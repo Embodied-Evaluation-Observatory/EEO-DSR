@@ -82,6 +82,12 @@ def parse(card):
     info["scene_id"] = bool(re.search(r'"(scene_id|workstation_id|station_id)"\s*:', text))
     info["license"] = lic.group(1).lower() if lic else None
     info["has_checksum"] = bool(re.search(r'"(sha256|checksum)"\s*:', text))
+    declared = {}
+    for key in ("frames_per_episode", "seconds_per_episode"):
+        m = re.search(rf'"{key}"\s*:\s*([0-9.]+)', text)
+        if m:
+            declared[key] = float(m.group(1))
+    info["declared_ratios"] = declared
     return text, info
 
 
@@ -108,11 +114,26 @@ def s2(info):
     total = info.get("total_episodes")
     fps = info.get("fps")
     frames = info.get("total_frames")
-    if total is None or fps is None:
-        return "MISSING", "卡片未同时声明条数与帧率"
-    if frames is None and info.get("total_videos") is None:
-        return "MISSING", f"声明 {total} 条、{fps} fps；未给帧数或视频数"
-    return "PASS", f"声明 {total} episodes、{fps} fps、帧数/视频数可换算"
+    declared = info.get("declared_ratios") or {}
+    if total is None:
+        return "MISSING", "卡片未声明 total_episodes"
+    if fps is None:
+        return "MISSING", f"声明 {total} episodes；卡片未声明 fps"
+    if frames is None:
+        return "MISSING", f"声明 {total} episodes、{fps} fps；未给帧数，无法算两个被比值"
+    fpe = frames / total
+    spe = frames / (total * fps)
+    ratio = f"frames/episode={fpe:.2f}，seconds/episode={spe:.2f}"
+    if not declared:
+        return "MISSING", f"声明 {total} episodes、{frames} frames、{fps} fps；{ratio}；卡片未声明换算率字段"
+    failures = []
+    for key, value in declared.items():
+        calc = fpe if key == "frames_per_episode" else spe
+        if abs(value - calc) > max(1e-9, 0.01 * abs(calc)):
+            failures.append(f"{key} 声明 {value}，重算 {calc:.4f}")
+    if failures:
+        return "FAIL", f"{ratio}；" + "；".join(failures)
+    return "PASS", f"{ratio}；声明的换算率与重算一致"
 
 
 def s3(info, last_modified):
@@ -173,36 +194,50 @@ def write_cards(path, rows):
                        [r["checks"][f"S{i}"][0] for i in range(1, 7)] + [ev])
 
 
-def write_readme(path, date, rows, summary, by_check):
-    lines = [f"# Phase 0 初筛 {date}", "",
+def write_readme(path, date, rows, summary):
+    lines = [f"# Phase 0 披露度普查 {date}", "",
+             summary["hard_sentence"], "",
              summary["sentence"], "",
              "本目录字段由 `tools/screen_cards.py` 自动解析自钉住的页面字节；**没有人工转录**。"
              "每张卡片的原始页面字节存在 `pages/`，其哈希（`page_sha256`）与结构化字段哈希（`card_sha256`）见 `cards.csv`。",
              "",
-             "S1 测的是分场景计数之和与声明总数；卡片没有分场景计数时，S1 记 MISSING，不是 FAIL。",
-             "MISSING 与 FAIL 分开汇总：前者是字段没公布，后者是已公布的数算不平。", "",
-             "逐项分布：" + "；".join(
-                 f"{k} PASS {v['PASS']} / FAIL {v['FAIL']} / MISSING {v['MISSING']}"
-                 for k, v in by_check.items()), "",
-             "`manifest.sha256` 钉住 `manifest.json`；`manifest.json` 列出输入与三个输出文件的哈希。", ""]
+             "## 集合级可判率", "",
+             "| 项 | 可判 (PASS+FAIL)/m | 可判率 | 判定 |",
+             "|---|---:|---:|---|"]
+    for k, v in summary["judgeability"].items():
+        lines.append(f"| {k} | {v['judgeable']}/{summary['cards']} | {v['rate']:.0%} | {v['verdict']} |")
+    lines += ["",
+              "某项 100% MISSING 时判为不可判，不计入通过。全部行同构时，声明本集合上无区分信号。",
+              "可判率是集合上的分布，不是对单张卡片的评级。", "",
+              "## 逐项分布", "",
+              "；".join(f"{k} PASS {v['PASS']} / FAIL {v['FAIL']} / MISSING {v['MISSING']}"
+                       for k, v in summary["by_check"].items()), "",
+              "S1 测的是分场景计数之和与声明总数；卡片没有分场景计数时，S1 记 MISSING，不是 FAIL。",
+              "S2 只有在卡片声明 `frames_per_episode` 或 `seconds_per_episode` 且与重算一致时才 PASS；"
+              "只给条数、帧数与 fps 不够。", "",
+              "`manifest.sha256` 钉住 `manifest.json`；`manifest.json` 列出输入与三个输出文件的哈希。", ""]
     for r in rows:
         lines.append(f"- `{r['dataset_id']}`：{r['url']}  page `{r['page_sha256']}`  card `{r['card_sha256']}`")
-    lines += ["", "本页只做卡片算术，不构成核验结论，不说明语料可用性。"]
+    lines += ["", "本页只报告披露与算术，不构成核验结论，不说明语料可用性。"]
     open(path, "w", encoding="utf-8").write("\n".join(lines))
-
 
 def write_html(path, date, rows, summary):
     esc = html.escape
-    head = f"""<!doctype html><meta charset="utf-8"><title>Phase 0 初筛 {date}</title>
+    head = f"""<!doctype html><meta charset="utf-8"><title>Phase 0 披露度普查 {date}</title>
 <style>body{{font:14px/1.5 system-ui,sans-serif;margin:32px;max-width:1200px}}
 table{{border-collapse:collapse;width:100%}}th,td{{border:1px solid #ccc;padding:6px;vertical-align:top}}
 .pass{{color:#176b2c}}.fail{{color:#a11}}.missing{{color:#777}}code{{font-size:12px}}</style>"""
-    body = [head, f"<h1>Phase 0 初筛 {date}</h1>",
-            "<p>初筛只报告卡片上的算术与缺项，不出具合格结论，不做数据集排名，不做资产估值。</p>",
-            "<p>本记录不以任何标准为判定依据。初筛只做卡片算术，不是符合性检查。</p>",
+    body = [head, f"<h1>Phase 0 披露度普查 {date}</h1>",
+            f"<p><b>{esc(summary['hard_sentence'])}</b></p>",
+            "<p>披露度普查只报告页面上的披露与算术，不出具合格结论，不做数据集排名，不做资产估值。</p>",
+            "<p>本记录不以任何标准为判定依据。披露度普查只做页面披露，不是符合性检查。</p>",
             f"<p>{esc(summary['sentence'])}</p>",
-            "<p>S1 测分场景计数之和；没有该字段记 MISSING，不记 FAIL。</p>",
-            "<table><tr><th>卡片</th><th>S1</th><th>S2</th><th>S3</th><th>S4</th><th>S5</th><th>S6</th></tr>"]
+            "<p>某项 100% MISSING 时判为不可判，不计入通过；全部行同构时，本集合上无区分信号。</p>",
+            "<table><tr><th>项</th><th>可判</th><th>可判率</th><th>判定</th></tr>"]
+    for k, v in summary["judgeability"].items():
+        body.append(f"<tr><td>{k}</td><td>{v['judgeable']}/{summary['cards']}</td>"
+                    f"<td>{v['rate']:.0%}</td><td>{esc(v['verdict'])}</td></tr>")
+    body += ["</table>", "<table><tr><th>卡片</th><th>S1</th><th>S2</th><th>S3</th><th>S4</th><th>S5</th><th>S6</th></tr>"]
     for r in rows:
         cells = [f"<td><a href='{esc(r['url'])}'>{esc(r['dataset_id'])}</a><br>"
                  f"<code>page {r['page_sha256'][:16]}…</code><br>"
@@ -214,7 +249,6 @@ table{{border-collapse:collapse;width:100%}}th,td{{border:1px solid #ccc;padding
     body += ["</table>", "<p>按 dataset_id 字母序，不按失败数。</p></body>"]
     open(path, "w", encoding="utf-8").write("\n".join(body))
 
-
 def self_test():
     """Exercise the S1 arithmetic and S4 licence branches without network access."""
     ok = True
@@ -225,6 +259,12 @@ def self_test():
                               "per_scene_episodes": {"a": 1, "b": 2, "c": 3}}), "FAIL"),
         ("S1 missing count", s1({"total_episodes": 6, "scene_count": 3,
                                  "per_scene_episodes": None}), "MISSING"),
+        ("S2 no declared ratio", s2({"total_episodes": 10, "total_frames": 100, "fps": 10,
+                                    "declared_ratios": {}}), "MISSING"),
+        ("S2 declared ratio matches", s2({"total_episodes": 10, "total_frames": 100, "fps": 10,
+                                         "declared_ratios": {"frames_per_episode": 10.0}}), "PASS"),
+        ("S2 declared ratio drifts", s2({"total_episodes": 10, "total_frames": 100, "fps": 10,
+                                        "declared_ratios": {"frames_per_episode": 11.0}}), "FAIL"),
         ("S4 known licence", s4({"license": "apache-2.0"}), "PASS"),
         ("S4 unknown licence", s4({"license": "apache"}), "FAIL"),
     ]
@@ -299,6 +339,26 @@ def main():
                  and any(v[0] == "MISSING" for v in r["checks"].values()))
     by_check = {f"S{i}": {st: sum(1 for r in rows if r["checks"][f"S{i}"][0] == st)
                           for st in ("PASS", "FAIL", "MISSING")} for i in range(1, 7)}
+    judgeability = {}
+    for i in range(1, 7):
+        v = by_check[f"S{i}"]
+        judgeable = v["PASS"] + v["FAIL"]
+        rate = judgeable / len(rows) if rows else 0.0
+        if judgeable == 0:
+            verdict = "不可判"
+        elif v["PASS"] == judgeable or v["FAIL"] == judgeable:
+            verdict = "无可区分信号"
+        else:
+            verdict = "有区分"
+        judgeability[f"S{i}"] = {"judgeable": judgeable, "rate": rate,
+                                 "verdict": verdict,
+                                 "discriminating": bool(v["PASS"] and v["FAIL"])}
+    patterns = {tuple(r["checks"][f"S{i}"][0] for i in range(1, 7)) for r in rows}
+    homogeneous = len(patterns) == 1
+    hard_sentence = f"本集合 0 项 FAIL 不代表卡片自洽；S1 在 {len(rows)} 张卡上全部不可判。"
+    if by_check["S1"]["MISSING"] != len(rows):
+        hard_sentence = (f"本集合 0 项 FAIL 不代表卡片自洽；S1 有 "
+                         f"{by_check['S1']['MISSING']} 张不可判。")
     summary = {
         "cards": len(rows),
         "at_least_one_fail": n_fail,
@@ -306,16 +366,22 @@ def main():
         "both_fail_and_missing": n_both,
         "neither": len(rows) - n_fail - n_missing + n_both,
         "by_check": by_check,
+        "judgeability": judgeability,
+        "homogeneous_rows": homogeneous,
+        "status_combinations": len(patterns),
+        "hard_sentence": hard_sentence,
         "sentence": (f"本集合 {len(rows)} 张卡片中 {n_fail} 张至少一项 FAIL，"
                      f"{n_missing} 张至少一项 MISSING；两项都有的 {n_both} 张。"),
     }
-    write_readme(readme_path, args.date, rows, summary, by_check)
+    if homogeneous:
+        summary["sentence"] += " 全部行同构，本集合上无区分信号。"
+    write_readme(readme_path, args.date, rows, summary)
     write_html(html_path, args.date, rows, summary)
 
     outputs = {os.path.basename(p): sha256_file(p) for p in (cards_path, html_path, readme_path)}
     manifest = {
         "module": "EEO-DSR",
-        "phase": "Phase 0",
+        "phase": "Phase 0 disclosure census",
         "date": args.date,
         "retrieval_date": args.date,
         "source": os.path.relpath(args.source, ROOT),

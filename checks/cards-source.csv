@@ -11,3 +11,11 @@ lerobot/stanford_hydra_dataset,https://huggingface.co/datasets/lerobot/stanford_
 lerobot/svla_so101_pickplace,https://huggingface.co/datasets/lerobot/svla_so101_pickplace/raw/main/README.md
 lerobot/taco_play,https://huggingface.co/datasets/lerobot/taco_play/raw/main/README.md
 lerobot/xarm_lift_medium,https://huggingface.co/datasets/lerobot/xarm_lift_medium/raw/main/README.md
+robomimic,https://raw.githubusercontent.com/ARISE-Initiative/robomimic/master/README.md
+calvin,https://raw.githubusercontent.com/mees/calvin/main/README.md
+robocasa,https://raw.githubusercontent.com/robocasa/robocasa/main/README.md
+maniskill,https://raw.githubusercontent.com/haosulab/ManiSkill/main/README.md
+droid-project,https://droid-dataset.github.io/
+openx-project,https://robotics-transformer-x.github.io/
+bridge-data-project,https://rail-berkeley.github.io/bridgedata/
+libero-project,https://libero-project.github.io/intro.html

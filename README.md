@@ -1,4 +1,4 @@
-# EEO-DSR / 具身数据集核验（V0.4）
+# EEO-DSR / 具身数据集核验（V0.5）
 
 EEO 的数据集侧模块，卖读数不卖结论：一个语料一份记录，一个数——**净有效 episode 量（NEES）**，
 带区间、带封顶、带不可算边界；数下面压着五个维度、六个检查项，每一项都能被第三方按同一口径复算。
@@ -12,7 +12,7 @@ EEO 的数据集侧模块，卖读数不卖结论：一个语料一份记录，�
 
 | 部分 | 状态 |
 |---|---|
-| schema 与跨字段规则 | 已完成（`eeo-dataset-review/0.4`、`eeo-sync-observation/0.1`） |
+| schema 与跨字段规则 | 已完成（`eeo-dataset-review/0.5`、`eeo-sync-observation/0.1`） |
 | 校验器 | 可运行，`--self-test` 150 例全部按预期拒绝 |
 | 去重检测器 | **不存在**：没有 `episode-embedding-cosine-v1` 实现，也没有硬负例夹具；`calibration_status` 只能写 `not_established` |
 | 时钟模型 | **只有规格与观测件格式，没有实现代码** |
@@ -20,21 +20,21 @@ EEO 的数据集侧模块，卖读数不卖结论：一个语料一份记录，�
 | episode 指纹 / 簇级 bootstrap | 未写 |
 | NEES 端到端 | **尚不可算**：任何真实语料目前都给不出数 |
 | 轨迹分散度 | 只有字段定义，未写 |
-| Phase 0 初筛 | **已跑（2026-11-25）**：12 张公开卡片，0 张至少一项 FAIL，12 张至少一项 MISSING；S2/S4 各 12 张 PASS，S1/S3/S5/S6 各 12 张 MISSING |
+| Phase 0 披露度普查 | **已跑（2026-11-26）**：20 张公开页面，0 张至少一项 FAIL，20 张至少一项 MISSING；S4 可判 12/20 且全 PASS，S1/S2/S3/S5/S6 可判 0/20。产品已改名为披露度普查，不再自称自洽性检查 |
 
 `schema/examples/` 里的七份记录是合成的校验夹具，用来证明 schema 能拒什么、收什么，**不是发出的记录**。
 
 **现在能交付什么**：
 
-- 可运行、可复算：方法文本（`METHOD.md`、`checks/README.md`）、记录与观测件规范（0.4 / 0.1）、
+- 可运行、可复算：方法文本（`METHOD.md`、`checks/README.md`）、记录与观测件规范（0.5 / 0.1）、
   校验器（`validate_record.py --self-test`、`run_all_checks.py`）、阈值声明表（`thresholds-declaration.md`）。
   今天就能用来校验一份记录草稿是否合规，或让买方先把 τ、W、m 声明下来。
-- 已跑：卡片自洽性初筛（Phase 0，2026-11-25）。输入 `checks/cards-source.csv` 与脚本 `tools/screen_cards.py` 入库并可复算；
-  Phase 0 结果在 `checks/dataset/2026-11-25-r2/`。
+- 已跑：卡片披露度普查（Phase 0，2026-11-26）。输入 `checks/cards-source.csv` 与脚本 `tools/screen_cards.py` 入库并可复算；
+  Phase 0 结果在 `checks/dataset/2026-11-26/`。
 - 尚不可用：任何真实语料的 NEES 读数（时钟模型、episode 指纹、簇级 bootstrap 未写）、轨迹分散度数值
   （仅字段定义）。
 - `schema/examples/` 是合成校验夹具，不是发出的记录；本模块至今未发出任何记录。
-- 初筛跑通后，其结果可用于供应商自查与初筛，不得引用为核验结论；初筛、T1、T2 三者不可互换。
+- 披露度普查结果可用于供应商自查，不得引用为核验结论；披露度普查、T1、T2 三者不可互换。
 
 ## 一句话，和一句必须同时说的话
 
@@ -225,7 +225,7 @@ NEES 说买到了多少独立证据；轨迹分散度说这些证据的形状有
 
 | 入口 | 拿到什么 | 产出 | 前置 |
 |---|---|---|---|
-| 公开卡片 | 已发布的卡 | 初筛检查（免费） | 无，无需登录与许可 |
+| 公开卡片 | 已发布的卡 | 披露度普查（免费） | 无，无需登录与许可 |
 | 委托样本 | 卡＋样本＋标签＋场景 id | 采购前数据体检（付费） | 阈值声明表、样本框声明、DATA_TERMS |
 | 全量 | 语料与记录 | 深度核验 | 同上＋数据协议与算力 |
 
@@ -233,12 +233,12 @@ NEES 说买到了多少独立证据；轨迹分散度说这些证据的形状有
 验收方走不动声明流程时落默认套餐，记录显著印"不得作为验收判定依据"。
 
 界面是装甲不是风格：无分数、无评级、无排行榜、无形容词；FAIL 格同时显示声明值与重算值；
-按字母或日期排，不按失败数排；聚合只写"m 份卡中 n 份至少一项不平"；每页顶部先整段印用途限定。
-中文只用"初筛检查 / 采购前数据体检 / 深度核验"三个名字。委托即公开、委托方具名；认证、评级、
+按字母或日期排，不按失败数排；聚合只写两个集合分布："m 份中 n 份至少一项 FAIL，k 份至少一项 MISSING"；每页顶部先整段印用途限定。
+中文只用"披露度普查 / 采购前数据体检 / 深度核验"三个名字。委托即公开、委托方具名；认证、评级、
 入表背书没有入口。
 
 开源三段式：代码 MIT、本模块计算产出 CC-BY-4.0、第三方字段依源方条款。方法、schema、校验器、
-纯算术、初筛脚本、观测件格式，以及实现后的时钟模型与去重检测器连同夹具，全部开源——"每一项都能被第三方按同一口径
+纯算术、披露度普查脚本、观测件格式，以及实现后的时钟模型与去重检测器连同夹具，全部开源——"每一项都能被第三方按同一口径
 复算"就是产品本身。语料与样本、买方私有件、未发出草稿、委托报价不公开。
 
 付费买的是"在委托方样本上、按委托方声明的阈值、出一份带日期、可复算、委托方具名的记录"。
@@ -250,7 +250,7 @@ fork 防伪靠三层可验证性：用途限定必填且校验器拒收剥掉的
 | 路径 | 内容 |
 |---|---|
 | `METHOD.md` | 方法：单元、切分、五维与 NEES 的关系、阈值归属、六类同步判定与结构性故障映射、去重发现、NEES 数学、封顶公式、精确零失败界、轨迹分散度、引用规则、放弃条件 |
-| `schema/record.schema.json` | 记录规范形式（`eeo-dataset-review/0.4`） |
+| `schema/record.schema.json` | 记录规范形式（`eeo-dataset-review/0.5`） |
 | `schema/sync-observation.schema.json` | 时钟观测件（`eeo-sync-observation/0.1`） |
 | `schema/examples/record-example.json` | 全量、同步已核验、可算 |
 | `schema/examples/record-example-unestimable.json` | 不可算（零方差占优），分散度仍可算 |
@@ -269,18 +269,19 @@ fork 防伪靠三层可验证性：用途限定必填且校验器拒收剥掉的
 | `RELEASE_GATE.md` | 发布门：冻结清单、预检记录、tag 不移、纠错发新版本 |
 | `tools/freeze_release.py` | 冻结一个版本的逐文件清单；已存在则拒绝 |
 | `tools/release_preflight.py` | 发布前复算冻结清单、全量检查，写 `preflight.json` |
-| `releases/v0.4/manifest.json` | V0.4 冻结清单 |
+| `releases/v0.5/manifest.json` | V0.5 冻结清单 |
 | `.github/workflows/reproduce.yml` | CI：每次 push/PR 跑自检、示例与 schema |
 | `ENTRY.md` | 三个入口、界面硬约束、开源范围与 fork 防伪 |
 | `LICENSE` | MIT（代码）；名称与记录格式标识不在授权范围内 |
 | `CITATION.md` | 引用必给四项：方法版本、语料 id 与版本、日期、记录哈希 |
 | `entry/DATA_TERMS.md` | 委托样本文档模板：要文件不要链接、用后删除、禁止再分发 |
 | `entry/sampling-frame.md` | 样本框模板：committed（规则哈希与种子）或 supplier-provided（封顶） |
-| `checks/README.md` | Phase 0 初筛规则 |
+| `checks/README.md` | Phase 0 披露度普查规则 |
 | `checks/cards-source.csv` | Phase 0 输入：`dataset_id` 与公开卡片 URL |
 | `tools/screen_cards.py` | 抓卡、双哈希、跑 S1–S6，写出 CSV/HTML/README/manifest |
 | `checks/dataset/2026-11-25/` | V0.3 的旧版 Phase 0 结果，保留但不改写 |
-| `checks/dataset/2026-11-25-r2/` | V0.4 结果：12 张卡片、双哈希、FAIL/MISSING 分开汇总 |
+| `checks/dataset/2026-11-25-r2/` | V0.4 结果：12 张 LeRobot 卡片、双哈希 |
+| `checks/dataset/2026-11-26/` | V0.5 结果：20 张异源页面、可判率、FAIL/MISSING 分开 |
 
 ## 校验
 
@@ -304,4 +305,4 @@ schema 管不了、由校验器执行的规则：阈值（含 m）由谁定、�
 ## 引用
 
 引用时给 `method_version`、语料 id 与版本、检索日期、记录自身哈希，以及级别（T1/T2）。
-初筛、样本级记录、全量记录三者不可互换，也不得用于它没有覆盖的语料。
+披露度普查、样本级记录、全量记录三者不可互换，也不得用于它没有覆盖的语料。

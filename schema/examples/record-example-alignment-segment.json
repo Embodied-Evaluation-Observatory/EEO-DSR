@@ -1,5 +1,5 @@
 {
-  "schema_version": "eeo-dataset-review/0.4",
+  "schema_version": "eeo-dataset-review/0.5",
   "module": "EEO-DSR",
   "dataset": {
     "dataset_id": "droid-1k-sample",
@@ -14,7 +14,7 @@
   "review": {
     "stage": "pre_purchase",
     "tier": "T2_full",
-    "method_version": "EEO-DSR-V0.4",
+    "method_version": "EEO-DSR-V0.5",
     "started_at": "2026-11-22T10:00:00Z",
     "frame": "committed",
     "frame_rule_sha256": "00000000000000000000000000000000000000000000000078dde6e5fd29f054",
@@ -334,7 +334,7 @@
   "scope_declaration": {
     "label_consistency": {
       "status": "not_assessed",
-      "reason": "标注一致性需要标签语义与金标准，本版不提供该读数；标签与索引核对安排在卡片初筛与数据集侧驱动之后。"
+      "reason": "标注一致性需要标签语义与金标准，本版不提供该读数；标签与索引核对安排在卡片披露度普查与数据集侧驱动之后。"
     },
     "card_index_crosscheck": {
       "status": "not_assessed",

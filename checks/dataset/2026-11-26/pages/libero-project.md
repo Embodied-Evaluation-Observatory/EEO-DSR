@@ -1,0 +1,68 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.9.3/css/bulma.min.css">
+
+<div class="video-container">
+    <video autoplay muted playsinline controls id="myVideo">
+        <source src="assets/videos/libero_intro.mp4" type="video/mp4" onended="skipIntro()">
+        Your browser does not support HTML5 video.
+    </video>
+    <!-- <iframe width="560" height="315" src="https://www.youtube.com/embed/tL6ALEzpNFQ?si=zcBnKuxaA8GXaVBb" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen onended="skipIntro()"></iframe> -->
+</iframe>
+
+</div>
+
+<div class="button-position">
+    <button id="myBtn" class="button is-rounded custom-button" onclick="skipIntro()">Go to the website</button>
+</div>
+
+<script>
+    function skipIntro() {
+        location.href = 'main.html';  // redirect to the index page
+    }
+    document.cookie = "visited=true; path=/";
+
+</script>
+
+<style>
+    /* Style the video container */
+    .video-container {
+        position: fixed;
+        top: 10px;
+        bottom: -10px;
+        width: 100%;
+        height: 95%;
+        overflow: hidden;
+        z-index: -1;
+
+        display: flex; /* set the display to flex */
+        justify-content: center; /* center horizontally */
+        align-items: center; /* center vertically */
+    }
+    .button-position {
+        position: fixed;
+        left: 50%;
+        bottom: 20px;
+        transform: translate(-50%, -50%);
+    }
+
+    /* Style the video */
+    .video-container video {
+        min-width: 40%; 
+        min-height: 50%; 
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        bottom: 0;
+        transform: translate(-50%,-50%);
+        width:60%!important;
+    }
+
+    .custom-button {
+        background-color: rgba(255, 255, 255, 0.2); /* white with 20% opacity */
+        color: rgb(42, 40, 40); /* vivid white text */
+        border: 2px solid rgb(146, 99, 99); /* white border */
+    }
+
+    .custom-button:hover {
+        background-color: rgba(255, 255, 255, 0.4); /* slightly less transparent when hovered */
+    }
+</style>

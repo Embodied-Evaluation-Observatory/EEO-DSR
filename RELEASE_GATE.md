@@ -11,15 +11,15 @@ not a claim.
 
 ## Order
 
-1. `python3 tools/freeze_release.py --version v0.4 --tag v0.4`
-   Writes `releases/v0.4/manifest.json`, hashing every tracked file except `releases/` and
+1. `python3 tools/freeze_release.py --version v0.5 --tag v0.5`
+   Writes `releases/v0.5/manifest.json`, hashing every tracked file except `releases/` and
    `SHA256SUMS`. It refuses to overwrite an existing release directory.
-2. `python3 tools/release_preflight.py --version v0.4`
+2. `python3 tools/release_preflight.py --version v0.5`
    Recomputes every manifest hash and size, checks `SHA256SUMS`, runs the validator self-test,
    the full example/schema check set, and the cosine smoke test. Writes
-   `releases/v0.4/preflight.json`; refuses to overwrite an existing record.
+   `releases/v0.5/preflight.json`; refuses to overwrite an existing record.
 3. Commit the manifest and the gate record. Confirm `main` carries what you think it carries.
-4. Create the annotated tag (`git tag -a v0.4 -m ...`).
+4. Create the annotated tag (`git tag -a v0.5 -m ...`).
 5. Push `main`, then the tag. Do not push any other tag from a bundle.
 6. Read back what the remote serves: `git ls-remote` for `main`, the tag object and its peeled
    commit. Compare the tag's tree with the local tree.
