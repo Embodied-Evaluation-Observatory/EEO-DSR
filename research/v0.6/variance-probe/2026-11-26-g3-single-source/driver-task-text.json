@@ -1,6 +1,6 @@
 {
   "cannot_cluster": 0,
-  "claim_scope": "success_rate_precision_at_single_source_cell_building_current_task_not_training_information",
+  "claim_scope": "success_rate_precision_at_single_source_task_text_not_training_information",
   "cluster_budget": {
     "formula": "ceil(ln(alpha) / ln(1 - target)), alpha=0.05",
     "note": "zero-failure budget; with observed failures use a failure-rate interval, not this table",
@@ -13,7 +13,7 @@
   },
   "cluster_key": "scene_id",
   "effective_n_success_rate": {
-    "claim_scope": "success_rate_precision_at_single_source_cell_building_current_task_not_training_information",
+    "claim_scope": "success_rate_precision_at_single_source_task_text_not_training_information",
     "deff_effective": 12.126365868440343,
     "mbar_deff": 6.629806132823969,
     "mbar_n_eff": 11073.174468335426,
@@ -38,8 +38,8 @@
     "status": "computed"
   },
   "information_status": "point_estimate_without_interval",
-  "input": "cell_corpus.csv.gz",
-  "label": "single_source_cell",
+  "input": "task_text_corpus.csv.gz",
+  "label": "single_source_task_text",
   "n_eff_interval": {
     "high": 73413.0,
     "low": 2418.0,

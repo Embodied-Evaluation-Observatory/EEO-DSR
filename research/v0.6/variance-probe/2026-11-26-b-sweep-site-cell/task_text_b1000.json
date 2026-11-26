@@ -1,6 +1,6 @@
 {
-  "label": "single_source_cell",
-  "input": "research/v0.6/variance-probe/2026-11-26-g3-single-source/cell_corpus.csv.gz",
+  "label": "single_source_task_text",
+  "input": "research/v0.6/variance-probe/2026-11-26-g3-single-source/task_text_corpus.csv.gz",
   "input_sha256": {
     "rows_input": 73413,
     "rows_used": 73413,

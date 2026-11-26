@@ -40,9 +40,9 @@
       "bootstrap_replicates": 1000
     },
     {
-      "axis": "cell_single_source",
-      "cluster_key": "scene_id",
-      "claim_scope": "success_rate_precision_at_single_source_cell_building_current_task_not_training_information",
+      "axis": "task_text_single_source",
+      "cluster_key": "building||current_task",
+      "claim_scope": "success_rate_precision_at_single_source_task_text_not_training_information",
       "K": 2418,
       "N": 73413,
       "singletons": 844,
@@ -68,7 +68,8 @@
       ],
       "rho_free_interval_relative_width": 0.9670630542274529,
       "negative_share": 0.0,
-      "bootstrap_replicates": 1000
+      "bootstrap_replicates": 1000,
+      "label_correction": "previous draft label cell_single_source was wrong; this axis is task text (building||current_task), not the mirror cell axis building||instruction"
     },
     {
       "axis": "native_single_source",
@@ -107,5 +108,10 @@
   "nees_record": {
     "status": "not_issued",
     "reason": "research draft; no release gate"
+  },
+  "label_correction": {
+    "from": "cell_single_source",
+    "to": "task_text_single_source",
+    "reason": "raw metadata has current_task (1,220 values), not per-episode language_instruction; mirror cell key is building||instruction with K=53,714, this axis has K=2,418; do not call it cell"
   }
 }

@@ -16,7 +16,8 @@
       "n_eff_high": 6480.963204195086,
       "n_eff_relative_width": 0.16638017707133682,
       "rho_low_delta_vs_Bmax": 0.0009545779406994193,
-      "rho_high_delta_vs_Bmax": 0.004486353738140658
+      "rho_high_delta_vs_Bmax": 0.004486353738140658,
+      "rho_width_delta_vs_Bmax": 0.003531775797441239
     },
     {
       "B": 250,
@@ -30,7 +31,8 @@
       "n_eff_high": 6452.062965826688,
       "n_eff_relative_width": 0.16167424438157377,
       "rho_low_delta_vs_Bmax": -0.000808613719921969,
-      "rho_high_delta_vs_Bmax": 0.003973394360337279
+      "rho_high_delta_vs_Bmax": 0.003973394360337279,
+      "rho_width_delta_vs_Bmax": 0.004782008080259248
     },
     {
       "B": 500,
@@ -44,7 +46,8 @@
       "n_eff_high": 6451.324079455438,
       "n_eff_relative_width": 0.15749332972974994,
       "rho_low_delta_vs_Bmax": -0.0007058320508517291,
-      "rho_high_delta_vs_Bmax": 0.003003488529855436
+      "rho_high_delta_vs_Bmax": 0.003003488529855436,
+      "rho_width_delta_vs_Bmax": 0.003709320580707165
     },
     {
       "B": 1000,
@@ -58,7 +61,8 @@
       "n_eff_high": 6428.406390940078,
       "n_eff_relative_width": 0.15217363258739017,
       "rho_low_delta_vs_Bmax": 0.0005790576271987868,
-      "rho_high_delta_vs_Bmax": 0.0011315845855527362
+      "rho_high_delta_vs_Bmax": 0.0011315845855527362,
+      "rho_width_delta_vs_Bmax": 0.0005525269583539494
     },
     {
       "B": 2000,
@@ -72,7 +76,8 @@
       "n_eff_high": 6413.558141011597,
       "n_eff_relative_width": 0.14759818729015656,
       "rho_low_delta_vs_Bmax": 0.0006087135192999749,
-      "rho_high_delta_vs_Bmax": 0.0004355992178957657
+      "rho_high_delta_vs_Bmax": 0.0004355992178957657,
+      "rho_width_delta_vs_Bmax": -0.00017311430140420914
     },
     {
       "B": 5000,
@@ -86,7 +91,8 @@
       "n_eff_high": 6421.393016182214,
       "n_eff_relative_width": 0.14901664011428506,
       "rho_low_delta_vs_Bmax": 0.0003241836405771248,
-      "rho_high_delta_vs_Bmax": 0.000382432377485753
+      "rho_high_delta_vs_Bmax": 0.000382432377485753,
+      "rho_width_delta_vs_Bmax": 5.8248736908628196e-05
     },
     {
       "B": 10000,
@@ -100,7 +106,8 @@
       "n_eff_high": 6430.030526148194,
       "n_eff_relative_width": 0.15022120456619403,
       "rho_low_delta_vs_Bmax": 0.0,
-      "rho_high_delta_vs_Bmax": 0.0
+      "rho_high_delta_vs_Bmax": 0.0,
+      "rho_width_delta_vs_Bmax": 0.0
     }
   ],
   "note": "B-sweep measures interval stability on the observed corpus, not simulation coverage. The n_eff interval is research-only."

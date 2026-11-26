@@ -75,8 +75,8 @@
   ],
   "outputs": {
     "cards.csv": "7994a187cca4abfc06360d3bdb89210079e5b9a52aa8191ca6adb950b05566e6",
-    "index.html": "f648d632b9d4b4476467b8bcd54d577c04fac8100d5b752e6f459385c3db9df5",
-    "README.md": "40839ce486e936e9fd3a5dff923e9ce5eb025f8210e8bbedb1537b45bafec3c0"
+    "index.html": "568df84f72aa002a0165b5730655dd9222b49d2d03eff191a69dec7c84ed8957",
+    "README.md": "1d2ab2b50b0d16107ce56cc4125e3bc1212d94f36fe4c1ff89d30900304934f6"
   },
   "summary": {
     "cards": 2,
@@ -118,38 +118,71 @@
         "AMBIGUOUS": 0
       }
     },
-    "judgeability": {
+    "decision_rate": {
       "S1": {
-        "judgeable": 0,
-        "rate": 0.0,
-        "verdict": "不可判"
+        "numerator": 1,
+        "denominator": 2,
+        "rate": 0.5
       },
       "S2": {
-        "judgeable": 0,
-        "rate": 0.0,
-        "verdict": "不可判"
+        "numerator": 0,
+        "denominator": 2,
+        "rate": 0.0
       },
       "S3": {
-        "judgeable": 0,
-        "rate": 0.0,
-        "verdict": "不可判"
+        "numerator": 0,
+        "denominator": 2,
+        "rate": 0.0
       },
       "S4": {
-        "judgeable": 2,
-        "rate": 1.0,
-        "verdict": "无可区分信号"
+        "numerator": 2,
+        "denominator": 2,
+        "rate": 1.0
       },
       "S5": {
-        "judgeable": 0,
-        "rate": 0.0,
-        "verdict": "不可判"
+        "numerator": 0,
+        "denominator": 2,
+        "rate": 0.0
       },
       "S6": {
-        "judgeable": 1,
-        "rate": 0.5,
-        "verdict": "无可区分信号"
+        "numerator": 1,
+        "denominator": 2,
+        "rate": 0.5
       }
-    }
+    },
+    "unique_recompute_rate": {
+      "S1": {
+        "numerator": 0,
+        "denominator": 2,
+        "rate": 0.0
+      },
+      "S2": {
+        "numerator": 0,
+        "denominator": 2,
+        "rate": 0.0
+      },
+      "S3": {
+        "numerator": 0,
+        "denominator": 2,
+        "rate": 0.0
+      },
+      "S4": {
+        "numerator": 2,
+        "denominator": 2,
+        "rate": 1.0
+      },
+      "S5": {
+        "numerator": 0,
+        "denominator": 2,
+        "rate": 0.0
+      },
+      "S6": {
+        "numerator": 1,
+        "denominator": 2,
+        "rate": 0.5
+      }
+    },
+    "note": "Two rates are collection-level distributions; AMBIGUOUS counts in decision rate, not in unique-recompute rate."
   },
   "note": "Manual transcription from pinned pages; not an automatic parser. Two-card supplement, not a 22-card census.",
   "source_sha256": "dbb59e7bf3c13820d804a8858b92c3a5cfca7eaa881a7bea1c1263944514ecc8",
