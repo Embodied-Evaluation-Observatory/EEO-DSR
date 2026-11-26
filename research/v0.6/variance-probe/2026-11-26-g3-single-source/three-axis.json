@@ -1,0 +1,111 @@
+{
+  "generated": "2026-11-26",
+  "status": "unreviewed_draft_in_repo",
+  "source": "droid_raw_meta.csv",
+  "source_rows": 74896,
+  "scene_valid_rows": 73511,
+  "same_rows_after_dedup": 73413,
+  "duplicate_rows_removed": 98,
+  "outcome": "success from raw metadata; checked against droid_scene.csv, 0 mismatches",
+  "axes": [
+    {
+      "axis": "site_single_source",
+      "cluster_key": "scene_id",
+      "claim_scope": "success_rate_precision_at_single_source_site_building_not_training_information",
+      "K": 69,
+      "N": 73413,
+      "singletons": 1,
+      "variable_clusters": 59,
+      "zero_variance_share_estimable": 0.1323529411764706,
+      "rho_point": 0.10461333686070409,
+      "n_eff_point": 589.745400072762,
+      "deff_effective": 124.48253092087265,
+      "mbar_n_eff": 654.3081445749241,
+      "mbar_overstatement": 0.10947562201281502,
+      "rho_bootstrap_95": [
+        0.06431886005088992,
+        0.14755963100405742
+      ],
+      "n_eff_conditional_interval": [
+        424.508983443765,
+        921.125562260302
+      ],
+      "n_eff_conditional_relative_width": 0.7381150854100521,
+      "rho_free_interval": [
+        69,
+        73413
+      ],
+      "rho_free_interval_relative_width": 0.9990601119692697,
+      "negative_share": 0.0,
+      "bootstrap_replicates": 1000
+    },
+    {
+      "axis": "cell_single_source",
+      "cluster_key": "scene_id",
+      "claim_scope": "success_rate_precision_at_single_source_cell_building_current_task_not_training_information",
+      "K": 2418,
+      "N": 73413,
+      "singletons": 844,
+      "variable_clusters": 956,
+      "zero_variance_share_estimable": 0.3926302414231258,
+      "rho_point": 0.19174408379700483,
+      "n_eff_point": 6053.998435843183,
+      "deff_effective": 12.126365868440343,
+      "mbar_n_eff": 11073.174468335426,
+      "mbar_overstatement": 0.829067943390241,
+      "rho_bootstrap_95": [
+        0.1656403083635099,
+        0.2214136947763227
+      ],
+      "n_eff_conditional_interval": [
+        5563.627824455608,
+        6614.515106953162
+      ],
+      "n_eff_conditional_relative_width": 0.17258580202523333,
+      "rho_free_interval": [
+        2418,
+        73413
+      ],
+      "rho_free_interval_relative_width": 0.9670630542274529,
+      "negative_share": 0.0,
+      "bootstrap_replicates": 1000
+    },
+    {
+      "axis": "native_single_source",
+      "cluster_key": "scene_id",
+      "claim_scope": "success_rate_precision_at_single_source_composite_scene_key_not_training_information",
+      "K": 2220,
+      "N": 73413,
+      "singletons": 217,
+      "variable_clusters": 1045,
+      "zero_variance_share_estimable": 0.4782825761357963,
+      "rho_point": 0.28452378847464543,
+      "n_eff_point": 5953.53928108529,
+      "deff_effective": 12.330984400025207,
+      "mbar_n_eff": 7251.1176302533095,
+      "mbar_overstatement": 0.21795074961384642,
+      "rho_bootstrap_95": [
+        0.2581172759193779,
+        0.3139812599854443
+      ],
+      "n_eff_conditional_interval": [
+        5519.340377449994,
+        6428.406390940078
+      ],
+      "n_eff_conditional_relative_width": 0.15217363258739017,
+      "rho_free_interval": [
+        2220,
+        73413
+      ],
+      "rho_free_interval_relative_width": 0.9697601242286789,
+      "negative_share": 0.0,
+      "bootstrap_replicates": 1000
+    }
+  ],
+  "native_matches_r3b": true,
+  "note": "Single-source rerun: all three axes use exactly the same 73,413 episode rows and outcomes from raw metadata. The cell axis here uses building||current_task, not building||language_instruction; current_task has 1,220 values, so this cell axis is coarser and is not comparable to the mirror cell axis K=53,714. The cross-source mirror/raw intersection remains blocked by the missing episode_index <-> uuid key.",
+  "nees_record": {
+    "status": "not_issued",
+    "reason": "research draft; no release gate"
+  }
+}

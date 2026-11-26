@@ -1,0 +1,94 @@
+{
+  "cannot_cluster": 0,
+  "claim_scope": "success_rate_precision_at_single_source_site_building_not_training_information",
+  "cluster_budget": {
+    "formula": "ceil(ln(alpha) / ln(1 - target)), alpha=0.05",
+    "note": "zero-failure budget; with observed failures use a failure-rate interval, not this table",
+    "status": "reference_only",
+    "targets": {
+      "0.01": 299,
+      "0.05": 59,
+      "0.1": 29
+    }
+  },
+  "cluster_key": "scene_id",
+  "effective_n_success_rate": {
+    "claim_scope": "success_rate_precision_at_single_source_site_building_not_training_information",
+    "deff_effective": 124.48253092087265,
+    "mbar_deff": 112.19942867697799,
+    "mbar_n_eff": 654.3081445749241,
+    "mbar_overstatement": 0.10947562201281502,
+    "method": "per_cluster_sum",
+    "multi_contribution": 588.745400072762,
+    "n_clusters": 69,
+    "n_dedup": 73413,
+    "n_eff": 589.745400072762,
+    "rho": 0.10461333686070409,
+    "rho_used": 0.10461333686070409,
+    "singleton_contribution": 1.0
+  },
+  "excluded_missing_scene": 0,
+  "icc_point": {
+    "estimator": "outcome_icc",
+    "m0": 1043.3283240529224,
+    "msb": 18.02838784590597,
+    "msw": 0.1466936222943692,
+    "p_bar": 0.794938157249496,
+    "rho": 0.10461333686070409,
+    "status": "computed"
+  },
+  "information_status": "point_estimate_without_interval",
+  "input": "site_corpus.csv.gz",
+  "label": "single_source_site",
+  "n_eff_interval": {
+    "high": 73413.0,
+    "low": 69.0,
+    "lower_share_of_dedup": 0.0009398880307302522,
+    "method": "per_cluster_sum; singletons exact; rho in [0,1]",
+    "relative_width": 0.9990601119692697,
+    "singleton_contribution": 1.0,
+    "width": 73344.0
+  },
+  "nees_record": {
+    "note": "effective N is for success-rate precision, not training information; a record waits for a bootstrap interval.",
+    "reason": "no_cluster_bootstrap_rho_interval",
+    "status": "not_issued"
+  },
+  "rho_low_cap": {
+    "bound": null,
+    "reason": "rho_low_not_available",
+    "status": "unestimable"
+  },
+  "rows_input": 73413,
+  "rows_used": 73413,
+  "source_rows": 73413,
+  "summary": {
+    "clusters": 69,
+    "constant_clusters": 9,
+    "constant_episodes": 9251,
+    "denominator": "all clusters; singletons contribute exactly 1",
+    "episodes": 73413,
+    "multi_clusters": 68,
+    "multi_episodes": 73412,
+    "neff_interval_high": 73413,
+    "neff_interval_low": 69,
+    "neff_interval_relative_width": 0.9990601119692697,
+    "neff_interval_width": 73344,
+    "singleton_episodes": 1,
+    "singleton_exact_contribution": 1,
+    "singletons": 1,
+    "variable_clusters": 59,
+    "variable_episodes": 64161,
+    "zero_variance_clusters_all": 10,
+    "zero_variance_clusters_estimable": 9,
+    "zero_variance_share": 0.1323529411764706,
+    "zero_variance_share_all": 0.14492753623188406,
+    "zero_variance_share_estimable": 0.1323529411764706
+  },
+  "unclusterable_share": 0.0,
+  "zero_failure_bounds": {
+    "failures": 15054,
+    "reason": "observed_failures",
+    "status": "not_applicable"
+  }
+}
