@@ -10,7 +10,7 @@ EEO-DSR 是数据集声明与标识层的独立核验器，和可复算的溯源
 
 标题保留“成功率精度层”：逐簇求和、单例分层、ρ-free 界、簇级 bootstrap、偏差/覆盖模拟、极端偏斜夹具是推断而非计数，且与 ρ 算在什么之上无关，是可复用资产。
 
-> 本文是 V0.6 定位修订草案，统计逻辑未改；未提交、未推送。发布版本仍为 V0.5。
+> 本文是 V0.6 定位修订，统计逻辑未改；已发布到 `main`（`0426c4e`）。
 
 ## 三种读数必须分开
 
@@ -309,7 +309,7 @@ fork 防伪靠三层可验证性：用途限定必填且校验器拒收剥掉的
 | `CITATION.md` | 引用必给四项：方法版本、语料 id 与版本、日期、记录哈希 |
 | `entry/DATA_TERMS.md` | 委托样本文档模板：要文件不要链接、用后删除、禁止再分发 |
 | `entry/sampling-frame.md` | 样本框模板：committed（规则哈希与种子）或 supplier-provided（封顶） |
-| `checks/README.md` | Phase 0 披露度普查规则 |
+| `checks/README.md` | 卡片口径明确性检查规则（两道闸、四态） |
 | `checks/cards-source.csv` | Phase 0 输入：`dataset_id` 与公开卡片 URL |
 | `tools/screen_cards.py` | 抓卡、双哈希、跑 S1–S6，写出 CSV/HTML/README/manifest |
 | `checks/dataset/2026-11-25/` | V0.3 的旧版 Phase 0 结果，保留但不改写 |
@@ -339,3 +339,7 @@ schema 管不了、由校验器执行的规则：阈值（含 m）由谁定、�
 
 引用时给 `method_version`、语料 id 与版本、检索日期、记录自身哈希，以及级别（T1/T2）。
 披露度普查、样本级记录、全量记录三者不可互换，也不得用于它没有覆盖的语料。
+
+## License
+
+代码采用 MIT 许可；名称、记录格式标识与发布物标识不在授权范围内。全文见 [`LICENSE`](LICENSE)。
