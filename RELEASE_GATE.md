@@ -37,6 +37,20 @@ not a claim.
 - Never rewrite a commit to add a signature or fix metadata. `SIGNING.md` in the Archive records
   the same rule: losing a key or missing a signature is a new release, not a history rewrite.
 
+## Readout labels are not release gates
+
+The preflight gate above protects the published bytes of a version. It does not decide whether a
+readout may be issued. For readouts, G1-G3 are labeling obligations: a reading may be issued before
+all residuals close, but only with the labels in `GOVERNANCE-ADDENDUM.md`.
+
+- G1 residuals do not block. Print the axis definition and the fact that the 564 semantic dedup is unreproduced; never present 2,207 or 2,220 as the paper's scene count.
+- G2 does not block the interval. Print nominal level, measured coverage, simulation count, size-table source, and interval method. Do not claim a nominal level that has not been calibrated.
+- G3 residuals do not block. Every count carries its row universe; differences between universes are labeled as such, not subtracted silently.
+
+A generic disclaimer is not a label. Missing coverage, simulation count, size-table source, or
+interval method means the reading is unlabeled and is not issued. Tagging a version still requires
+the preflight record; this section only governs claims.
+
 ## What the checks mean
 
 | Check | Blocks when |
