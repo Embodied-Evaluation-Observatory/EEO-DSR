@@ -1,0 +1,29 @@
+{
+  "interval_calibration": "measured_below_nominal",
+  "nominal_95_claim": "not_permitted",
+  "required_annotations": {
+    "interval_method": "percentile",
+    "nominal": 0.95,
+    "measured_coverage": [
+      0.838,
+      0.936
+    ],
+    "bootstrap_reps": 2000,
+    "size_table": "cell",
+    "calibrator_sha256": "dec94fb63388396fc63097bb01b9532743b8d2cedc5e46a1e8c98edb03f3eeed",
+    "full_k_calibrator_sha256": "52c94952408268378050e384e966e0a997d53763cc911fc7acf7c023c952b8b1",
+    "size_table_sha256": "6ca4bf3b814c27910d00bec813b2063b356338c041295b8d3f48e84661ab2ae3",
+    "size_table_source": "research/v0.6/variance-probe/2026-11-26-r2/droid_cell.csv.gz",
+    "full_k_rho090": {
+      "rho_coverage_percentile": 0.85,
+      "rho_coverage_bca": 0.833,
+      "n_eff_coverage_percentile": 0.847,
+      "simulations": 300,
+      "bootstrap_reps": 2000,
+      "m_occ_sd": 75.75,
+      "source": "research/v0.6/variance-probe/2026-11-26-cell-full-k/full-vs-fixed-rho090.json"
+    }
+  },
+  "n_eff_rule": "n_eff interval is an interval for true n_eff; never inherit the rho interval's nominal level",
+  "note": "This field block is a publication constraint, not a general disclaimer."
+}

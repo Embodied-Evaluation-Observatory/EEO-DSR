@@ -57,7 +57,7 @@ raw → sync 筛选 → dedup 计数 → ITR / NEES
 | 闸 | 现状 | 发行标注 |
 |---|---|---|
 | G1 簇键唯一性 | **已发现碰撞**：2,207 个 raw scene_id 中 9 个跨 >1 个 building、2 个跨 >1 个 robot_serial；这 9 个 id 覆盖 2,172 条 episode，占 73,413 的 2.96%。覆盖键仍是 `scene_id`，精度键改为 `scene_id｜building｜robot_serial`，重跑后 K=2,220。2,207 raw、2,220 复合键、2,080 论文 scene、564 语义去重不是一回事；564 的语义映射未复现 | 印轴口径，并印“564 语义去重未复现”；不得把 2,207 或 2,220 写成论文 scene 数 |
-| G2 覆盖率标定 | native composite 已跑 1,000 模拟 ×100 reps：覆盖率 0.910–0.938。cell 轴 B=25/100/500/2,000 各 1,000 模拟，B=2,000 覆盖率 0.838–0.936；另比了 percentile／basic／BC／BCa：percentile 在 8 个 ρ 中 7 个最好，ρ=0.90 仍只有 0.838，basic 0.739，BC 0.824，BCa 0.819。换区间名字不能修复 | 区间照发，旁边印“名义 95%，实测覆盖 0.910–0.938（1,000×100，native 尺寸表，percentile）”；cell 印“0.838–0.936（1,000×B=2,000，cell 尺寸表，percentile）”。没有实测覆盖，不得附名义区间 |
+| G2 覆盖率标定 | native composite 已跑 1,000 模拟 ×100 reps：覆盖率 0.910–0.938。cell 轴 B=25/100/500/2,000 各 1,000 模拟，B=2,000 覆盖率 0.838–0.936；另比了 percentile／basic／BC／BCa：percentile 在 8 个 ρ 中 7 个最好，ρ=0.90 仍只有 0.838，basic 0.739，BC 0.824，BCa 0.819。换区间名字不能修复。覆盖率网格另作研究注记，不是语料记录；`interval_calibration: measured_below_nominal`，`nominal_95_claim: not_permitted` | 区间照发，旁边印“名义 95%，实测覆盖 0.910–0.938（1,000×100，native 尺寸表，percentile）”；cell 印“0.838–0.936（1,000×B=2,000，cell 尺寸表，percentile）”；cell 全 K 对照 ρ=0.90 印“fixed 0.827／full 0.850／n_eff 0.847（300×2，B=2,000）”，仅该格。没有实测覆盖，不得附名义区间；不得写“95% 置信区间” |
 | G3 行集一致 | 计数已对账：镜像 95,658、镜像 building 非缺失 93,994、raw metadata 74,896、raw scene 非缺失 73,413；差 20,762 是 95,658 与 74,896 的跨宇宙差额。镜像无 uuid、metadata 无 episode_index，精确交集仍无法构造 | 每个数后印所属行宇宙；不得跨宇宙直接相减，也不得把 raw scene 行当作镜像子集 |
 
 ### 第 2 级：有界可建

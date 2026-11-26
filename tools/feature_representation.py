@@ -49,36 +49,64 @@ def _robust_scale(x: np.ndarray) -> np.ndarray:
     return np.where(scale > 0, scale, 1.0)
 
 
-def fit_representation(features: np.ndarray, dims: int | None = None):
-    """Fit the fixed representation and return scores, loadings, diagnostics."""
+def fit_representation(features: np.ndarray, dims: int | None = None,
+                       basis: dict | None = None):
+    """Fit or apply the fixed representation.
+
+    Returns fingerprints (L2-normalized, for cosine dedup), projections
+    (pre-L2, for ICR dispersion), loadings, preprocessing parameters, and
+    diagnostics.  When ``basis`` is supplied, the SVD basis and medians/
+    scales/means are reused rather than re-fitted: reference and target then
+    live in the same coordinate space.  This is the shared-basis contract.
+    """
     x = _median_impute(features)
     if x.ndim != 2:
         raise ValueError("features must be a 2-D matrix")
     if x.shape[0] < 2 or x.shape[1] < 1:
         raise ValueError("need at least two episodes and one feature")
-    x = x - x.mean(axis=0, keepdims=True)
-    x = x / _robust_scale(x)
-    u, s, vt = np.linalg.svd(x, full_matrices=False)
-    max_k = min(x.shape[1], x.shape[0] - 1, s.size)
-    k = max_k if dims is None else max(1, min(int(dims), max_k))
-    scores = x @ vt[:k].T
-    # Deterministic sign: largest absolute loading is positive.
-    for j in range(k):
-        if vt[j, np.argmax(np.abs(vt[j]))] < 0:
-            vt[j] *= -1.0
-            scores[:, j] *= -1.0
-    norms = np.linalg.norm(scores, axis=1, keepdims=True)
-    fingerprints = np.divide(scores, norms, out=np.zeros_like(scores), where=norms > 0)
-    ev = (s * s) / max(1.0, float(x.shape[0] - 1))
-    evr = ev / ev.sum() if ev.sum() > 0 else np.zeros_like(ev)
-    diag = {
-        "n_episodes": int(x.shape[0]),
-        "input_dims": int(x.shape[1]),
-        "output_dims": int(k),
-        "explained_variance_ratio": [float(v) for v in evr[:k]],
-        "cumulative_explained_variance": float(evr[:k].sum()),
-    }
-    return fingerprints, vt[:k], diag
+    if basis is not None:
+        med = np.asarray(basis["medians"], dtype=float)
+        scales = np.asarray(basis["scales"], dtype=float)
+        means = np.asarray(basis["means"], dtype=float)
+        loadings = np.asarray(basis["loadings"], dtype=float)
+        if med.size != x.shape[1] or scales.size != x.shape[1] or means.size != x.shape[1]:
+            raise ValueError("basis preprocessing does not match input feature dimensions")
+        if loadings.shape[1] != x.shape[1]:
+            raise ValueError("basis loadings do not match input feature dimensions")
+        x = (x - means) / scales
+        projections = x @ loadings.T
+        k = loadings.shape[0]
+        diag = {"n_episodes": int(x.shape[0]), "input_dims": int(x.shape[1]),
+                "output_dims": int(k), "basis_reused": True}
+    else:
+        med = np.nanmedian(features, axis=0)
+        med = np.where(np.isfinite(med), med, 0.0)
+        x0 = _median_impute(features)
+        means = x0.mean(axis=0, keepdims=True)
+        scales = _robust_scale(x0 - means)
+        x = (x0 - means) / scales
+        u, s, vt = np.linalg.svd(x, full_matrices=False)
+        max_k = min(x.shape[1], x.shape[0] - 1, s.size)
+        k = max_k if dims is None else max(1, min(int(dims), max_k))
+        loadings = vt[:k].copy()
+        # Deterministic sign: largest absolute loading is positive.
+        for j in range(k):
+            if loadings[j, np.argmax(np.abs(loadings[j]))] < 0:
+                loadings[j] *= -1.0
+        projections = x @ loadings.T
+        ev = (s * s) / max(1.0, float(x.shape[0] - 1))
+        evr = ev / ev.sum() if ev.sum() > 0 else np.zeros_like(ev)
+        diag = {
+            "n_episodes": int(x.shape[0]),
+            "input_dims": int(x.shape[1]),
+            "output_dims": int(k),
+            "basis_reused": False,
+            "explained_variance_ratio": [float(v) for v in evr[:k]],
+            "cumulative_explained_variance": float(evr[:k].sum()),
+        }
+    norms = np.linalg.norm(projections, axis=1, keepdims=True)
+    fingerprints = np.divide(projections, norms, out=np.zeros_like(projections), where=norms > 0)
+    return fingerprints, projections, loadings, med, scales.reshape(-1), means.reshape(-1), diag
 
 
 def _cosine_pairs(fingerprints: np.ndarray, threshold: float, chunk: int = 512):
@@ -95,7 +123,16 @@ def _cosine_pairs(fingerprints: np.ndarray, threshold: float, chunk: int = 512):
     return out
 
 
-def run(input_path: str, out_prefix: str, dims: int | None, threshold: float | None):
+def _load_basis(path: str):
+    z = np.load(path, allow_pickle=True)
+    need = ("loadings", "medians", "scales", "means")
+    if any(k not in z for k in need):
+        raise ValueError("basis npz must contain loadings, medians, scales, means")
+    return {k: np.asarray(z[k], dtype=float) for k in need}
+
+
+def run(input_path: str, out_prefix: str, dims: int | None, threshold: float | None,
+        basis_path: str | None = None):
     z = np.load(input_path, allow_pickle=True)
     if "episode_id" not in z or "features" not in z:
         raise ValueError("input must contain episode_id and features")
@@ -105,7 +142,8 @@ def run(input_path: str, out_prefix: str, dims: int | None, threshold: float | N
         raise ValueError("episode_id length does not match features rows")
     if threshold is not None and not (0.0 < threshold <= 1.0):
         raise ValueError("dedup threshold must be in (0, 1]")
-    fingerprints, loadings, diag = fit_representation(features, dims)
+    basis = _load_basis(basis_path) if basis_path else None
+    fingerprints, projections, loadings, medians, scales, means, diag = fit_representation(features, dims, basis)
     cluster_id = z["cluster_id"] if "cluster_id" in z else None
     if cluster_id is not None:
         cluster_id = _as_str_array(cluster_id)
@@ -116,7 +154,11 @@ def run(input_path: str, out_prefix: str, dims: int | None, threshold: float | N
     payload = {
         "episode_id": episode_id,
         "fingerprints": fingerprints.astype(np.float32),
+        "projections": projections.astype(np.float32),
         "loadings": loadings.astype(np.float32),
+        "medians": medians.astype(np.float32),
+        "scales": scales.astype(np.float32),
+        "means": means.astype(np.float32),
     }
     if cluster_id is not None:
         payload["cluster_id"] = cluster_id
@@ -124,14 +166,18 @@ def run(input_path: str, out_prefix: str, dims: int | None, threshold: float | N
     meta = {
         "input": str(input_path),
         "input_sha256": hashlib.sha256(Path(input_path).read_bytes()).hexdigest(),
-        "method": "median impute; IQR robust scale; centre; SVD; sign fix; L2 normalize",
+        "method": "median impute; IQR robust scale; centre; SVD; sign fix; projections kept; L2 normalize for cosine",
         "representation": "episode-feature-pca-cosine-v1",
         "fingerprint_dims": diag["output_dims"],
+        "basis_path": str(basis_path) if basis_path else None,
+        "basis_sha256": hashlib.sha256(Path(basis_path).read_bytes()).hexdigest() if basis_path else None,
+        "basis_reused": bool(diag.get("basis_reused")),
         "diagnostics": diag,
         "dedup_threshold": threshold,
         "dedup_threshold_basis": "buyer-declared; absent means no candidate list",
         "dedup_notice": "cosine candidate list is not a duplicate count; DSR-D5a still needs calibration",
-        "icr_notice": "this is the shared feature upstream; ICR interval is not issued here",
+        "icr_notice": "ICR uses `projections` before L2, not `fingerprints`; ICR interval is not issued here",
+        "l2_notice": "fingerprints are L2-normalized for cosine dedup; projections retain amplitude for ICR dispersion",
     }
     if threshold is not None:
         pairs = _cosine_pairs(fingerprints, threshold)
@@ -176,6 +222,7 @@ def main() -> int:
     ap.add_argument("--out-prefix")
     ap.add_argument("--dims", type=int, default=64)
     ap.add_argument("--dedup-threshold", type=float)
+    ap.add_argument("--basis")
     ap.add_argument("--self-test", action="store_true")
     args = ap.parse_args()
     if args.self_test:
@@ -183,7 +230,7 @@ def main() -> int:
         return 0
     if not args.input or not args.out_prefix:
         raise SystemExit("--input and --out-prefix are required unless --self-test")
-    return run(args.input, args.out_prefix, args.dims, args.dedup_threshold)
+    return run(args.input, args.out_prefix, args.dims, args.dedup_threshold, args.basis)
 
 
 if __name__ == "__main__":

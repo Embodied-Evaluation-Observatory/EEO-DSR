@@ -32,11 +32,11 @@ NOTICE = ("Descriptive readout only. No threshold, no ranking, no acceptance dec
           "The reference population is buyer-supplied; EEO does not own or choose it.")
 
 
-def _load(path: str):
+def _load(path: str, matrix: str = "fingerprints"):
     z = np.load(path, allow_pickle=True)
-    if "fingerprints" not in z:
-        raise ValueError(f"{path}: missing fingerprints")
-    return np.asarray(z["fingerprints"], dtype=float)
+    if matrix not in z:
+        raise ValueError(f"{path}: missing {matrix}")
+    return np.asarray(z[matrix], dtype=float)
 
 
 def _check(x: np.ndarray, name: str):
@@ -114,10 +114,11 @@ def compare(reference: np.ndarray, target: np.ndarray, reps: int = 200, seed: in
     }
 
 
-def run(reference_path: str, target_path: str, out: str, reps: int):
-    ref = _load(reference_path); tgt = _load(target_path)
+def run(reference_path: str, target_path: str, out: str, reps: int, matrix: str = "fingerprints"):
+    ref = _load(reference_path, matrix); tgt = _load(target_path, matrix)
     _check(ref, "reference"); _check(tgt, "target")
     result = compare(ref, tgt, reps=reps)
+    result["matrix"] = matrix
     result["reference_input"] = str(reference_path)
     result["target_input"] = str(target_path)
     result["reference_sha256"] = hashlib.sha256(Path(reference_path).read_bytes()).hexdigest()
@@ -154,13 +155,14 @@ def main() -> int:
     ap.add_argument("--target")
     ap.add_argument("--out")
     ap.add_argument("--bootstrap-reps", type=int, default=200)
+    ap.add_argument("--matrix", default="fingerprints", choices=("fingerprints", "projections"))
     ap.add_argument("--self-test", action="store_true")
     args = ap.parse_args()
     if args.self_test:
         self_test(); return 0
     if not (args.reference and args.target and args.out):
         raise SystemExit("--reference, --target and --out are required unless --self-test")
-    return run(args.reference, args.target, args.out, args.bootstrap_reps)
+    return run(args.reference, args.target, args.out, args.bootstrap_reps, args.matrix)
 
 
 if __name__ == "__main__":

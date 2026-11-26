@@ -1,0 +1,244 @@
+{
+  "summary": {
+    "representation": "summary",
+    "dims": 32,
+    "n_positive": 300,
+    "n_negative": 246,
+    "positive_by_copy_type": {
+      "reencode_0.005": {
+        "n": 150,
+        "mean": 0.9737097037965939,
+        "quantiles": [
+          0.8686507734772875,
+          0.9253823788159706,
+          0.9812924553893732,
+          0.9998274269750642,
+          0.9999731269488454
+        ]
+      },
+      "reencode_0.02": {
+        "n": 150,
+        "mean": 0.7776240909627379,
+        "quantiles": [
+          -0.11702884371512531,
+          0.4401442579286061,
+          0.8097492313443929,
+          0.9965995257701137,
+          0.9996812413638317
+        ]
+      }
+    },
+    "positive_cosine_mean": 0.875666897379666,
+    "positive_cosine_min": -0.11702884371512531,
+    "negative_cosine_mean": 0.32391380312140144,
+    "negative_cosine_max": 0.9617313665527873,
+    "positive_cosine_quantiles": [
+      -0.11702884371512531,
+      0.5026612820507589,
+      0.9586964230129232,
+      0.9996882462209841,
+      0.9999731269488454
+    ],
+    "negative_cosine_quantiles": [
+      -0.7021365438492118,
+      -0.39534226816824514,
+      0.4221104727479472,
+      0.8271841399222485,
+      0.9617313665527873
+    ],
+    "time_shift_sensitivity_mean_cosine": null,
+    "thresholds": [
+      {
+        "w": 0.9,
+        "false_positive": 2,
+        "false_negative": 101,
+        "fpr": 0.008130081300813009,
+        "fnr": 0.33666666666666667,
+        "fpr_upper95": 0.02537011398483117,
+        "fnr_upper95": 0.3842832385621752,
+        "by_copy_type": {
+          "reencode_0.005": {
+            "n": 150,
+            "false_negative": 5,
+            "fnr": 0.03333333333333333,
+            "fnr_upper95": 0.06880518393587672
+          },
+          "reencode_0.02": {
+            "n": 150,
+            "false_negative": 96,
+            "fnr": 0.64,
+            "fnr_upper95": 0.7052659760082389
+          }
+        }
+      },
+      {
+        "w": 0.95,
+        "false_positive": 1,
+        "false_negative": 134,
+        "fpr": 0.0040650406504065045,
+        "fnr": 0.44666666666666666,
+        "fpr_upper95": 0.019137880741541248,
+        "fnr_upper95": 0.4957839992182267,
+        "by_copy_type": {
+          "reencode_0.005": {
+            "n": 150,
+            "false_negative": 28,
+            "fnr": 0.18666666666666668,
+            "fnr_upper95": 0.24685546629491223
+          },
+          "reencode_0.02": {
+            "n": 150,
+            "false_negative": 106,
+            "fnr": 0.7066666666666667,
+            "fnr_upper95": 0.7676456176779187
+          }
+        }
+      },
+      {
+        "w": 0.99,
+        "false_positive": 0,
+        "false_negative": 215,
+        "fpr": 0.0,
+        "fnr": 0.7166666666666667,
+        "fpr_upper95": 0.012103924462517783,
+        "fnr_upper95": 0.7593872949694603,
+        "by_copy_type": {
+          "reencode_0.005": {
+            "n": 150,
+            "false_negative": 87,
+            "fnr": 0.58,
+            "fnr_upper95": 0.6479677437657922
+          },
+          "reencode_0.02": {
+            "n": 150,
+            "false_negative": 128,
+            "fnr": 0.8533333333333334,
+            "fnr_upper95": 0.8985727152860312
+          }
+        }
+      }
+    ]
+  },
+  "traj16": {
+    "representation": "traj16",
+    "dims": 32,
+    "n_positive": 300,
+    "n_negative": 246,
+    "positive_by_copy_type": {
+      "reencode_0.005": {
+        "n": 150,
+        "mean": 0.9891371785837351,
+        "quantiles": [
+          0.9167137715984985,
+          0.9582739527587539,
+          0.9947435280843938,
+          0.9998458484150092,
+          0.999985615500572
+        ]
+      },
+      "reencode_0.02": {
+        "n": 150,
+        "mean": 0.8877077686569478,
+        "quantiles": [
+          0.3634800712516267,
+          0.6521274608605844,
+          0.9350307145259322,
+          0.998009999423996,
+          0.9998808417217009
+        ]
+      }
+    },
+    "positive_cosine_mean": 0.9384224736203415,
+    "positive_cosine_min": 0.3634800712516267,
+    "negative_cosine_mean": 0.15793290070541796,
+    "negative_cosine_max": 0.8993817527787834,
+    "positive_cosine_quantiles": [
+      0.3634800712516267,
+      0.7498025241783236,
+      0.9809220609665329,
+      0.9997124902109709,
+      0.999985615500572
+    ],
+    "negative_cosine_quantiles": [
+      -0.7764008830372531,
+      -0.3246922770085955,
+      0.1436373126967982,
+      0.6561969538426183,
+      0.8993817527787834
+    ],
+    "time_shift_sensitivity_mean_cosine": -0.0009569640974938812,
+    "thresholds": [
+      {
+        "w": 0.9,
+        "false_positive": 0,
+        "false_negative": 60,
+        "fpr": 0.0,
+        "fnr": 0.2,
+        "fpr_upper95": 0.012103924462517783,
+        "fnr_upper95": 0.24180637257486587,
+        "by_copy_type": {
+          "reencode_0.005": {
+            "n": 150,
+            "false_negative": 0,
+            "fnr": 0.0,
+            "fnr_upper95": 0.01977343816450844
+          },
+          "reencode_0.02": {
+            "n": 150,
+            "false_negative": 60,
+            "fnr": 0.4,
+            "fnr_upper95": 0.47018755666857354
+          }
+        }
+      },
+      {
+        "w": 0.95,
+        "false_positive": 0,
+        "false_negative": 91,
+        "fpr": 0.0,
+        "fnr": 0.30333333333333334,
+        "fpr_upper95": 0.012103924462517783,
+        "fnr_upper95": 0.349985164468395,
+        "by_copy_type": {
+          "reencode_0.005": {
+            "n": 150,
+            "false_negative": 3,
+            "fnr": 0.02,
+            "fnr_upper95": 0.050877067978523934
+          },
+          "reencode_0.02": {
+            "n": 150,
+            "false_negative": 88,
+            "fnr": 0.5866666666666667,
+            "fnr_upper95": 0.6543847174519859
+          }
+        }
+      },
+      {
+        "w": 0.99,
+        "false_positive": 0,
+        "false_negative": 176,
+        "fpr": 0.0,
+        "fnr": 0.5866666666666667,
+        "fpr_upper95": 0.012103924462517783,
+        "fnr_upper95": 0.6343014194383729,
+        "by_copy_type": {
+          "reencode_0.005": {
+            "n": 150,
+            "false_negative": 49,
+            "fnr": 0.32666666666666666,
+            "fnr_upper95": 0.3951931458130184
+          },
+          "reencode_0.02": {
+            "n": 150,
+            "false_negative": 127,
+            "fnr": 0.8466666666666667,
+            "fnr_upper95": 0.8928793781731155
+          }
+        }
+      }
+    ]
+  },
+  "w_notice": "W is a research placeholder unless a buyer declares it; this is not a DSR-D5a duplicate count or a D5b leak count.",
+  "n_floor": "at least 59 pairs per class; exact Clopper-Pearson one-sided upper bounds"
+}
