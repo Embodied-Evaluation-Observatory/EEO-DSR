@@ -4,7 +4,7 @@
   institutional backing, no funding, no staff. The name describes an intention — to keep a
   dataset-side record of what a public dataset card actually supports — not an existing
   organisation.
-- Current release: `EEO-DSR-V0.6.4` on `main` (`d218ed91067c3bb1a2be53210c00788743a76581`, tag `v0.6.4` → `7a8b4fdcb4c67c32e647bb0c17e7c178ea1da354`), schema still `eeo-dataset-review/0.5`
+- Current release: `EEO-DSR-V0.6.5` on `main` (`f1a389343372ad35d1a8903b610fb38f4f319f9e`, tag `v0.6.5` → `c6bbfff337c043b8ceeec9b3a3841d53eb4915ba`), schema still `eeo-dataset-review/0.5`
   pending the `chain.readout` migration, observation `eeo-sync-observation/0.1`.
   V0.6 separates ITR / NEES / ICR and makes G1-G3 labeling obligations rather than a single release gate;
   the public and interface rules are in `GOVERNANCE-ADDENDUM.md`.
@@ -56,7 +56,8 @@
 | V0.6.1 | `f82c56481e3999b121b0f2975f2cbc1c3ea40d91` | `v0.6.1` → `022f73596664f45a9bd88dddb056751dfcff0cf9` | G1/G2/G3 first batch | published, superseded by V0.6.2, not rewritten |
 | V0.6.2 | `d4176c007e6a631f39cad29ce056dad2190900f1` | `v0.6.2` → `333fb6969f44f150e87e607eac00c6520972de25` | cell coverage-vs-B, site/task_text B choice, two-rate Phase 0, row universes, width sign fix | published, superseded by V0.6.3, not rewritten |
 | V0.6.3 | `9660e199a90df82545d15f4a8938cdc43722b4f2` | `v0.6.3` → `a84e1b6a06dfdf3d0eeff2bfd6eb23888d7dc07f` | interval method check, reference deviation tool, shared fingerprint upstream | published, superseded by V0.6.4, not rewritten |
-| V0.6.4 | `d218ed91067c3bb1a2be53210c00788743a76581` | `v0.6.4` → `7a8b4fdcb4c67c32e647bb0c17e7c178ea1da354` | governance addendum, public/interface rules, G2 split rule, row-universe labels | published, current release; post-tag research in the working tree is not in this tag |
+| V0.6.4 | `d218ed91067c3bb1a2be53210c00788743a76581` | `v0.6.4` → `7a8b4fdcb4c67c32e647bb0c17e7c178ea1da354` | governance addendum, public/interface rules, G2 split rule, row-universe labels | published, superseded by V0.6.5, not rewritten |
+| V0.6.5 | `f1a389343372ad35d1a8903b610fb38f4f319f9e` | `v0.6.5` → `c6bbfff337c043b8ceeec9b3a3841d53eb4915ba` | cell full-K control, G2 split, DROID fingerprint sample and hard-negative calibration | published, current release |
 
 The V0.2 tag stays where it is. Corrections are published as a new version; earlier releases
 stay citable and are not rewritten.
