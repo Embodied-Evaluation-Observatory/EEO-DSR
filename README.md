@@ -55,7 +55,7 @@ raw → sync 筛选 → dedup 计数 → ITR / NEES
 | 闸 | 现状 | 关闭条件 |
 |---|---|---|
 | G1 簇键唯一性 | **已发现碰撞**：2,207 个 raw scene_id 中 9 个跨 >1 个 building、2 个跨 >1 个 robot_serial；这 9 个 id 覆盖 2,172 条 episode，占 73,413 的 2.96%。覆盖键仍是 `scene_id`，精度键改为 `scene_id｜building｜robot_serial`，重跑后 K=2,220。读数只留在研究目录，不印在本 README。仍未闭合：2,207 raw ≠ 论文 2,080 ≠ 564，564 语义去重未复现 | 564 的语义映射仍缺；不得把 2,207 或 2,220 写成论文 scene 数 |
-| G2 覆盖率标定 | native composite 已跑 1,000 模拟 ×100 reps：覆盖率 0.910–0.938，Wilson 区间多数不覆盖名义 0.95，percentile 区间偏窄。cell 轴已在 B=25/100/500/2,000 各 1,000 模拟上做 sweep：B=2,000 覆盖率 0.838–0.936；B 增大能把覆盖抬到约 0.92–0.94，但 ρ=0.90 仍最低，偏斜没有随 B 消失 | 换宽区间方法或做覆盖修正；cell 轴按实际覆盖率明写，不能按名义 0.95 报；ρ 近 0 用边界感知区间或明写下端在参数空间外 |
+| G2 覆盖率标定 | native composite 已跑 1,000 模拟 ×100 reps：覆盖率 0.910–0.938。cell 轴 B=25/100/500/2,000 各 1,000 模拟，B=2,000 覆盖率 0.838–0.936；另比了 percentile／basic／BC／BCa：percentile 在 8 个 ρ 中 7 个最好，ρ=0.90 仍只有 0.838，basic 0.739，BC 0.824，BCa 0.819。换区间名字不能修复 | 改估计量或区间构造（studentized／m-out-of-n／方差稳定变换）；或明写实际覆盖并禁止按名义 0.95 使用。ICR 在 G2 关闭前不建区间 |
 | G3 行集一致 | 计数已对账：镜像 95,658、raw metadata 74,896，差 20,762；按 building 的差集中在 bww 5,219、gates 4,931、evgrc 1,779 等；镜像无 uuid、metadata 无 episode_index，精确交集仍无法构造 | 先建立 episode_index↔uuid 连接键；再取交集同批行重跑三轴；不得把 raw scene 行当作镜像子集 |
 
 ### 第 2 级：有界可建
@@ -74,7 +74,7 @@ raw → sync 筛选 → dedup 计数 → ITR / NEES
 | 校验器 | 可运行，`--self-test` 150 例按预期拒绝 |
 | 去重检测器 | 不存在：没有 `episode-embedding-cosine-v1`，也没有硬负例夹具 |
 | 时钟模型 | 只有规格与观测件格式，没有实现代码 |
-| episode 指纹 / 簇级 bootstrap | bootstrap 已有研究脚本；指纹未写 |
+| episode 指纹 / 簇级 bootstrap | bootstrap 已有研究脚本；指纹研究实现 `tools/feature_representation.py`，无真实特征矩阵 |
 | 数据集侧驱动 | 研究实现，未发布：episode→簇、逐簇 n_eff、零失败界、预算、ρ 下端封顶 |
 | ITR | 方法已跑通；DROID 原生 scene 读数未过发布闸，不进对外材料 |
 | NEES 端到端 | 尚不可算：D2/D5a 未实现 |

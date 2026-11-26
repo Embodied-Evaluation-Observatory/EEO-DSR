@@ -18,6 +18,7 @@ means the number of selected multi clusters is fixed rather than random.
 from __future__ import annotations
 import argparse, json, math
 from pathlib import Path
+from statistics import NormalDist
 import numpy as np
 import dataset_driver as dd
 
@@ -65,6 +66,73 @@ def icc_from_boot_counts(counts: np.ndarray, n: np.ndarray, s: np.ndarray):
     return np.where(good, rho, np.nan)
 
 
+def rho_leave_one(n, s, k0, N0, S0, A0, W0, U0, drop):
+    """Leave-one-occurrence-out ICC(1) for indices drop, from sufficient sums."""
+    n = np.asarray(n, dtype=float); s = np.asarray(s, dtype=float)
+    k = k0 - 1.0
+    N = N0 - n[drop]
+    S = S0 - s[drop]
+    A = A0 - (s[drop] * s[drop] / n[drop])
+    W = W0 - (s[drop] - s[drop] * s[drop] / n[drop])
+    U = U0 - (n[drop] * n[drop])
+    with np.errstate(divide="ignore", invalid="ignore"):
+        msb = (A - S * S / N) / (k - 1.0)
+        msw = W / (N - k)
+        m0 = (N - U / N) / (k - 1.0)
+        den = msb + (m0 - 1.0) * msw
+        out = (msb - msw) / den
+    good = np.isfinite(out) & (N > k) & (den != 0) & (k >= 2)
+    return np.where(good, out, np.nan)
+
+
+def bca_acceleration(n, s, theta, rng, max_jack=400):
+    """Approximate jackknife acceleration from a random subset of occurrences."""
+    n = np.asarray(n, dtype=float); s = np.asarray(s, dtype=float)
+    k0 = float(n.size); N0 = float(n.sum()); S0 = float(s.sum())
+    A0 = float((s * s / n).sum()); W0 = float((s - s * s / n).sum())
+    U0 = float((n * n).sum())
+    m = min(int(max_jack), n.size)
+    drop = rng.choice(n.size, size=m, replace=False)
+    vals = rho_leave_one(n, s, k0, N0, S0, A0, W0, U0, drop)
+    vals = vals[np.isfinite(vals)]
+    if vals.size < 20:
+        return 0.0
+    mean = vals.mean()
+    d = mean - vals
+    den = (np.sum(d * d) ** 1.5)
+    if den == 0:
+        return 0.0
+    return float(np.sum(d * d * d) / (6.0 * den))
+
+
+def interval_from_boot(vals, theta, accel, method):
+    """Coverage interval for a known simulation truth; returns None if too few reps."""
+    vals = np.asarray(vals, dtype=float)
+    vals = vals[np.isfinite(vals)]
+    if vals.size < 20:
+        return None
+    if method == "percentile":
+        return [float(np.percentile(vals, 2.5)), float(np.percentile(vals, 97.5))]
+    if method == "basic":
+        q = np.percentile(vals, [2.5, 97.5])
+        return [float(2 * theta - q[1]), float(2 * theta - q[0])]
+    if method == "normal":
+        sd = float(np.std(vals, ddof=1))
+        return [theta - 1.96 * sd, theta + 1.96 * sd]
+    if method in ("bc", "bca"):
+        nd = NormalDist()
+        share = float(np.mean(vals < theta))
+        share = min(max(share, 1e-6), 1 - 1e-6)
+        z0 = nd.inv_cdf(share)
+        a = accel if method == "bca" else 0.0
+        za, zb = nd.inv_cdf(0.025), nd.inv_cdf(0.975)
+        a1 = nd.cdf(z0 + (z0 + za) / (1 - a * (z0 + za)))
+        a2 = nd.cdf(z0 + (z0 + zb) / (1 - a * (z0 + zb)))
+        a1, a2 = sorted((a1, a2))
+        return [float(np.percentile(vals, 100 * a1)), float(np.percentile(vals, 100 * a2))]
+    raise ValueError(method)
+
+
 def wilson(k: int, n: int, z: float = 1.96):
     if n == 0:
         return None
@@ -83,11 +151,14 @@ def main() -> int:
     ap.add_argument("--bootstrap-reps", default="25,100,500,2000")
     ap.add_argument("--rhos", default="0,0.05,0.1,0.2,0.3,0.5,0.7,0.9")
     ap.add_argument("--seed", type=int, default=20261128)
+    ap.add_argument("--methods", default="percentile,basic,normal,bc,bca")
+    ap.add_argument("--bca-jackknife", type=int, default=400)
     args = ap.parse_args()
     Bs = sorted({int(x) for x in args.bootstrap_reps.split(",") if x.strip()})
     if min(Bs) < 20:
         raise SystemExit("B must be >= 20 for a 2.5/97.5 percentile with >=20 valid reps")
     rhos = [float(x) for x in args.rhos.split(",") if x.strip()]
+    methods = [x.strip() for x in args.methods.split(",") if x.strip()]
 
     rows, _ = dd.read_corpus(args.input)
     clusters = dd.aggregate(rows, ("scene_id",))
@@ -101,13 +172,15 @@ def main() -> int:
         raise SystemExit("fewer than two multi-episode clusters")
     p_mean = float(successes_all.sum()) / float(sizes_all.sum())
     rng = np.random.default_rng(args.seed)
+    rng_jack = np.random.default_rng(args.seed + 104729)
     Bmax = max(Bs)
     out = []
     for rho in rhos:
         est, neg, failed = [], 0, 0
-        covers = {b: 0 for b in Bs}
+        covers = {(m, b): 0 for m in methods for b in Bs}
         valid_for = {b: 0 for b in Bs}
-        widths = {b: [] for b in Bs}
+        widths = {(m, b): [] for m in methods for b in Bs}
+        accels = []
         for _ in range(args.simulations):
             # Each original multi cluster is selected Binomial(K, 1/K) times;
             # equivalently Multinomial over the multi clusters, then expand
@@ -133,15 +206,20 @@ def main() -> int:
             M = sim_n.size
             boot_counts = rng.multinomial(M, np.full(M, 1.0 / M), size=Bmax)
             rb = icc_from_boot_counts(boot_counts, sim_n, sim_s)
+            accel = bca_acceleration(sim_n, sim_s, point, rng_jack, args.bca_jackknife) if "bca" in methods else 0.0
+            accels.append(accel)
             for b in Bs:
                 vals = rb[:b]
                 vals = vals[np.isfinite(vals)]
                 if len(vals) < max(20, b // 4):
                     continue
-                lo, hi = np.percentile(vals, [2.5, 97.5])
-                covers[b] += int(lo <= rho <= hi)
                 valid_for[b] += 1
-                widths[b].append(float(hi - lo))
+                for m in methods:
+                    iv = interval_from_boot(vals, point, accel, m)
+                    if iv is None:
+                        continue
+                    covers[(m, b)] += int(iv[0] <= rho <= iv[1])
+                    widths[(m, b)].append(float(iv[1] - iv[0]))
         valid = len(est)
         if not valid:
             out.append({"rho_true": rho, "simulations_valid": 0, "coverage_by_B": {}})
@@ -149,12 +227,16 @@ def main() -> int:
         by_b = {}
         for b in Bs:
             v = valid_for[b]
-            by_b[str(b)] = {
-                "coverage_95": covers[b] / v if v else None,
-                "coverage_successes": covers[b],
-                "coverage_wilson_95": wilson(covers[b], v),
-                "mean_interval_width": float(np.mean(widths[b])) if widths[b] else None,
-            }
+            methods_out = {}
+            for m in methods:
+                success = covers[(m, b)]
+                methods_out[m] = {
+                    "coverage_95": success / v if v else None,
+                    "coverage_successes": success,
+                    "coverage_wilson_95": wilson(success, v),
+                    "mean_interval_width": float(np.mean(widths[(m, b)])) if widths[(m, b)] else None,
+                }
+            by_b[str(b)] = methods_out
         out.append({
             "rho_true": rho,
             "simulations_requested": args.simulations,
@@ -165,6 +247,7 @@ def main() -> int:
             "negative_share": neg / valid,
             "coverage_by_B": by_b,
             "bootstrap_replicates_valid_max_B": int(np.sum(np.isfinite(rb))) if 'rb' in locals() else None,
+            "bca_acceleration_mean": float(np.mean(accels)) if accels else None,
         })
     obj = {
         "input": args.input,
@@ -172,7 +255,7 @@ def main() -> int:
         "episodes": int(sizes_all.sum()),
         "multi_clusters": int(n_multi.size),
         "p_mean": p_mean,
-        "method": "fixed-size cluster bootstrap on the multi-cluster subpopulation; point sample Multinomial(M,1/M) over multi clusters; bootstrap Multinomial(M_occ,1/M_occ) over occurrences; nested B prefixes; ICC(1) from bootstrap counts via sufficient statistics; percentile interval; Wilson interval on coverage",
+        "method": "fixed-size cluster bootstrap on the multi-cluster subpopulation; point sample Multinomial(M,1/M) over multi clusters; bootstrap Multinomial(M_occ,1/M_occ) over occurrences; nested B prefixes; ICC(1) from bootstrap counts; intervals: percentile, basic, normal, bias-corrected (BC), BCa with 400-point jackknife acceleration; Wilson interval on coverage",
         "simulations_per_rho": args.simulations,
         "bootstrap_reps": Bs,
         "grid": out,

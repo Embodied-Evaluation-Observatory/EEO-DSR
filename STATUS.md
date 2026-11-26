@@ -17,7 +17,7 @@
   point ICC 0.766531; zero-variance share is a readout, not a veto. No NEES record is issued
   without a cluster-bootstrap rho interval.
 - What does not exist: the dedup detector (`episode-embedding-cosine-v1`), the clock model
-  implementation, episode fingerprints, cluster-level bootstrap, any real-corpus NEES reading,
+  implementation, a research-only SVD fingerprint pipeline, cluster-level bootstrap, any real-corpus NEES reading,
   label-consistency verification, and D1b (cards versus an index). None of these are promised.
 - Scale, stated plainly: one maintainer, a handful of releases, no external users yet. Treat the
   outputs as a working record, not as an authority.
