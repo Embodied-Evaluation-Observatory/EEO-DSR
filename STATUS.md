@@ -4,11 +4,20 @@
   institutional backing, no funding, no staff. The name describes an intention — to keep a
   dataset-side record of what a public dataset card actually supports — not an existing
   organisation.
-- Current version: `EEO-DSR-V0.5`, schema `eeo-dataset-review/0.5`, observation
-  `eeo-sync-observation/0.1`.
+- Current release: `EEO-DSR-V0.5`, schema `eeo-dataset-review/0.5`, observation
+  `eeo-sync-observation/0.1`. The code tree also contains an untagged V0.6 research
+  commit with the dataset-side driver and DROID variance probe, plus an uncommitted
+  V0.6 positioning draft (`README.md`, `METHOD.md`, `checks/README.md`,
+  `ONE-PAGER-V0.6.md`, `schema/MIGRATION-V0.6.md`).
 - What exists: method, record and observation schemas, validator with 150 self-test cases,
   threshold declaration, entry/licensing text, Phase 0 disclosure census with three dated results
   (2026-11-25, 2026-11-25-r2 and 2026-11-26), and the cosine threshold helper smoke test.
+- Post-V0.5 research (untagged): `tools/dataset_driver.py` implements episode→cluster aggregation,
+  deff/n_eff, zero-failure bounds, cluster budget, and the rho-low cap, with an external known-answer
+  fixture. The corrected DROID probe is in `research/v0.6/variance-probe/2026-11-26-r2/`:
+  cell-axis n_eff interval `[53,714, 93,994]`, 93 clusters with within-cluster variation,
+  point ICC 0.766531; zero-variance share is a readout, not a veto. No NEES record is issued
+  without a cluster-bootstrap rho interval.
 - What does not exist: the dedup detector (`episode-embedding-cosine-v1`), the clock model
   implementation, episode fingerprints, cluster-level bootstrap, any real-corpus NEES reading,
   label-consistency verification, and D1b (cards versus an index). None of these are promised.
@@ -36,7 +45,8 @@
 | V0.2 | `4e2defbd88dfe44246f7182a8197fc2eb0b947ce` | `v0.2` → `ce6c10976f0e1b38fada799f354e8ed500a185b6` | 0.2 schemas, Phase 0 first result | published, superseded by V0.3, not rewritten |
 | V0.3 | `298cbf58f1f812df33f3f7e7249e8fddda0d3af6` | `v0.3` → `6882a76c54f293851aac99586b6db92668b72de8` | 0.3 schemas, withdrawn dedup gate, release gate, CI | published, superseded by V0.4, not rewritten |
 | V0.4 | `7e45f1898c67cdef643a6c6dceb468e92b9985e6` | `v0.4` → `5b136c72c63a7e6ec28da9e85b580d64238ad635` | 0.4 schemas, Phase 0 source list and dual hash, FAIL/MISSING split summary | published, superseded by V0.5, not rewritten |
-| V0.5 | see `RELEASE.md` after push | `v0.5` | 0.5 schemas, disclosure census, judgeability, strict S2, 20-page set | current |
+| V0.5 | `d2b55852d239f4c117d47026e412b9ebe5b41203` | `v0.5` → `0087d05fff1eea429f4e19b36d7459e7a80ec791` | 0.5 schemas, disclosure census, judgeability, strict S2, 20-page set | published, current release |
+| V0.6 research | untagged local commit | none | dataset-side driver, DROID variance probe, known-answer fixture | untagged research, not released |
 
 The V0.2 tag stays where it is. Corrections are published as a new version; earlier releases
 stay citable and are not rewritten.

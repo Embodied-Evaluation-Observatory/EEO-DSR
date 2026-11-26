@@ -1,0 +1,62 @@
+{
+ "gate": "G1 cluster key uniqueness",
+ "status": "partially_closed_semantic_dedup_not_reproduced",
+ "source": "work/publicdata/droid_raw_meta.csv (74,896 rows; 74,795 unique uuid; scene_id=-1 excluded)",
+ "raw_scene_values": 2207,
+ "paper_scene_ids": 2080,
+ "semantic_unique_scenes": 564,
+ "collisions_raw": {
+  "scene_ids_with_multiple_building": 9,
+  "scene_ids_with_multiple_robot_serial": 2,
+  "scene_ids_with_multiple_normalized_building_or_robot": 9,
+  "examples": {
+   "4823049285": [
+    "BAIR",
+    "KAIST",
+    "Gates",
+    "Penn Levine 457",
+    "Bayes - RAD Lab",
+    "Bayes - Lab 1"
+   ],
+   "4465064685": [
+    "Gates",
+    "BAIR"
+   ],
+   "3827924651": [
+    "Mila Staff Kitchen",
+    "Glen's office"
+   ],
+   "4173062021": [
+    "780 Shary",
+    "780 Shary Ave"
+   ]
+  }
+ },
+ "decision": "scene_id alone is not unique across sites; composite key scene_id|building|robot_serial required for the native-scene axis.",
+ "composite_rerun": {
+  "clusters": 2220,
+  "episodes": 73413,
+  "singletons": 217,
+  "variable_clusters": 1045,
+  "zero_variance_share": 0.4782825761357963,
+  "rho_point": 0.28452378847464543,
+  "n_eff_point": 5953.53928108529,
+  "deff": 12.330984400025207,
+  "rho_conditional_95": [
+   0.2581172759193779,
+   0.3139812599844443
+  ],
+  "n_eff_conditional_95": [
+   5519.340377449994,
+   6428.406390940078
+  ],
+  "n_eff_conditional_relative_width": 0.15217363258739017,
+  "bootstrap_reps": 1000,
+  "artifacts": [
+   "driver-report.json",
+   "bootstrap.json"
+  ]
+ },
+ "unclosed": "564 semantic unique scenes not reproduced; raw 2,207 and composite 2,220 are not the paper 2,080 or 564. Do not cite as the paper scene count.",
+ "nees_record": "not_issued"
+}

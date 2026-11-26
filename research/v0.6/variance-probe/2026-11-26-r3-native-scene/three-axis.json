@@ -1,0 +1,152 @@
+{
+ "generated": "2026-11-26",
+ "status": "unreviewed_draft_in_repo",
+ "source_rows": 74896,
+ "unique_episode_ids": 74795,
+ "duplicate_metadata_rows": 101,
+ "native_scene_rows": 73413,
+ "scene_missing": 1382,
+ "note": "Axes are parallel. Do not merge or take a max deff. Native scene is raw scene_id, not the paper 564 semantic dedup.",
+ "axes": [
+  {
+   "axis": "native_scene",
+   "claim_scope": "success_rate_precision_at_native_scene_cluster_not_training_information",
+   "claim_scope_plain": "整体成功率要按 DROID 原生 scene 计精度时用这条；它不是训练信息量。",
+   "K": 2207,
+   "K_variance": 1991,
+   "singletons": 216,
+   "variable_clusters": 1038,
+   "zero_variance_share": 0.4786539427423405,
+   "zero_variance_role": "readout_only_not_a_veto",
+   "interval_reading": "usable",
+   "rho_point": 0.2798279662781307,
+   "n_eff_point": 5990.513564485708,
+   "deff_effective": 12.254875848245005,
+   "mbar_n_eff": 7320.591990076148,
+   "mbar_overstatement": 0.2220307843847824,
+   "rho_bootstrap_95": {
+    "low": 0.25375274872213655,
+    "high": 0.3069055492779254,
+    "method": "percentile",
+    "replicates": 1000
+   },
+   "coverage": {
+    "buildings": 58,
+    "tasks": 944,
+    "variable_episodes": 51655
+   },
+   "nees_record": "not_issued",
+   "rho_free_interval": [
+    2207.0,
+    73413.0
+   ],
+   "rho_free_interval_relative_width": 0.9699372045822947,
+   "rho_free_interval_reading": "no_information",
+   "rho_conditional_range": {
+    "low": 0.25375274872213655,
+    "high": 0.3069055492779254,
+    "reps": 1000,
+    "method": "cluster bootstrap percentile; conditional on this corpus",
+    "relative_width": 0.15020930150202536,
+    "interval_reading": "usable"
+   },
+   "n_eff_conditional_interval": [
+    5565.297625321255,
+    6469.139848800033
+   ]
+  },
+  {
+   "axis": "site_building",
+   "claim_scope": "success_rate_precision_at_site_cluster_not_training_information",
+   "claim_scope_plain": "整体成功率要跨采集站点合并时用这条；它不回答场景多样性或任务单元精度。",
+   "K": 73,
+   "K_variance": 72,
+   "singletons": 1,
+   "variable_clusters": 65,
+   "zero_variance_share": 0.09722222222222222,
+   "zero_variance_role": "readout_only_not_a_veto",
+   "interval_reading": "no_information",
+   "rho_point": 0.08159342374307724,
+   "n_eff_point": 791.6454342074906,
+   "deff_effective": 118.73244755601552,
+   "mbar_n_eff": 886.9265816696799,
+   "mbar_overstatement": 0.12035836164150249,
+   "rho_bootstrap_95": {
+    "low": 0.0562590700151777,
+    "high": 0.10678313699339219,
+    "method": "percentile",
+    "replicates": 1000
+   },
+   "coverage": {
+    "buildings": 73,
+    "task_units": "not_in_three_column_corpus"
+   },
+   "nees_record": "not_issued",
+   "rho_free_interval": [
+    73.0,
+    93994.0
+   ],
+   "rho_free_interval_relative_width": 0.9992233546822138,
+   "rho_free_interval_reading": "no_information",
+   "rho_conditional_range": {
+    "low": 0.0562590700151777,
+    "high": 0.10678313699339219,
+    "reps": 1000,
+    "method": "cluster bootstrap percentile; conditional on this corpus",
+    "relative_width": 0.604897493315611,
+    "interval_reading": "no_information"
+   },
+   "n_eff_conditional_interval": [
+    609.2573556425629,
+    1137.5887799594109
+   ]
+  },
+  {
+   "axis": "cell_building_instruction",
+   "claim_scope": "success_rate_precision_at_task_unit_cluster_not_training_information",
+   "claim_scope_plain": "要估某个 building+instruction 单元的成功率精度时用这条；它不是 scene 轴，也不是训练信息量。",
+   "K": 53714,
+   "K_variance": 6602,
+   "singletons": 47112,
+   "variable_clusters": 93,
+   "zero_variance_share": 0.9859133595880036,
+   "zero_variance_role": "readout_only_not_a_veto",
+   "interval_reading": "usable",
+   "rho_point": 0.7665312664090086,
+   "n_eff_point": 54853.996691841516,
+   "deff_effective": 1.713530566023092,
+   "mbar_n_eff": 59685.55282449254,
+   "mbar_overstatement": 0.08808029357995029,
+   "rho_bootstrap_95": {
+    "low": 0.6687124287199263,
+    "high": 0.8552120012634321,
+    "method": "percentile",
+    "replicates": 1000
+   },
+   "coverage": {
+    "buildings": 49,
+    "instruction_units": 49,
+    "empty_instruction_units": 45
+   },
+   "nees_record": "not_issued",
+   "rho_free_interval": [
+    53714.0,
+    93994.0
+   ],
+   "rho_free_interval_relative_width": 0.4285379917867098,
+   "rho_free_interval_reading": "wide",
+   "rho_conditional_range": {
+    "low": 0.6687124287199263,
+    "high": 0.8552120012634321,
+    "reps": 1000,
+    "method": "cluster bootstrap percentile; conditional on this corpus",
+    "relative_width": 0.020027612164726576,
+    "interval_reading": "usable"
+   },
+   "n_eff_conditional_interval": [
+    54373.71538520971,
+    55473.706163243536
+   ]
+  }
+ ]
+}

@@ -1,0 +1,49 @@
+{
+  "label": "droid-site",
+  "input": "research/v0.6/variance-probe/2026-11-26-r2/droid_site.csv.gz",
+  "input_sha256": {
+    "rows_input": 93994,
+    "rows_used": 93994,
+    "excluded_missing_scene": 0
+  },
+  "source_rows": 95658,
+  "cannot_cluster": 1664,
+  "rows_used": 93994,
+  "clusters": 73,
+  "method": "cluster bootstrap; resample K clusters with replacement; ICC(1) per replicate",
+  "replicates_requested": 1000,
+  "replicates_valid": 1000,
+  "point": {
+    "rho_unclipped": 0.08159342374307724,
+    "rho_zero_clipped": 0.08159342374307724,
+    "msb": 15.23547436998055,
+    "msw": 0.1347204494905823,
+    "m0": 1261.6675557050023,
+    "p_bar": 0.8222952773078847
+  },
+  "interval_95": {
+    "low": 0.0562590700151777,
+    "high": 0.10678313699339219,
+    "method": "percentile"
+  },
+  "n_eff_interval": {
+    "low": 609.2573556425629,
+    "high": 1137.5887799594109,
+    "method": "per replicate n_eff at its rho, then percentile",
+    "relative_width": 0.604897493315611
+  },
+  "distribution": {
+    "min": 0.0433976879740989,
+    "p025": 0.0562590700151777,
+    "median": 0.07879091029967046,
+    "p975": 0.10678313699339219,
+    "max": 0.13281566707421388,
+    "negative_share": 0.0,
+    "below_zero_clipped_to_zero": 0
+  },
+  "nees_record": {
+    "status": "not_issued",
+    "reason": "bootstrap interval is a diagnostic; record needs the full gate"
+  },
+  "note": "The interval is for the ICC on this axis, not for training information."
+}

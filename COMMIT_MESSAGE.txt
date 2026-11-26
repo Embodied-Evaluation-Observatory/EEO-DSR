@@ -1,55 +1,20 @@
-EEO-DSR V0.5: turn Phase 0 into a disclosure census and publish judgeability
+EEO-DSR V0.6 research r2: correct the variance criterion and expose the rho-free interval
 
-This release ships the method, schemas, validator, release gate and the 2026-11-26 Phase 0
-disclosure census. It does not ship any NEES reading of any corpus and does not state whether
-any corpus is usable.
+- Replace mbar n_eff with the exact per-cluster sum sum_k n_k/(1+(n_k-1)rho).
+  Singletons contribute exactly 1 at every rho; the strict rho-free interval is [K,N].
+- DROID cell axis: K=53,714, N=93,994, interval [53,714, 93,994], lower share 57.14%.
+  47,112 singletons, 6,602 multi-cluster, 93 clusters with within-cluster variation.
+- Zero-variance share is now a readout, not a veto. Constant clusters contribute 0 to
+  MSW and still enter MSB; ICC point on the cell axis is 0.766531.
+- Site axis: K=73 (one singleton), ICC on 72 multi-clusters, exact point n_eff 791.65,
+  mbar comparison 886.93 (+12.04%).
+- Report no-within-cluster-variation separately; all-singleton n_eff is exactly N.
+- Report the 1,664 episodes without a building as a separate unclusterable reading,
+  not as a silent shrink from 95,658 to 93,994.
+- Add extreme-skew and all-singleton fixtures; driver self-test is 12 groups.
+- Mark the old 2026-11-26 probe result superseded; corrected run is 2026-11-26-r2.
+- Do not issue a NEES record: no cluster-bootstrap rho interval yet. The point n_eff is
+  success-rate precision, not training information; each axis carries its own claim scope.
 
-Hard sentence
-- README and every census page now print: "0 FAIL does not mean the cards are self-consistent;
-  S1 is undecidable on all 20 cards."
-- Zero FAIL can no longer be read as good news.
-
-Judgeability
-- Each S1-S6 now reports (PASS+FAIL)/m, its rate, and a verdict: unjudgeable / no discriminating
-  signal / discriminating.
-- Per-check results are set-level distributions, not per-card ratings.
-
-Abandonment and branch condition
-- A check that is 100% MISSING is unjudgeable and is not counted as a pass.
-- If every row has the same status vector, the report states that the set carries no
-  discriminating signal.
-- The current set has two status vectors, so the all-row-same condition is not triggered.
-
-S2 tightened
-- S2 no longer passes because total_episodes, total_frames and fps exist.
-- The script computes and prints frames/episode and seconds/episode. S2 passes only when the page
-  also declares frames_per_episode or seconds_per_episode and the declared value matches the
-  recomputation within 1%. Otherwise S2 is MISSING or FAIL.
-- The 12 LeRobot cards do not declare either ratio, so S2 moves from 12/12 PASS to 12/12 MISSING.
-
-Name changed
-- S1, S3, S5 and S6 keep their strict definitions and are 100% MISSING on the 20-page set.
-- The product no longer calls itself a self-consistency check. It is now a Phase 0 disclosure
-  census: it reports what pages disclose, not whether they are self-consistent.
-- If self-consistency is to be judged later, the definitions must be relaxed or the judgeable
-  set expanded in a separate version; MISSING is never counted as a pass.
-
-Set expanded
-- cards-source.csv grows from 12 LeRobot cards to 20 heterogeneous pages: robomimic, calvin,
-  robocasa and maniskill GitHub READMEs, plus droid, openx, bridge-data and libero project pages.
-- This is still a convenience census of what was reachable on the date, not a random sample and
-  not an industry estimate.
-
-Results
-- 20 pages: 0 with at least one FAIL, 20 with at least one MISSING, 0 with both.
-- S1/S2/S3/S5/S6 judgeable 0/20. S4 judgeable 12/20, all PASS, verdict no discriminating signal.
-- Two status vectors; not all rows isomorphic.
-
-Directory table
-- README.md lists record-example.json once; the observation row points at
-  schema/examples/sync-observation-example.json.
-
-Release boundary
-- Published files are listed in releases/v0.5/manifest.json and hashed in SHA256SUMS.
-- V0.4 stays at 7e45f18 and tag v0.4 stays at 5b136c7. V0.4's 2026-11-25-r2 result is not
-  rewritten; V0.5 writes 2026-11-26.
+METHOD/schema/validator migration is not in this commit. No record is issued under the
+new trigger until that migration is done.

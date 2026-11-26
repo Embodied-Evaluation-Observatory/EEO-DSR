@@ -8,6 +8,7 @@ import sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 VAL = os.path.join(ROOT, "tools", "validate_record.py")
+DRIVER = os.path.join(ROOT, "tools", "dataset_driver.py")
 
 
 def run(args):
@@ -16,6 +17,12 @@ def run(args):
 
 def main():
     failures = []
+
+    dr = subprocess.run([sys.executable, DRIVER, "--self-test"], capture_output=True, text=True)
+    for line in (dr.stdout or "").strip().splitlines():
+        print(line)
+    if dr.returncode != 0:
+        failures.append("dataset-driver")
 
     st = run(["--self-test"])
     print(st.stdout.strip().splitlines()[-1] if st.stdout else "self-test: no output")
