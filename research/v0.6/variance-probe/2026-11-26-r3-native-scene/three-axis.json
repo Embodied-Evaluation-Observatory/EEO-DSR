@@ -6,54 +6,67 @@
  "duplicate_metadata_rows": 101,
  "native_scene_rows": 73413,
  "scene_missing": 1382,
- "note": "Axes are parallel. Do not merge or take a max deff. Native scene is raw scene_id, not the paper 564 semantic dedup.",
+ "note": "Axes are parallel. Do not merge or take a max deff. Native axis uses the composite key scene_id|building|robot_serial for precision; coverage key remains raw scene_id (2,207) and is reported separately.",
  "axes": [
   {
-   "axis": "native_scene",
-   "claim_scope": "success_rate_precision_at_native_scene_cluster_not_training_information",
-   "claim_scope_plain": "整体成功率要按 DROID 原生 scene 计精度时用这条；它不是训练信息量。",
-   "K": 2207,
-   "K_variance": 1991,
-   "singletons": 216,
-   "variable_clusters": 1038,
-   "zero_variance_share": 0.4786539427423405,
+   "axis": "native_scene_composite",
+   "claim_scope": "success_rate_precision_at_composite_scene_key_not_training_information",
+   "claim_scope_plain": "整体成功率要按 DROID 原生 scene 的复合键（scene_id|building|robot_serial）计精度时用这条；它不是训练信息量，也不是论文 564 语义 scene 数。",
+   "K": 2220,
+   "K_variance": 2003,
+   "singletons": 217,
+   "variable_clusters": 1045,
+   "zero_variance_share": 0.4782825761357963,
    "zero_variance_role": "readout_only_not_a_veto",
    "interval_reading": "usable",
-   "rho_point": 0.2798279662781307,
-   "n_eff_point": 5990.513564485708,
-   "deff_effective": 12.254875848245005,
-   "mbar_n_eff": 7320.591990076148,
-   "mbar_overstatement": 0.2220307843847824,
+   "rho_point": 0.28452378847464543,
+   "n_eff_point": 5953.53928108529,
+   "deff_effective": 12.330984400025207,
+   "mbar_n_eff": 7251.1176302533095,
+   "mbar_overstatement": 0.21795074961384642,
    "rho_bootstrap_95": {
-    "low": 0.25375274872213655,
-    "high": 0.3069055492779254,
+    "low": 0.2581172759193779,
+    "high": 0.3139812599854443,
     "method": "percentile",
     "replicates": 1000
    },
    "coverage": {
     "buildings": 58,
-    "tasks": 944,
-    "variable_episodes": 51655
+    "tasks": 925,
+    "variable_episodes": 50983,
+    "building_top10": 0.6566,
+    "building_top20": 0.8627,
+    "task_top10": 0.6749,
+    "task_top20": 0.7608
    },
    "nees_record": "not_issued",
    "rho_free_interval": [
-    2207.0,
+    2220.0,
     73413.0
    ],
-   "rho_free_interval_relative_width": 0.9699372045822947,
+   "rho_free_interval_relative_width": 0.9697601242286789,
    "rho_free_interval_reading": "no_information",
    "rho_conditional_range": {
-    "low": 0.25375274872213655,
-    "high": 0.3069055492779254,
+    "low": 0.2581172759193779,
+    "high": 0.3139812599854443,
     "reps": 1000,
     "method": "cluster bootstrap percentile; conditional on this corpus",
-    "relative_width": 0.15020930150202536,
+    "relative_width": 0.15217363258739017,
     "interval_reading": "usable"
    },
    "n_eff_conditional_interval": [
-    5565.297625321255,
-    6469.139848800033
-   ]
+    5519.340377449994,
+    6428.406390940078
+   ],
+   "coverage_key": "scene_id",
+   "precision_key": "scene_id|building|robot_serial",
+   "coverage_key_clusters": 2207,
+   "collision_ids": 9,
+   "collision_episode_coverage": {
+    "episodes": 2172,
+    "denominator": 73413,
+    "share": 0.029586
+   }
   },
   {
    "axis": "site_building",

@@ -4,11 +4,9 @@
   institutional backing, no funding, no staff. The name describes an intention — to keep a
   dataset-side record of what a public dataset card actually supports — not an existing
   organisation.
-- Current release: `EEO-DSR-V0.5`, schema `eeo-dataset-review/0.5`, observation
-  `eeo-sync-observation/0.1`. The code tree also contains an untagged V0.6 research
-  commit with the dataset-side driver and DROID variance probe, plus an uncommitted
-  V0.6 positioning draft (`README.md`, `METHOD.md`, `checks/README.md`,
-  `ONE-PAGER-V0.6.md`, `schema/MIGRATION-V0.6.md`).
+- Current release: `EEO-DSR-V0.6` on `main`, schema still `eeo-dataset-review/0.5`
+  pending the `chain.readout` migration, observation `eeo-sync-observation/0.1`.
+  V0.6 separates ITR / NEES / ICR and makes G1-G3 release gates explicit.
 - What exists: method, record and observation schemas, validator with 150 self-test cases,
   threshold declaration, entry/licensing text, Phase 0 disclosure census with three dated results
   (2026-11-25, 2026-11-25-r2 and 2026-11-26), and the cosine threshold helper smoke test.
