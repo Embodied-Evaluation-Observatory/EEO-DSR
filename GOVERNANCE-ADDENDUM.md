@@ -39,7 +39,7 @@
 
 ### 2.5 同一 episode 多记录的 tie-break 必须声明
 
-同一 uuid 出现多条记录、且 `success` 冲突时，`rho` 的输入会静默依赖一个未声明的取数规则。正式记录必须在 `neev.dedup.tie_break` 声明 `first` / `last` / `drop_group` / `not_applicable` 之一，并给出敏感性证据或说明。当前处理默认 `first`；`last` 与 `drop_group` 的敏感性见 `research/v0.6/reference-and-representation/2026-11-27-label-conflicts/`。不得把 43 组冲突只当“数据质量”而不披露规则。
+同一 uuid 出现多条记录、且 `success` 冲突时，`rho` 的输入会静默依赖一个未声明的取数规则。正式记录必须在 `neev.dedup.tie_break` 声明 `first` / `last` / `drop_group` / `not_applicable` 之一，并给出敏感性证据或说明。tie-break 不设默认值。 有重复记录的语料必须显式声明 first / last / drop_group 之一；无重复记录的语料声明 not_applicable。drop_group 是推荐值（不选任何一条，整组剔除，不偏向任一 success 值），但推荐不等于默认——买方不声明，validator 拒绝记录。选择 drop_group 时，记录必须同时报告 n_dropped_groups 和 n_dropped_episodes；`last` 与 `drop_group` 的敏感性见 `research/v0.6/reference-and-representation/2026-11-27-label-conflicts/`。不得把 43 组冲突只当“数据质量”而不披露规则。
 
 ## 3 G1、G2、G3：从发布闸门改为标注强制
 
@@ -148,7 +148,7 @@ label:
 
 ## 6 分层预检层（2026-11-27）
 
-正式记录保持“委托方具名、样本瑕疵公开、中间结果公开”。为降低国企/监管方在采购前的内部合规门槛，新增三层预检；只有层 2 是“不具名样本预核验”，三层都不是记录：
+正式记录保持“委托方具名、样本瑕疵公开、中间结果公开”。新增三层预检；只有层 2 是“不具名样本预核验”，三层都不是记录：
 
 | 层 | 做什么 | 数据去向 | 产出 |
 |---|---|---|---|
