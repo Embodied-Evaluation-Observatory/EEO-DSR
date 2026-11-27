@@ -1,0 +1,90 @@
+{
+  "input": "research/v0.6/variance-probe/2026-11-26-r3-native-scene/droid_scene.csv.gz",
+  "clusters": 2207,
+  "episodes": 73413,
+  "p_mean": 0.794940950512852,
+  "size_table": {
+    "min": 1,
+    "median": 15,
+    "max": 810,
+    "mean": 33.263706388763026
+  },
+  "method": "beta-binomial at known rho; sizes resampled from DROID native scene sizes; ICC(1); cluster bootstrap percentile",
+  "simulations_per_rho": 100,
+  "bootstrap_reps": 100,
+  "grid": [
+    {
+      "rho_true": 0.0,
+      "simulations_valid": 100,
+      "bias_mean": -0.00014277325311396787,
+      "sd": 0.00092428411844657,
+      "coverage_95": 0.88,
+      "bootstrap_replicates_valid": 100,
+      "negative_share": 0.59
+    },
+    {
+      "rho_true": 0.05,
+      "simulations_valid": 100,
+      "bias_mean": 0.00015358152197073038,
+      "sd": 0.003229963654909015,
+      "coverage_95": 0.95,
+      "bootstrap_replicates_valid": 100,
+      "negative_share": 0.0
+    },
+    {
+      "rho_true": 0.1,
+      "simulations_valid": 100,
+      "bias_mean": -0.0003050545457844861,
+      "sd": 0.006082318163391371,
+      "coverage_95": 0.93,
+      "bootstrap_replicates_valid": 100,
+      "negative_share": 0.0
+    },
+    {
+      "rho_true": 0.2,
+      "simulations_valid": 100,
+      "bias_mean": 0.00012987827321608858,
+      "sd": 0.011695517964878855,
+      "coverage_95": 0.9,
+      "bootstrap_replicates_valid": 100,
+      "negative_share": 0.0
+    },
+    {
+      "rho_true": 0.3,
+      "simulations_valid": 100,
+      "bias_mean": -0.0008553989310720045,
+      "sd": 0.016369225862548797,
+      "coverage_95": 0.92,
+      "bootstrap_replicates_valid": 100,
+      "negative_share": 0.0
+    },
+    {
+      "rho_true": 0.5,
+      "simulations_valid": 100,
+      "bias_mean": 0.0033189426473114736,
+      "sd": 0.01939327158252301,
+      "coverage_95": 0.93,
+      "bootstrap_replicates_valid": 100,
+      "negative_share": 0.0
+    },
+    {
+      "rho_true": 0.7,
+      "simulations_valid": 100,
+      "bias_mean": -0.0009785711268527342,
+      "sd": 0.01916202484878081,
+      "coverage_95": 0.94,
+      "bootstrap_replicates_valid": 100,
+      "negative_share": 0.0
+    },
+    {
+      "rho_true": 0.9,
+      "simulations_valid": 100,
+      "bias_mean": -0.0008988917282035658,
+      "sd": 0.012177438408311892,
+      "coverage_95": 0.95,
+      "bootstrap_replicates_valid": 100,
+      "negative_share": 0.0
+    }
+  ],
+  "note": "Coverage is conditional on an estimable point; this tests estimator behaviour, not a corpus claim."
+}

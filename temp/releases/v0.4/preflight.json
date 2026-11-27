@@ -1,0 +1,33 @@
+{
+  "release": "v0.4",
+  "tag": "v0.4",
+  "run_at_utc": "2026-11-25T15:26:10+00:00",
+  "checks": [
+    {
+      "name": "manifest",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "name": "checksums",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "name": "self-test",
+      "status": "PASS",
+      "detail": "self-test: 150/150 mutations rejected as intended"
+    },
+    {
+      "name": "examples",
+      "status": "PASS",
+      "detail": "all checks passed"
+    },
+    {
+      "name": "smoke",
+      "status": "PASS",
+      "detail": "cosine smoke ran; this is not a detector gate"
+    }
+  ],
+  "result": "PASS"
+}

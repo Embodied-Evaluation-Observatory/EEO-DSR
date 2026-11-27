@@ -1,0 +1,2020 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://eeo.local/schema/record/0.5",
+  "title": "EEO-DSR record (eeo-dataset-review/0.5)",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "module",
+    "dataset",
+    "review",
+    "dimensions",
+    "thresholds",
+    "neev",
+    "split",
+    "buyer_summary",
+    "submitter",
+    "use_limitation",
+    "reference_note",
+    "buyer_summary_use_limitation",
+    "scope_declaration"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "eeo-dataset-review/0.5"
+    },
+    "module": {
+      "const": "EEO-DSR"
+    },
+    "dataset": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "dataset_id",
+        "version",
+        "licence",
+        "card_url",
+        "retrieval_date",
+        "card_sha256",
+        "manifest_sha256"
+      ],
+      "properties": {
+        "dataset_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "version": {
+          "type": "string",
+          "minLength": 1
+        },
+        "licence": {
+          "type": "string",
+          "minLength": 1
+        },
+        "card_url": {
+          "type": "string",
+          "format": "uri"
+        },
+        "retrieval_date": {
+          "type": "string",
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+        },
+        "card_last_modified": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "card_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "page_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "manifest_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "checksums": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "review": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "stage",
+        "tier",
+        "method_version",
+        "frame"
+      ],
+      "properties": {
+        "stage": {
+          "enum": [
+            "screen",
+            "pre_purchase",
+            "deep"
+          ]
+        },
+        "tier": {
+          "enum": [
+            "T1_sample",
+            "T2_full"
+          ]
+        },
+        "method_version": {
+          "type": "string",
+          "minLength": 1
+        },
+        "started_at": {
+          "type": "string"
+        },
+        "frame": {
+          "enum": [
+            "committed",
+            "supplier-provided"
+          ]
+        },
+        "frame_rule_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "frame_seed": {
+          "type": "string"
+        },
+        "supplier_provided_cap": {
+          "type": "string",
+          "minLength": 1
+        },
+        "scope_statement": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "dimensions": {
+      "type": "array",
+      "minItems": 6,
+      "maxItems": 6,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "status",
+          "readout"
+        ],
+        "properties": {
+          "id": {
+            "enum": [
+              "DSR-D1",
+              "DSR-D2",
+              "DSR-D3",
+              "DSR-D4",
+              "DSR-D5a",
+              "DSR-D5b"
+            ]
+          },
+          "status": {
+            "enum": [
+              "checked",
+              "partial",
+              "not_checkable"
+            ]
+          },
+          "reason_code": {
+            "enum": [
+              "card_has_no_breakdown",
+              "unit_conversion_absent",
+              "licence_not_machine_readable",
+              "no_recorded_clock",
+              "clock_features_unusable",
+              "alignment_unresolved",
+              "split_undeclared",
+              "frame_wise_split",
+              "no_task_labels",
+              "no_cluster_ids",
+              "revision_unpinned"
+            ]
+          },
+          "readout": {
+            "type": "string",
+            "minLength": 1
+          },
+          "missing": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "thresholds": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "eeo_sets_thresholds",
+        "dedup",
+        "thresholds_origin"
+      ],
+      "properties": {
+        "eeo_sets_thresholds": {
+          "const": false
+        },
+        "sync": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "tau_ms",
+            "tau_rule",
+            "pairing_policy",
+            "tau_factor",
+            "period_basis",
+            "pairing_direction",
+            "m",
+            "declared_by",
+            "basis",
+            "m_origin",
+            "sensitivity"
+          ],
+          "properties": {
+            "tau_ms": {
+              "type": "number",
+              "exclusiveMinimum": 0
+            },
+            "declared_by": {
+              "enum": [
+                "buyer",
+                "supplier",
+                "joint"
+              ]
+            },
+            "basis": {
+              "type": "string",
+              "minLength": 1
+            },
+            "sensitivity": {
+              "type": "array",
+              "minItems": 2,
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "tau_ms",
+                  "w",
+                  "m",
+                  "n_fail",
+                  "n_degraded"
+                ],
+                "properties": {
+                  "tau_ms": {
+                    "type": "number",
+                    "exclusiveMinimum": 0
+                  },
+                  "n_fail": {
+                    "type": "integer",
+                    "minimum": 0
+                  },
+                  "n_degraded": {
+                    "type": "integer",
+                    "minimum": 0
+                  },
+                  "m": {
+                    "type": "number",
+                    "exclusiveMinimum": 1
+                  },
+                  "w": {
+                    "type": "number",
+                    "exclusiveMinimum": 0,
+                    "maximum": 1
+                  }
+                }
+              },
+              "description": "At least two (tau, m) pairs. The sweep must contain the declared pair and must contain m=2 and m=3."
+            },
+            "m": {
+              "type": "number",
+              "exclusiveMinimum": 1,
+              "description": "Top of the degraded band as a multiple of tau. Declared by the party that declares tau. EEO default is 3, and using that default must be stated here rather than hidden in the method."
+            },
+            "m_origin": {
+              "enum": [
+                "buyer",
+                "supplier",
+                "joint",
+                "eeo_default"
+              ],
+              "description": "Who chose m. eeo_default means the record uses EEO default 3 and says so."
+            },
+            "tau_rule": {
+              "enum": [
+                "derived_from_pairing_policy",
+                "declared_convention"
+              ]
+            },
+            "shortest_stream_period_ms": {
+              "type": [
+                "number",
+                "null"
+              ],
+              "exclusiveMinimum": 0
+            },
+            "pairing_policy": {
+              "enum": [
+                "nearest_neighbor",
+                "zero_order_hold",
+                "unknown"
+              ]
+            },
+            "tau_factor": {
+              "type": [
+                "number",
+                "null"
+              ],
+              "exclusiveMinimum": 0,
+              "maximum": 2
+            },
+            "period_basis": {
+              "enum": [
+                "sampled_stream",
+                "shortest_stream"
+              ]
+            },
+            "tau_convention_note": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "sensitivity_headline": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "pairing_direction": {
+              "enum": [
+                "camera_frames_to_state_samples",
+                "state_samples_to_camera_frames",
+                "bidirectional",
+                "unknown"
+              ]
+            },
+            "sampled_stream_period_ms": {
+              "type": [
+                "number",
+                "null"
+              ],
+              "exclusiveMinimum": 0
+            },
+            "tau_scope": {
+              "const": "global_simplified"
+            },
+            "global_tau_note": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        },
+        "dedup": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "w",
+            "declared_by",
+            "basis",
+            "sensitivity"
+          ],
+          "properties": {
+            "w": {
+              "type": "number",
+              "exclusiveMinimum": 0,
+              "maximum": 1
+            },
+            "declared_by": {
+              "enum": [
+                "buyer",
+                "supplier",
+                "joint"
+              ]
+            },
+            "basis": {
+              "type": "string",
+              "minLength": 1
+            },
+            "fingerprint": {
+              "type": "string"
+            },
+            "sensitivity": {
+              "type": "array",
+              "minItems": 2,
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "w",
+                  "n_duplicate_copies"
+                ],
+                "properties": {
+                  "w": {
+                    "type": "number",
+                    "exclusiveMinimum": 0,
+                    "maximum": 1
+                  },
+                  "n_duplicate_copies": {
+                    "type": "integer",
+                    "minimum": 0
+                  },
+                  "nees": {
+                    "type": "number",
+                    "minimum": 0
+                  }
+                }
+              }
+            }
+          }
+        },
+        "thresholds_origin": {
+          "enum": [
+            "buyer_declared",
+            "eeo_default_package"
+          ]
+        },
+        "default_package_notice": {
+          "type": [
+            "object",
+            "null"
+          ],
+          "additionalProperties": false,
+          "required": [
+            "zh",
+            "en"
+          ],
+          "properties": {
+            "zh": {
+              "type": "string",
+              "minLength": 1
+            },
+            "en": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        },
+        "acceptance_use": {
+          "enum": [
+            "not_declared_by_buyer",
+            "buyer_declared"
+          ]
+        }
+      }
+    },
+    "neev": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "n_declared",
+        "sync",
+        "dedup",
+        "chain",
+        "cluster",
+        "rho",
+        "nees",
+        "trajectory_diversity_signal",
+        "failure_observations"
+      ],
+      "properties": {
+        "n_declared": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "sync": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "status",
+            "clock_model",
+            "scope_note",
+            "n_pass",
+            "n_degraded",
+            "n_fail",
+            "n_alignment_excluded",
+            "n_alignment_unlocatable",
+            "n_unverified",
+            "structural_fault",
+            "degraded_policy",
+            "alignment",
+            "stream_continuity_findings"
+          ],
+          "properties": {
+            "status": {
+              "enum": [
+                "verified",
+                "unverified"
+              ]
+            },
+            "clock_model": {
+              "type": "object",
+              "additionalProperties": false,
+              "description": "EEO's own clock model: it runs inside this module, borrows the field conventions of public timing work, and carries no runtime dependency on any external tool or service.",
+              "required": [
+                "model_id",
+                "version",
+                "self_implemented",
+                "external_dependency",
+                "features"
+              ],
+              "properties": {
+                "model_id": {
+                  "const": "eeo-clock"
+                },
+                "version": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "self_implemented": {
+                  "const": true
+                },
+                "external_dependency": {
+                  "const": false
+                },
+                "observation_sha256": {
+                  "type": "string",
+                  "pattern": "^[0-9a-f]{64}$",
+                  "description": "Hash of the clock observation the counts were taken from; required when sync is verified."
+                },
+                "features": {
+                  "type": "array",
+                  "minItems": 3,
+                  "items": {
+                    "enum": [
+                      "offset",
+                      "drift",
+                      "jitter",
+                      "gap",
+                      "reset"
+                    ]
+                  }
+                },
+                "self_check": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "description": "Known-ground-truth fault injection the clock model must pass before a record may claim verified sync.",
+                  "required": [
+                    "fixture_id",
+                    "fixture_version",
+                    "runner",
+                    "coverage",
+                    "n_cases",
+                    "n_passed",
+                    "run_date"
+                  ],
+                  "properties": {
+                    "fixture_id": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "fixture_version": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "n_cases": {
+                      "type": "integer",
+                      "minimum": 8
+                    },
+                    "n_passed": {
+                      "type": "integer",
+                      "minimum": 0
+                    },
+                    "run_date": {
+                      "type": "string",
+                      "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+                    },
+                    "runner": {
+                      "type": "string",
+                      "minLength": 1,
+                      "description": "Executable fixture driver under tools/; the self-test calls it."
+                    },
+                    "coverage": {
+                      "type": "array",
+                      "minItems": 5,
+                      "uniqueItems": true,
+                      "items": {
+                        "enum": [
+                          "late_packet",
+                          "missing_frame",
+                          "clock_drift",
+                          "clock_reset",
+                          "non_monotonic"
+                        ]
+                      },
+                      "description": "Injected fault classes; at least one case per class."
+                    }
+                  }
+                }
+              }
+            },
+            "reason_code": {
+              "enum": [
+                "no_recorded_clock",
+                "clock_features_unusable"
+              ]
+            },
+            "scope_note": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "zh",
+                "en"
+              ],
+              "properties": {
+                "zh": {
+                  "const": "本核验只核验记录时间线自洽，不认定采集时物理同步。"
+                },
+                "en": {
+                  "const": "This review checks that the recorded timeline is self-consistent; it does not certify that the sensors were physically synchronised at capture."
+                }
+              }
+            },
+            "n_pass": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "n_degraded": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "n_fail": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "n_alignment_excluded": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "n_alignment_unlocatable": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "n_unverified": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "degraded_policy": {
+              "const": "excluded_from_nees"
+            },
+            "alignment": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "executed",
+                "outcome",
+                "rule"
+              ],
+              "properties": {
+                "executed": {
+                  "const": false
+                },
+                "outcome": {
+                  "enum": [
+                    "not_required",
+                    "segment_excluded",
+                    "extent_unknown",
+                    "segment_unverified"
+                  ]
+                },
+                "affected_episodes": {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "basis": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "reason_code": {
+                  "enum": [
+                    "reset_points_unlocatable",
+                    "alignment_rule_absent"
+                  ]
+                },
+                "note": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "rule": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "rule_type",
+                    "source",
+                    "rule_hash",
+                    "applicable"
+                  ],
+                  "properties": {
+                    "rule_type": {
+                      "enum": [
+                        "none",
+                        "reset_to_zero",
+                        "custom_documented"
+                      ]
+                    },
+                    "source": {
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "rule_hash": {
+                      "type": [
+                        "string",
+                        "null"
+                      ],
+                      "pattern": "^[0-9a-f]{64}$"
+                    },
+                    "applicable": {
+                      "type": "boolean"
+                    },
+                    "reset_point_episode_id": {
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "reset_point_timestamp": {
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    }
+                  }
+                }
+              }
+            },
+            "structural_fault": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "type",
+                "n_events",
+                "affected_episodes",
+                "range_basis"
+              ],
+              "properties": {
+                "type": {
+                  "enum": [
+                    "none",
+                    "clock_reset",
+                    "non_monotonic_spike",
+                    "other"
+                  ]
+                },
+                "affected_episodes": {
+                  "type": [
+                    "integer",
+                    "null"
+                  ],
+                  "minimum": 0
+                },
+                "range_basis": {
+                  "enum": [
+                    "none",
+                    "segment_from_reset_point",
+                    "spike_containing_episodes",
+                    "spike_crossing_no_internal_break",
+                    "unlocatable"
+                  ]
+                },
+                "note": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "n_events": {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "stream_continuity_finding": {
+                  "type": "boolean"
+                }
+              }
+            },
+            "stream_continuity_findings": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "count",
+                "boundaries",
+                "basis",
+                "note"
+              ],
+              "properties": {
+                "count": {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "boundaries": {
+                  "type": [
+                    "array",
+                    "null"
+                  ],
+                  "items": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": [
+                      "left_episode_id",
+                      "right_episode_id"
+                    ],
+                    "properties": {
+                      "left_episode_id": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "right_episode_id": {
+                        "type": "string",
+                        "minLength": 1
+                      }
+                    }
+                  }
+                },
+                "basis": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "note": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              }
+            }
+          }
+        },
+        "dedup": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "executed",
+            "n_duplicate_copies",
+            "n_exact_copies",
+            "n_cross_split_copies",
+            "leakage_rate",
+            "n_distinct_est",
+            "calibration_status"
+          ],
+          "properties": {
+            "executed": {
+              "const": false
+            },
+            "n_duplicate_copies": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "n_cross_split_copies": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "leakage_rate": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1
+            },
+            "n_distinct_est": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "n_exact_copies": {
+              "type": "integer",
+              "minimum": 0,
+              "description": "Byte-identical copies, counted regardless of W. A subset of n_duplicate_copies."
+            },
+            "metric": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "id",
+                "defined_in",
+                "family",
+                "threshold_binding"
+              ],
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "defined_in": {
+                  "const": "METHOD 4.5"
+                },
+                "family": {
+                  "enum": [
+                    "embedding_cosine",
+                    "perceptual_hash",
+                    "exact_byte"
+                  ]
+                },
+                "threshold_binding": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "metric",
+                    "w",
+                    "calibration_fixture_id"
+                  ],
+                  "properties": {
+                    "metric": {
+                      "enum": [
+                        "embedding_cosine",
+                        "perceptual_hash",
+                        "exact_byte"
+                      ]
+                    },
+                    "w": {
+                      "type": "number",
+                      "minimum": 0,
+                      "maximum": 1
+                    },
+                    "calibration_fixture_id": {
+                      "anyOf": [
+                        {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        {
+                          "type": "null"
+                        }
+                      ],
+                      "description": "Fixture id when a real calibration exists; null while calibration_status is not_established."
+                    }
+                  }
+                }
+              },
+              "description": "Fixed by EEO in the method. The buyer declares W, never the metric."
+            },
+            "metric_note": {
+              "type": "string",
+              "minLength": 1
+            },
+            "calibration": {
+              "type": [
+                "object",
+                "null"
+              ],
+              "additionalProperties": false,
+              "description": "Known-truth calibration of the dedup detector, only when one exists. Null while calibration_status is not_established.",
+              "required": [
+                "fixture_id",
+                "fixture_version",
+                "fixture_hash",
+                "runner",
+                "executed",
+                "n_positive_pairs",
+                "n_negative_pairs",
+                "n_false_merge",
+                "n_false_split",
+                "false_merge_rate",
+                "false_split_rate",
+                "upper95_false_merge_rate",
+                "upper95_false_split_rate",
+                "passed",
+                "result_hash",
+                "run_date"
+              ],
+              "properties": {
+                "fixture_id": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "fixture_version": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "runner": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "n_positive_pairs": {
+                  "type": "integer",
+                  "minimum": 59
+                },
+                "n_negative_pairs": {
+                  "type": "integer",
+                  "minimum": 59
+                },
+                "false_merge_rate": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 1
+                },
+                "false_split_rate": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 1
+                },
+                "passed": {
+                  "const": true
+                },
+                "run_date": {
+                  "type": "string",
+                  "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+                },
+                "executed": {
+                  "const": true
+                },
+                "n_false_merge": {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "n_false_split": {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "upper95_false_merge_rate": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 1
+                },
+                "upper95_false_split_rate": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 1
+                },
+                "fixture_hash": {
+                  "type": "string",
+                  "pattern": "^[0-9a-f]{64}$"
+                },
+                "result_hash": {
+                  "type": "string",
+                  "pattern": "^[0-9a-f]{64}$"
+                }
+              }
+            },
+            "calibration_status": {
+              "enum": [
+                "not_established",
+                "established"
+              ],
+              "description": "Whether a real detector calibration exists. not_established means no detector and no gate; calibration must then be null."
+            },
+            "tie_break": {
+              "type": "object",
+              "additionalProperties": false,
+              "description": "Declared rule for resolving multiple records of the same episode with conflicting fields, especially success. Required when a record reports a success-based rho and duplicate audit found conflicts.",
+              "required": [
+                "rule"
+              ],
+              "properties": {
+                "rule": {
+                  "enum": [
+                    "first",
+                    "last",
+                    "drop_group",
+                    "not_applicable"
+                  ]
+                },
+                "note": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "sensitivity_evidence": {
+                  "type": [
+                    "string",
+                    "null"
+                  ],
+                  "description": "Path or id of the three-rule sensitivity evidence; null only when rule is not_applicable."
+                }
+              }
+            }
+          },
+          "allOf": [
+            {
+              "if": {
+                "properties": {
+                  "calibration_status": {
+                    "const": "established"
+                  }
+                }
+              },
+              "then": {
+                "required": [
+                  "calibration"
+                ],
+                "properties": {
+                  "calibration": {
+                    "type": "object"
+                  }
+                }
+              }
+            },
+            {
+              "if": {
+                "properties": {
+                  "calibration_status": {
+                    "const": "not_established"
+                  }
+                }
+              },
+              "then": {
+                "properties": {
+                  "calibration": {
+                    "type": "null"
+                  }
+                }
+              }
+            }
+          ]
+        },
+        "chain": {
+          "type": "object",
+          "additionalProperties": false,
+          "description": "The four-step chain, printed as fields: raw is n_declared, then sync_filtered, dedup_count, nees.",
+          "required": [
+            "sync_filtered",
+            "sync_unverified",
+            "dedup_count",
+            "nees"
+          ],
+          "properties": {
+            "sync_filtered": {
+              "type": [
+                "number",
+                "null"
+              ]
+            },
+            "dedup_count": {
+              "type": [
+                "number",
+                "null"
+              ]
+            },
+            "nees": {
+              "type": [
+                "number",
+                "null"
+              ]
+            },
+            "sync_unverified": {
+              "type": [
+                "number",
+                "null"
+              ]
+            }
+          }
+        },
+        "cluster": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "axis",
+            "level",
+            "count",
+            "mean_size"
+          ],
+          "properties": {
+            "axis": {
+              "enum": [
+                "workstation-object",
+                "scene",
+                "environment"
+              ]
+            },
+            "count": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "mean_size": {
+              "type": "number",
+              "minimum": 1
+            },
+            "note": {
+              "type": "string"
+            },
+            "level": {
+              "enum": [
+                "workstation_object",
+                "scene",
+                "environment",
+                "task",
+                "other"
+              ]
+            }
+          }
+        },
+        "rho": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "status",
+            "estimator"
+          ],
+          "properties": {
+            "status": {
+              "enum": [
+                "measured",
+                "assumed",
+                "not_measured"
+              ]
+            },
+            "estimator": {
+              "enum": [
+                "outcome_icc",
+                "feature_dispersion"
+              ]
+            },
+            "value": {
+              "type": [
+                "number",
+                "null"
+              ],
+              "minimum": 0,
+              "maximum": 1
+            },
+            "interval": {
+              "type": "array",
+              "minItems": 2,
+              "maxItems": 2,
+              "items": {
+                "type": "number"
+              }
+            },
+            "basis": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "kind"
+              ],
+              "properties": {
+                "kind": {
+                  "enum": [
+                    "borrowed_from",
+                    "sensitivity_range",
+                    "measured_here",
+                    "not_measured"
+                  ]
+                },
+                "corpus_id": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "range": {
+                  "type": "array",
+                  "minItems": 2,
+                  "maxItems": 2,
+                  "items": {
+                    "type": "number",
+                    "minimum": 0,
+                    "maximum": 1
+                  }
+                },
+                "note": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "nees": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "status",
+            "unit",
+            "basis",
+            "cleaning",
+            "cap"
+          ],
+          "properties": {
+            "status": {
+              "enum": [
+                "computable",
+                "interval",
+                "upper_bound",
+                "unestimable_zero_variance",
+                "unestimable_alignment",
+                "unestimable_other"
+              ]
+            },
+            "unit": {
+              "const": "episode"
+            },
+            "basis": {
+              "const": "post_dedup_estimate"
+            },
+            "cleaning": {
+              "const": "not_performed"
+            },
+            "value": {
+              "type": [
+                "number",
+                "null"
+              ],
+              "minimum": 0
+            },
+            "interval": {
+              "anyOf": [
+                {
+                  "type": "array",
+                  "minItems": 2,
+                  "maxItems": 2,
+                  "items": {
+                    "type": "number"
+                  }
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "cap": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "applied",
+                "bases"
+              ],
+              "properties": {
+                "applied": {
+                  "type": "boolean"
+                },
+                "bases": {
+                  "type": "array",
+                  "items": {
+                    "enum": [
+                      "sample_scope",
+                      "sync_unverified"
+                    ]
+                  }
+                },
+                "direction": {
+                  "enum": [
+                    "upper_bound",
+                    null
+                  ]
+                },
+                "value": {
+                  "type": [
+                    "number",
+                    "null"
+                  ],
+                  "minimum": 0,
+                  "description": "The bound itself, i.e. the number the buyer sees when capped."
+                },
+                "formula": {
+                  "type": "string",
+                  "minLength": 1,
+                  "description": "The formula that produced value, so the bound can be recomputed."
+                },
+                "rho": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 1,
+                  "description": "The rho used in the bound."
+                },
+                "basis_note": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "rho_source": {
+                  "enum": [
+                    "interval_low",
+                    "sensitivity_range_low"
+                  ]
+                },
+                "mean_size_def": {
+                  "const": "mean_cluster_size = n_dedup / n_clusters"
+                },
+                "buyer_note": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              }
+            },
+            "reason_code": {
+              "enum": [
+                "zero_variance_dominance",
+                "split_not_declared",
+                "frame_wise_split",
+                "sync_unverified",
+                "cluster_ids_absent",
+                "insufficient_clusters",
+                "alignment_rule_absent",
+                "reset_points_unlocatable"
+              ]
+            },
+            "reason_detail": {
+              "type": "string"
+            }
+          }
+        },
+        "failure_observations": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/failure_observations"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "diagnostics": {
+          "type": "object",
+          "additionalProperties": false,
+          "description": "Separate diagnostic readings, each with its own basis. They are not parts of NEES and do not sum to it.",
+          "required": [
+            "zero_variance_share",
+            "n_dedup"
+          ],
+          "properties": {
+            "zero_variance_share": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "status",
+                "basis"
+              ],
+              "properties": {
+                "status": {
+                  "enum": [
+                    "computed",
+                    "not_computable_due_to_alignment"
+                  ]
+                },
+                "value": {
+                  "type": [
+                    "number",
+                    "null"
+                  ],
+                  "minimum": 0,
+                  "maximum": 1
+                },
+                "basis": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              }
+            },
+            "n_dedup": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "value",
+                "basis"
+              ],
+              "properties": {
+                "value": {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "basis": {
+                  "type": "string",
+                  "minLength": 1,
+                  "description": "How the count was reached."
+                }
+              }
+            }
+          }
+        },
+        "trajectory_diversity_signal": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "status",
+            "pool",
+            "n_dedup",
+            "dim_rule",
+            "embodiment_scope",
+            "embodiment",
+            "stratification",
+            "stratum_summary",
+            "pooled_total",
+            "between_task_share",
+            "basis",
+            "note",
+            "decision_supports",
+            "decision_does_not_support"
+          ],
+          "properties": {
+            "status": {
+              "enum": [
+                "computed",
+                "insufficient_sample",
+                "not_computed",
+                "not_computable_mixed_embodiment",
+                "not_computable"
+              ]
+            },
+            "pool": {
+              "const": "post_dedup"
+            },
+            "n_dedup": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "dim_rule": {
+              "const": "participation_ratio"
+            },
+            "pca_effective_dim": {
+              "type": [
+                "integer",
+                "null"
+              ],
+              "minimum": 0
+            },
+            "geometric_entropy": {
+              "type": [
+                "number",
+                "null"
+              ],
+              "minimum": 0
+            },
+            "embodiment_scope": {
+              "enum": [
+                "single",
+                "mixed",
+                "unknown"
+              ]
+            },
+            "embodiment": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "mode"
+              ],
+              "properties": {
+                "mode": {
+                  "enum": [
+                    "within"
+                  ]
+                },
+                "embodiment_id": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                }
+              }
+            },
+            "basis": {
+              "type": "string",
+              "minLength": 1
+            },
+            "note": {
+              "type": "string",
+              "minLength": 1
+            },
+            "reference_distribution": {
+              "type": [
+                "object",
+                "null"
+              ]
+            },
+            "effective_dim": {
+              "type": [
+                "number",
+                "null"
+              ],
+              "minimum": 0
+            },
+            "spectral_entropy": {
+              "type": [
+                "object",
+                "null"
+              ],
+              "additionalProperties": false,
+              "required": [
+                "value",
+                "role"
+              ],
+              "properties": {
+                "value": {
+                  "type": "number",
+                  "minimum": 0
+                },
+                "role": {
+                  "const": "supplementary"
+                }
+              }
+            },
+            "stratification": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "mode",
+                "unit",
+                "task_count",
+                "n_strata",
+                "per_stratum"
+              ],
+              "properties": {
+                "mode": {
+                  "enum": [
+                    "stratified",
+                    "pooled"
+                  ]
+                },
+                "unit": {
+                  "enum": [
+                    "task",
+                    "scene",
+                    "dataset"
+                  ]
+                },
+                "task_count": {
+                  "type": "integer",
+                  "minimum": 1
+                },
+                "n_strata": {
+                  "type": "integer",
+                  "minimum": 1
+                },
+                "per_stratum": {
+                  "type": [
+                    "array",
+                    "null"
+                  ],
+                  "items": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": [
+                      "stratum_id",
+                      "n_dedup",
+                      "status",
+                      "effective_dim"
+                    ],
+                    "properties": {
+                      "stratum_id": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "n_dedup": {
+                        "type": "integer",
+                        "minimum": 0
+                      },
+                      "effective_dim": {
+                        "type": [
+                          "number",
+                          "null"
+                        ],
+                        "minimum": 0
+                      },
+                      "status": {
+                        "enum": [
+                          "computed",
+                          "insufficient_sample"
+                        ]
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "pooled_total": {
+              "type": [
+                "number",
+                "null"
+              ]
+            },
+            "between_task_share": {
+              "type": [
+                "number",
+                "null"
+              ],
+              "minimum": 0,
+              "maximum": 1
+            },
+            "stratum_summary": {
+              "type": [
+                "object",
+                "null"
+              ],
+              "additionalProperties": false,
+              "required": [
+                "n_strata",
+                "n_computed",
+                "n_insufficient",
+                "median",
+                "min",
+                "max"
+              ],
+              "properties": {
+                "n_strata": {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "n_computed": {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "n_insufficient": {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "median": {
+                  "type": [
+                    "number",
+                    "null"
+                  ]
+                },
+                "min": {
+                  "type": [
+                    "number",
+                    "null"
+                  ]
+                },
+                "max": {
+                  "type": [
+                    "number",
+                    "null"
+                  ]
+                }
+              }
+            },
+            "decision_supports": {
+              "type": "string",
+              "minLength": 1
+            },
+            "decision_does_not_support": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        }
+      }
+    },
+    "split": {
+      "enum": [
+        "workstation-object",
+        "scene",
+        "environment",
+        "not declared",
+        "frame-wise"
+      ]
+    },
+    "buyer_summary": {
+      "type": "array",
+      "minItems": 3,
+      "maxItems": 5,
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "submitter": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "organisation",
+        "role"
+      ],
+      "properties": {
+        "organisation": {
+          "type": "string",
+          "minLength": 1
+        },
+        "role": {
+          "enum": [
+            "supplier",
+            "independent"
+          ]
+        },
+        "prior_prechecks": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "date",
+              "tool"
+            ],
+            "properties": {
+              "date": {
+                "type": "string",
+                "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$"
+              },
+              "tool": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          }
+        }
+      }
+    },
+    "objections": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "party",
+          "text"
+        ],
+        "properties": {
+          "party": {
+            "type": "string"
+          },
+          "text": {
+            "type": "string"
+          },
+          "outcome": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "use_limitation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "text_version",
+        "en",
+        "zh"
+      ],
+      "properties": {
+        "text_version": {
+          "const": "EEO-DUL-2"
+        },
+        "en": {
+          "type": "string",
+          "minLength": 1
+        },
+        "zh": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "reference_note": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "text_version",
+        "en",
+        "zh"
+      ],
+      "properties": {
+        "text_version": {
+          "const": "EEO-RN-3"
+        },
+        "en": {
+          "type": "string",
+          "minLength": 1,
+          "const": "No standard is cited as a basis for this record. The dimension split of YD/T 6771-2026 informed the thinking behind this module's own five dimensions; those dimensions are defined independently and form no mapping to it. Its clauses and thresholds are not cited, and nothing here asserts conformity with it or with any other standard."
+        },
+        "zh": {
+          "type": "string",
+          "minLength": 1,
+          "const": "本记录不以任何标准为判定依据。YD/T 6771—2026 的维度划分仅作为思路参考；本模块的五个维度独立定义，与该标准不构成对照关系。不引其条款与阈值，也不声明与该标准或任何其他标准相符。"
+        }
+      }
+    },
+    "buyer_summary_use_limitation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "text_version",
+        "en",
+        "zh"
+      ],
+      "properties": {
+        "text_version": {
+          "const": "EEO-DUL-2"
+        },
+        "en": {
+          "type": "string",
+          "minLength": 1
+        },
+        "zh": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "description": "The same EEO-DUL-2 text, printed at the top of the buyer summary page."
+    },
+    "scope_declaration": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "label_consistency",
+        "card_index_crosscheck",
+        "dimension_code_note"
+      ],
+      "properties": {
+        "label_consistency": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "status",
+            "reason"
+          ],
+          "properties": {
+            "status": {
+              "const": "not_assessed"
+            },
+            "reason": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        },
+        "card_index_crosscheck": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "status",
+            "reason"
+          ],
+          "properties": {
+            "status": {
+              "const": "not_assessed"
+            },
+            "reason": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        },
+        "dimension_code_note": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    }
+  },
+  "definitions": {
+    "failure_observations": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "failures",
+        "n",
+        "n_ind",
+        "n_ind_basis",
+        "upper95_by_cluster",
+        "upper95_by_dedup",
+        "decision_note",
+        "basis"
+      ],
+      "properties": {
+        "failures": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "n": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "n_ind": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "n_ind_basis": {
+          "enum": [
+            "cluster_count",
+            "dedup_count"
+          ]
+        },
+        "formula": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Exact one-sided 95% upper bound for zero failures: 1 - 0.05^(1/n_ind)."
+        },
+        "basis": {
+          "type": "string",
+          "minLength": 1
+        },
+        "upper95_by_cluster": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "upper95_by_dedup": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "cluster_budget": {
+          "type": [
+            "array",
+            "null"
+          ],
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "target_rate",
+              "clusters_required"
+            ],
+            "properties": {
+              "target_rate": {
+                "enum": [
+                  0.1,
+                  0.05,
+                  0.01
+                ]
+              },
+              "clusters_required": {
+                "type": "integer",
+                "minimum": 1
+              }
+            }
+          }
+        },
+        "decision_note": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    }
+  },
+  "not": {
+    "required": [
+      "pre_check_not_a_record"
+    ]
+  }
+}

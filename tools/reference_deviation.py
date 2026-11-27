@@ -28,8 +28,15 @@ import json
 from pathlib import Path
 import numpy as np
 
-NOTICE = ("Descriptive readout only. No threshold, no ranking, no acceptance decision. "
-          "The reference population is buyer-supplied; EEO does not own or choose it.")
+NOTICE_BUYER = ("Descriptive readout only. No threshold, no ranking, no acceptance decision. "
+                "The reference population is buyer-supplied; EEO does not own or choose it.")
+NOTICE_SITE = ("Descriptive same-corpus site-to-site readout only. No threshold, no ranking, "
+               "no acceptance decision. This is not a buyer-deployment reference and must not "
+               "be described as one.")
+
+
+def _notice(scope: str) -> str:
+    return NOTICE_SITE if scope == "site_to_site" else NOTICE_BUYER
 
 
 def _load(path: str, matrix: str = "fingerprints"):
@@ -85,7 +92,34 @@ def _bootstrap_energy(a: np.ndarray, b: np.ndarray, reps: int, seed: int):
     return [float(np.percentile(vals, 2.5)), float(np.percentile(vals, 97.5))]
 
 
-def compare(reference: np.ndarray, target: np.ndarray, reps: int = 200, seed: int = 20261129):
+def _subsample_energy(a: np.ndarray, b: np.ndarray, reps: int, seed: int,
+                      fraction: float = 0.9):
+    """m-out-of-n subsampling without replacement.
+
+    Energy distance uses a V-statistic with diagonal terms in its within-sample
+    means.  Resampling with replacement creates duplicate/zero-distance pairs
+    and inflates the interval above the full-sample point; the bootstrap
+    interval is therefore not the interval of the same estimator.  Subsampling
+    without replacement keeps the same estimator and no duplicate ties.
+    """
+    if not 0.0 < fraction < 1.0:
+        raise ValueError("subsample fraction must be in (0,1)")
+    rng = np.random.default_rng(seed)
+    na = max(2, int(round(a.shape[0] * fraction)))
+    nb = max(2, int(round(b.shape[0] * fraction)))
+    vals = []
+    for _ in range(reps):
+        ai = rng.choice(a.shape[0], na, replace=False)
+        bi = rng.choice(b.shape[0], nb, replace=False)
+        vals.append(energy_distance(a[ai], b[bi]))
+    return [float(np.percentile(vals, 2.5)), float(np.percentile(vals, 97.5))]
+
+
+def compare(reference: np.ndarray, target: np.ndarray, reps: int = 200,
+            seed: int = 20261129, scope: str = "buyer_reference",
+            reference_label: str = "buyer-supplied reference",
+            target_label: str = "dataset",
+            interval_method: str = "subsample", subsample_fraction: float = 0.9):
     if reference.shape[1] != target.shape[1]:
         raise ValueError("reference and target fingerprint dimensions differ")
     pooled_sd = np.sqrt((reference.var(axis=0, ddof=1) + target.var(axis=0, ddof=1)) / 2.0)
@@ -103,22 +137,42 @@ def compare(reference: np.ndarray, target: np.ndarray, reps: int = 200, seed: in
         "mean_shift_max_abs_z": float(np.max(np.abs(mean_shift))),
         "mean_shift_per_dim": [float(v) for v in mean_shift],
         "energy_distance": energy_distance(reference, target),
-        "energy_distance_bootstrap_95": _bootstrap_energy(reference, target, reps, seed),
+        "energy_distance_interval_95": (
+            _subsample_energy(reference, target, reps, seed, subsample_fraction)
+            if interval_method == "subsample"
+            else _bootstrap_energy(reference, target, reps, seed)
+        ),
+        "energy_distance_interval_method": interval_method,
+        "energy_distance_bootstrap_95": (
+            _bootstrap_energy(reference, target, reps, seed)
+            if interval_method == "bootstrap" else None
+        ),
         "ks_max": float(max(ks)),
         "ks_per_dim": [float(v) for v in ks],
         "target_outside_reference_0.5_99.5_share": float(outside.any(axis=1).mean()),
         "target_outside_reference_per_dim_share": [float(v) for v in outside.mean(axis=0)],
         "nearest_reference_distance_median": float(np.median(nearest)),
         "nearest_reference_distance_p95": float(np.percentile(nearest, 95)),
-        "notice": NOTICE,
+        "scope": scope,
+        "reference_label": reference_label,
+        "target_label": target_label,
+        "notice": _notice(scope),
     }
 
 
-def run(reference_path: str, target_path: str, out: str, reps: int, matrix: str = "fingerprints"):
+def run(reference_path: str, target_path: str, out: str, reps: int,
+        matrix: str = "fingerprints", scope: str = "buyer_reference",
+        reference_label: str = "buyer-supplied reference", target_label: str = "dataset",
+        interval_method: str = "subsample", subsample_fraction: float = 0.9):
     ref = _load(reference_path, matrix); tgt = _load(target_path, matrix)
     _check(ref, "reference"); _check(tgt, "target")
-    result = compare(ref, tgt, reps=reps)
+    result = compare(ref, tgt, reps=reps, scope=scope,
+                     reference_label=reference_label, target_label=target_label,
+                     interval_method=interval_method, subsample_fraction=subsample_fraction)
     result["matrix"] = matrix
+    if scope == "site_to_site":
+        result["claim_scope"] = "basis_fit_direction_dependent"
+        result["basis_fit_side"] = "reference"
     result["reference_input"] = str(reference_path)
     result["target_input"] = str(target_path)
     result["reference_sha256"] = hashlib.sha256(Path(reference_path).read_bytes()).hexdigest()
@@ -156,13 +210,20 @@ def main() -> int:
     ap.add_argument("--out")
     ap.add_argument("--bootstrap-reps", type=int, default=200)
     ap.add_argument("--matrix", default="fingerprints", choices=("fingerprints", "projections"))
+    ap.add_argument("--scope", default="buyer_reference", choices=("buyer_reference", "site_to_site"))
+    ap.add_argument("--reference-label", default="buyer-supplied reference")
+    ap.add_argument("--target-label", default="dataset")
+    ap.add_argument("--interval-method", default="subsample", choices=("subsample", "bootstrap"))
+    ap.add_argument("--subsample-fraction", type=float, default=0.9)
     ap.add_argument("--self-test", action="store_true")
     args = ap.parse_args()
     if args.self_test:
         self_test(); return 0
     if not (args.reference and args.target and args.out):
         raise SystemExit("--reference, --target and --out are required unless --self-test")
-    return run(args.reference, args.target, args.out, args.bootstrap_reps, args.matrix)
+    return run(args.reference, args.target, args.out, args.bootstrap_reps, args.matrix,
+               args.scope, args.reference_label, args.target_label,
+               args.interval_method, args.subsample_fraction)
 
 
 if __name__ == "__main__":

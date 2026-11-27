@@ -1,0 +1,1958 @@
+{
+  "generated": "2026-11-27",
+  "raw_meta": "../work/publicdata/droid_raw_meta.csv",
+  "raw_rows": 74896,
+  "raw_unique_uuid": 74795,
+  "raw_duplicate_groups": 101,
+  "raw_extra_duplicate_rows": 101,
+  "raw_exact_duplicate_groups": 58,
+  "raw_conflict_duplicate_groups": 43,
+  "scene_valid_before_dedup": 73511,
+  "scene_valid_after_dedup": 73413,
+  "scene_duplicate_rows_removed": 98,
+  "scene_removed_exact_groups": 57,
+  "scene_removed_conflict_groups": 41,
+  "real_positive_candidate_pairs": 58,
+  "data_quality_conflict_pairs": 43,
+  "exact_duplicates": [
+    {
+      "uuid": "IRIS+ef107c48+2023-04-07-13h-26m-32s",
+      "rows": [
+        27138,
+        27524
+      ]
+    },
+    {
+      "uuid": "IRIS+ef107c48+2023-04-07-13h-25m-39s",
+      "rows": [
+        27146,
+        27477
+      ]
+    },
+    {
+      "uuid": "IRIS+ef107c48+2023-04-07-13h-49m-06s",
+      "rows": [
+        27168,
+        28206
+      ]
+    },
+    {
+      "uuid": "IRIS+ef107c48+2023-04-07-13h-25m-59s",
+      "rows": [
+        27187,
+        27488
+      ]
+    },
+    {
+      "uuid": "IRIS+ef107c48+2023-04-07-13h-41m-49s",
+      "rows": [
+        27195,
+        27437
+      ]
+    },
+    {
+      "uuid": "IRIS+ef107c48+2023-04-07-13h-40m-32s",
+      "rows": [
+        27364,
+        27408
+      ]
+    },
+    {
+      "uuid": "IRIS+ef107c48+2023-04-07-13h-31m-28s",
+      "rows": [
+        27378,
+        27464
+      ]
+    },
+    {
+      "uuid": "IRIS+ef107c48+2023-04-07-13h-23m-33s",
+      "rows": [
+        27392,
+        27553
+      ]
+    },
+    {
+      "uuid": "IRIS+ef107c48+2023-04-07-13h-54m-01s",
+      "rows": [
+        27393,
+        27631
+      ]
+    },
+    {
+      "uuid": "IRIS+ef107c48+2023-04-07-12h-51m-02s",
+      "rows": [
+        27394,
+        27424
+      ]
+    },
+    {
+      "uuid": "IRIS+ef107c48+2023-04-07-13h-28m-33s",
+      "rows": [
+        27396,
+        28146
+      ]
+    },
+    {
+      "uuid": "IRIS+ef107c48+2023-04-07-13h-40m-49s",
+      "rows": [
+        27399,
+        27422
+      ]
+    },
+    {
+      "uuid": "IRIS+ef107c48+2023-04-07-13h-32m-05s",
+      "rows": [
+        27403,
+        27494
+      ]
+    },
+    {
+      "uuid": "IRIS+ef107c48+2023-04-07-13h-26m-16s",
+      "rows": [
+        27405,
+        27415
+      ]
+    },
+    {
+      "uuid": "IRIS+ef107c48+2023-04-07-13h-37m-35s",
+      "rows": [
+        27407,
+        27432
+      ]
+    },
+    {
+      "uuid": "IRIS+ef107c48+2023-04-07-13h-23m-53s",
+      "rows": [
+        27413,
+        27484
+      ]
+    },
+    {
+      "uuid": "IRIS+ef107c48+2023-04-07-13h-29m-09s",
+      "rows": [
+        27416,
+        28204
+      ]
+    },
+    {
+      "uuid": "IRIS+ef107c48+2023-04-07-13h-48m-00s",
+      "rows": [
+        27419,
+        27549
+      ]
+    },
+    {
+      "uuid": "IRIS+ef107c48+2023-04-07-13h-53m-25s",
+      "rows": [
+        27420,
+        28233
+      ]
+    },
+    {
+      "uuid": "IRIS+ef107c48+2023-04-07-13h-24m-53s",
+      "rows": [
+        27421,
+        27460
+      ]
+    },
+    {
+      "uuid": "IRIS+ef107c48+2023-04-07-13h-24m-31s",
+      "rows": [
+        27423,
+        28156
+      ]
+    },
+    {
+      "uuid": "IRIS+ef107c48+2023-04-07-13h-32m-40s",
+      "rows": [
+        27425,
+        27499
+      ]
+    },
+    {
+      "uuid": "IRIS+ef107c48+2023-04-07-13h-52m-30s",
+      "rows": [
+        27426,
+        27511
+      ]
+    },
+    {
+      "uuid": "IRIS+ef107c48+2023-04-07-13h-35m-09s",
+      "rows": [
+        27429,
+        27492
+      ]
+    },
+    {
+      "uuid": "IRIS+ef107c48+2023-04-07-13h-28m-01s",
+      "rows": [
+        27431,
+        27500
+      ]
+    },
+    {
+      "uuid": "IRIS+ef107c48+2023-04-07-13h-34m-38s",
+      "rows": [
+        27438,
+        27536
+      ]
+    },
+    {
+      "uuid": "IRIS+ef107c48+2023-04-07-13h-28m-18s",
+      "rows": [
+        27439,
+        27480
+      ]
+    },
+    {
+      "uuid": "IRIS+ef107c48+2023-04-07-13h-48m-45s",
+      "rows": [
+        27445,
+        27493
+      ]
+    },
+    {
+      "uuid": "IRIS+ef107c48+2023-04-07-13h-48m-29s",
+      "rows": [
+        27446,
+        27522
+      ]
+    },
+    {
+      "uuid": "IRIS+ef107c48+2023-04-07-13h-53m-45s",
+      "rows": [
+        27451,
+        27538
+      ]
+    },
+    {
+      "uuid": "IRIS+ef107c48+2023-04-07-13h-29m-41s",
+      "rows": [
+        27453,
+        27482
+      ]
+    },
+    {
+      "uuid": "IRIS+ef107c48+2023-04-07-13h-43m-38s",
+      "rows": [
+        27455,
+        28083
+      ]
+    },
+    {
+      "uuid": "IRIS+ef107c48+2023-04-07-13h-56m-22s",
+      "rows": [
+        27457,
+        28240
+      ]
+    },
+    {
+      "uuid": "IRIS+ef107c48+2023-04-07-13h-47m-38s",
+      "rows": [
+        27458,
+        27937
+      ]
+    },
+    {
+      "uuid": "IRIS+ef107c48+2023-04-07-13h-40m-13s",
+      "rows": [
+        27459,
+        27474
+      ]
+    },
+    {
+      "uuid": "IRIS+ef107c48+2023-04-07-13h-52m-47s",
+      "rows": [
+        27461,
+        27479
+      ]
+    },
+    {
+      "uuid": "IRIS+ef107c48+2023-04-07-13h-32m-23s",
+      "rows": [
+        27465,
+        28069
+      ]
+    },
+    {
+      "uuid": "IRIS+ef107c48+2023-04-07-13h-42m-08s",
+      "rows": [
+        27470,
+        27525
+      ]
+    },
+    {
+      "uuid": "IRIS+ef107c48+2023-04-07-13h-52m-14s",
+      "rows": [
+        27475,
+        27510
+      ]
+    },
+    {
+      "uuid": "IRIS+ef107c48+2023-04-07-13h-55m-32s",
+      "rows": [
+        27478,
+        27613
+      ]
+    },
+    {
+      "uuid": "IRIS+ef107c48+2023-04-07-13h-37m-55s",
+      "rows": [
+        27483,
+        27519
+      ]
+    },
+    {
+      "uuid": "IRIS+ef107c48+2023-04-07-13h-34m-13s",
+      "rows": [
+        27489,
+        27498
+      ]
+    },
+    {
+      "uuid": "IRIS+ef107c48+2023-04-07-13h-50m-35s",
+      "rows": [
+        27490,
+        28056
+      ]
+    },
+    {
+      "uuid": "IRIS+ef107c48+2023-04-07-13h-55m-01s",
+      "rows": [
+        27491,
+        27580
+      ]
+    },
+    {
+      "uuid": "IRIS+ef107c48+2023-04-07-13h-43m-59s",
+      "rows": [
+        27497,
+        27551
+      ]
+    },
+    {
+      "uuid": "IRIS+ef107c48+2023-04-07-13h-51m-11s",
+      "rows": [
+        27503,
+        27663
+      ]
+    },
+    {
+      "uuid": "IRIS+ef107c48+2023-04-07-13h-41m-24s",
+      "rows": [
+        27505,
+        27989
+      ]
+    },
+    {
+      "uuid": "IRIS+ef107c48+2023-04-07-13h-49m-26s",
+      "rows": [
+        27512,
+        28266
+      ]
+    },
+    {
+      "uuid": "IRIS+ef107c48+2023-04-07-13h-30m-39s",
+      "rows": [
+        27513,
+        27526
+      ]
+    },
+    {
+      "uuid": "IRIS+ef107c48+2023-04-07-13h-54m-17s",
+      "rows": [
+        27518,
+        27537
+      ]
+    },
+    {
+      "uuid": "IRIS+ef107c48+2023-04-07-13h-54m-42s",
+      "rows": [
+        27527,
+        28537
+      ]
+    },
+    {
+      "uuid": "IRIS+ef107c48+2023-04-07-14h-00m-48s",
+      "rows": [
+        27543,
+        27578
+      ]
+    },
+    {
+      "uuid": "IRIS+ef107c48+2023-04-07-13h-53m-04s",
+      "rows": [
+        27555,
+        27680
+      ]
+    },
+    {
+      "uuid": "IRIS+ef107c48+2023-04-07-13h-31m-06s",
+      "rows": [
+        27556,
+        27903
+      ]
+    },
+    {
+      "uuid": "IRIS+ef107c48+2023-04-07-14h-02m-21s",
+      "rows": [
+        27559,
+        28003
+      ]
+    },
+    {
+      "uuid": "IRIS+ef107c48+2023-04-07-14h-04m-47s",
+      "rows": [
+        27564,
+        28011
+      ]
+    },
+    {
+      "uuid": "IRIS+ef107c48+2023-04-07-13h-41m-05s",
+      "rows": [
+        27990,
+        28600
+      ]
+    },
+    {
+      "uuid": "RAIL+80edfcb1+2023-04-12-15h-21m-02s",
+      "rows": [
+        35275,
+        38073
+      ]
+    }
+  ],
+  "conflicts": [
+    {
+      "uuid": "AUTOLab+44bb9c36+2023-11-25-10h-11m-14s",
+      "rows": [
+        2230,
+        8115
+      ],
+      "conflict_fields": [
+        "success"
+      ],
+      "values": {
+        "success": [
+          "False",
+          "True"
+        ]
+      }
+    },
+    {
+      "uuid": "AUTOLab+44bb9c36+2023-11-28-11h-17m-25s",
+      "rows": [
+        2410,
+        8504
+      ],
+      "conflict_fields": [
+        "success"
+      ],
+      "values": {
+        "success": [
+          "False",
+          "True"
+        ]
+      }
+    },
+    {
+      "uuid": "ILIAD+50aee79f+2023-08-15-23h-13m-19s",
+      "rows": [
+        18022,
+        19830
+      ],
+      "conflict_fields": [
+        "success"
+      ],
+      "values": {
+        "success": [
+          "False",
+          "True"
+        ]
+      }
+    },
+    {
+      "uuid": "IPRL+41a1536a+2023-11-14-14h-07m-16s",
+      "rows": [
+        21483,
+        24896
+      ],
+      "conflict_fields": [
+        "success"
+      ],
+      "values": {
+        "success": [
+          "False",
+          "True"
+        ]
+      }
+    },
+    {
+      "uuid": "RAD+c6cf6b42+2023-12-16-16h-18m-23s",
+      "rows": [
+        34033,
+        34880
+      ],
+      "conflict_fields": [
+        "success",
+        "current_task"
+      ],
+      "values": {
+        "success": [
+          "False",
+          "True"
+        ],
+        "current_task": [
+          "Do anything you like that takes multiple steps to complete.",
+          "Move object to a new position and orientation (ex: grasping, relocating, flipping)"
+        ]
+      }
+    },
+    {
+      "uuid": "RAD+c6cf6b42+2023-12-16-22h-33m-57s",
+      "rows": [
+        34059,
+        35808
+      ],
+      "conflict_fields": [
+        "success"
+      ],
+      "values": {
+        "success": [
+          "False",
+          "True"
+        ]
+      }
+    },
+    {
+      "uuid": "RAD+c6cf6b42+2023-12-18-19h-18m-59s",
+      "rows": [
+        34217,
+        35027
+      ],
+      "conflict_fields": [
+        "success"
+      ],
+      "values": {
+        "success": [
+          "False",
+          "True"
+        ]
+      }
+    },
+    {
+      "uuid": "RAIL+eh61f232+2023-04-07-19h-48m-56s",
+      "rows": [
+        35339,
+        38649
+      ],
+      "conflict_fields": [
+        "success"
+      ],
+      "values": {
+        "success": [
+          "False",
+          "True"
+        ]
+      }
+    },
+    {
+      "uuid": "RAIL+80edfcb1+2023-04-12-15h-17m-43s",
+      "rows": [
+        35430,
+        38428
+      ],
+      "conflict_fields": [
+        "success"
+      ],
+      "values": {
+        "success": [
+          "False",
+          "True"
+        ]
+      }
+    },
+    {
+      "uuid": "RAIL+80edfcb1+2023-04-19-14h-23m-34s",
+      "rows": [
+        35444,
+        38793
+      ],
+      "conflict_fields": [
+        "success"
+      ],
+      "values": {
+        "success": [
+          "False",
+          "True"
+        ]
+      }
+    },
+    {
+      "uuid": "RAIL+t3d58310+2023-05-19-15h-27m-46s",
+      "rows": [
+        35456,
+        38844
+      ],
+      "conflict_fields": [
+        "success"
+      ],
+      "values": {
+        "success": [
+          "False",
+          "True"
+        ]
+      }
+    },
+    {
+      "uuid": "RAIL+d027f2ae+2023-05-30-15h-04m-00s",
+      "rows": [
+        35544,
+        39268
+      ],
+      "conflict_fields": [
+        "success",
+        "current_task"
+      ],
+      "values": {
+        "success": [
+          "False",
+          "True"
+        ],
+        "current_task": [
+          "Move object into or out of container (ex: drawer, clothes hamper, plate, trashcan, washer)",
+          "Move object to a new position and orientation (ex: grasping, relocating, flipping)"
+        ]
+      }
+    },
+    {
+      "uuid": "RAIL+d027f2ae+2023-06-05-17h-02m-06s",
+      "rows": [
+        35662,
+        39451
+      ],
+      "conflict_fields": [
+        "success"
+      ],
+      "values": {
+        "success": [
+          "False",
+          "True"
+        ]
+      }
+    },
+    {
+      "uuid": "RAIL+80edfcb1+2023-04-17-15h-45m-45s",
+      "rows": [
+        36041,
+        38510
+      ],
+      "conflict_fields": [
+        "success"
+      ],
+      "values": {
+        "success": [
+          "False",
+          "True"
+        ]
+      }
+    },
+    {
+      "uuid": "RAIL+d027f2ae+2023-06-22-14h-08m-56s",
+      "rows": [
+        36331,
+        39808
+      ],
+      "conflict_fields": [
+        "success"
+      ],
+      "values": {
+        "success": [
+          "False",
+          "True"
+        ]
+      }
+    },
+    {
+      "uuid": "RAIL+80edfcb1+2023-06-29-12h-45m-35s",
+      "rows": [
+        36426,
+        40167
+      ],
+      "conflict_fields": [
+        "success",
+        "current_task"
+      ],
+      "values": {
+        "success": [
+          "False",
+          "True"
+        ],
+        "current_task": [
+          "Move lid on or off of container (ex: pot, cup, pill bottle)",
+          "Turn twistable object (ex: faucets, lamps, stove knobs)"
+        ]
+      }
+    },
+    {
+      "uuid": "RAIL+80edfcb1+2023-07-05-18h-24m-04s",
+      "rows": [
+        36430,
+        40509
+      ],
+      "conflict_fields": [
+        "success"
+      ],
+      "values": {
+        "success": [
+          "False",
+          "True"
+        ]
+      }
+    },
+    {
+      "uuid": "RAIL+80edfcb1+2023-07-05-18h-16m-17s",
+      "rows": [
+        36441,
+        41068
+      ],
+      "conflict_fields": [
+        "success",
+        "current_task"
+      ],
+      "values": {
+        "success": [
+          "False",
+          "True"
+        ],
+        "current_task": [
+          "Use cloth to clean something (ex: table, window, mirror, plate)",
+          "Fold, spread out, or clump object (ex: cloth, charging cord, clothes)"
+        ]
+      }
+    },
+    {
+      "uuid": "RAIL+80edfcb1+2023-06-29-12h-53m-29s",
+      "rows": [
+        36485,
+        40185
+      ],
+      "conflict_fields": [
+        "success",
+        "current_task"
+      ],
+      "values": {
+        "success": [
+          "False",
+          "True"
+        ],
+        "current_task": [
+          "Move object into or out of container (ex: drawer, clothes hamper, plate, trashcan, washer)",
+          "Turn twistable object (ex: faucets, lamps, stove knobs)"
+        ]
+      }
+    },
+    {
+      "uuid": "RAIL+d027f2ae+2023-08-07-14h-54m-29s",
+      "rows": [
+        36583,
+        41581
+      ],
+      "conflict_fields": [
+        "success"
+      ],
+      "values": {
+        "success": [
+          "False",
+          "True"
+        ]
+      }
+    },
+    {
+      "uuid": "RAIL+d027f2ae+2023-08-07-14h-52m-26s",
+      "rows": [
+        36608,
+        41683
+      ],
+      "conflict_fields": [
+        "success",
+        "current_task"
+      ],
+      "values": {
+        "success": [
+          "False",
+          "True"
+        ],
+        "current_task": [
+          "Turn twistable object (ex: faucets, lamps, stove knobs)",
+          "Move object to a new position and orientation (ex: grasping, relocating, flipping)"
+        ]
+      }
+    },
+    {
+      "uuid": "RAIL+d027f2ae+2023-08-10-17h-24m-18s",
+      "rows": [
+        36622,
+        42070
+      ],
+      "conflict_fields": [
+        "success",
+        "current_task"
+      ],
+      "values": {
+        "success": [
+          "False",
+          "True"
+        ],
+        "current_task": [
+          "Move object into or out of container (ex: drawer, clothes hamper, plate, trashcan, washer)",
+          "Move object to a new position and orientation (ex: grasping, relocating, flipping)"
+        ]
+      }
+    },
+    {
+      "uuid": "RAIL+d027f2ae+2023-10-16-10h-05m-08s",
+      "rows": [
+        37404,
+        42864
+      ],
+      "conflict_fields": [
+        "success",
+        "current_task"
+      ],
+      "values": {
+        "success": [
+          "False",
+          "True"
+        ],
+        "current_task": [
+          "Move object into or out of container (ex: drawer, clothes hamper, plate, trashcan, washer)",
+          "Move object to a new position and orientation (ex: grasping, relocating, flipping)"
+        ]
+      }
+    },
+    {
+      "uuid": "RAIL+36cc8ede+2023-11-01-15h-39m-21s",
+      "rows": [
+        37773,
+        43284
+      ],
+      "conflict_fields": [
+        "success"
+      ],
+      "values": {
+        "success": [
+          "False",
+          "True"
+        ]
+      }
+    },
+    {
+      "uuid": "REAL+4dbb5646+2023-05-17-16h-16m-32s",
+      "rows": [
+        44347,
+        45766
+      ],
+      "conflict_fields": [
+        "success",
+        "current_task"
+      ],
+      "values": {
+        "success": [
+          "False",
+          "True"
+        ],
+        "current_task": [
+          "Press button (ex: light switch, elevators, microwave button)",
+          "Move object to a new position and orientation (ex: grasping, relocating, flipping)"
+        ]
+      }
+    },
+    {
+      "uuid": "REAL+de601749+2023-06-21-19h-52m-30s",
+      "rows": [
+        44447,
+        47272
+      ],
+      "conflict_fields": [
+        "scene_id",
+        "success"
+      ],
+      "values": {
+        "scene_id": [
+          "2810536841",
+          "9946667739"
+        ],
+        "success": [
+          "False",
+          "True"
+        ]
+      }
+    },
+    {
+      "uuid": "REAL+4f8ca688+2023-08-15-14h-03m-21s",
+      "rows": [
+        45028,
+        48147
+      ],
+      "conflict_fields": [
+        "success",
+        "current_task"
+      ],
+      "values": {
+        "success": [
+          "False",
+          "True"
+        ],
+        "current_task": [
+          "Press button (ex: light switch, elevators, microwave button)",
+          "Open or close slidable objects (ex: toaster, drawers, sliding doors, dressers)"
+        ]
+      }
+    },
+    {
+      "uuid": "REAL+de601749+2023-12-18-17h-05m-05s",
+      "rows": [
+        45383,
+        48928
+      ],
+      "conflict_fields": [
+        "success",
+        "current_task"
+      ],
+      "values": {
+        "success": [
+          "False",
+          "True"
+        ],
+        "current_task": [
+          "Press button (ex: light switch, elevators, microwave button)",
+          "Do any two tasks consecutively.\n\nSuggested tasks:\n* Press button (ex: light switch, elevators, microwave button)\n* Press button (ex: light switch, elevators, microwave button)"
+        ]
+      }
+    },
+    {
+      "uuid": "REAL+de601749+2023-12-18-16h-58m-29s",
+      "rows": [
+        45421,
+        48756
+      ],
+      "conflict_fields": [
+        "success"
+      ],
+      "values": {
+        "success": [
+          "False",
+          "True"
+        ]
+      }
+    },
+    {
+      "uuid": "REAL+b04f2af4+2023-07-15-14h-20m-23s",
+      "rows": [
+        45494,
+        48010
+      ],
+      "conflict_fields": [
+        "success"
+      ],
+      "values": {
+        "success": [
+          "False",
+          "True"
+        ]
+      }
+    },
+    {
+      "uuid": "REAL+de601749+2023-12-18-17h-18m-38s",
+      "rows": [
+        45812,
+        48774
+      ],
+      "conflict_fields": [
+        "success"
+      ],
+      "values": {
+        "success": [
+          "False",
+          "True"
+        ]
+      }
+    },
+    {
+      "uuid": "REAL+de601749+2023-12-14-13h-57m-01s",
+      "rows": [
+        46255,
+        48650
+      ],
+      "conflict_fields": [
+        "success"
+      ],
+      "values": {
+        "success": [
+          "False",
+          "True"
+        ]
+      }
+    },
+    {
+      "uuid": "RPL+32cba90c+2023-11-30-22h-58m-37s",
+      "rows": [
+        49119,
+        50846
+      ],
+      "conflict_fields": [
+        "success"
+      ],
+      "values": {
+        "success": [
+          "False",
+          "True"
+        ]
+      }
+    },
+    {
+      "uuid": "TRI+52ca9b6a+2023-10-18-15h-36m-05s",
+      "rows": [
+        51813,
+        56864
+      ],
+      "conflict_fields": [
+        "success",
+        "current_task"
+      ],
+      "values": {
+        "success": [
+          "False",
+          "True"
+        ],
+        "current_task": [
+          "Open or close curtain (ex: blanket on bed, shower curtain, shades)",
+          "Fold, spread out, or clump object (ex: cloth, charging cord, clothes)"
+        ]
+      }
+    },
+    {
+      "uuid": "TRI+52ca9b6a+2023-10-18-17h-12m-54s",
+      "rows": [
+        51861,
+        56772
+      ],
+      "conflict_fields": [
+        "success",
+        "current_task"
+      ],
+      "values": {
+        "success": [
+          "False",
+          "True"
+        ],
+        "current_task": [
+          "Press button (ex: light switch, elevators, microwave button)",
+          "Do any two tasks consecutively.\n\nSuggested tasks:\n* Hang or unhang object (ex: towel on hook, clothes over chair)\n* Move object into or out of container (ex: drawer, clothes hamper, plate, trashcan, washer)"
+        ]
+      }
+    },
+    {
+      "uuid": "TRI+52ca9b6a+2023-10-23-14h-07m-03s",
+      "rows": [
+        52308,
+        58514
+      ],
+      "conflict_fields": [
+        "scene_id",
+        "success",
+        "current_task",
+        "robot_serial"
+      ],
+      "values": {
+        "scene_id": [
+          "5899989100",
+          "7134913629"
+        ],
+        "success": [
+          "False",
+          "True"
+        ],
+        "current_task": [
+          "Move lid on or off of container (ex: pot, cup, pill bottle)",
+          "Move object to a new position and orientation (ex: grasping, relocating, flipping)"
+        ],
+        "robot_serial": [
+          "fr3-295341-1326895",
+          "fr3-"
+        ]
+      }
+    },
+    {
+      "uuid": "TRI+52ca9b6a+2023-10-23-13h-43m-21s",
+      "rows": [
+        52386,
+        57069
+      ],
+      "conflict_fields": [
+        "scene_id",
+        "success",
+        "current_task",
+        "robot_serial"
+      ],
+      "values": {
+        "scene_id": [
+          "7134913629",
+          "5899989100"
+        ],
+        "success": [
+          "False",
+          "True"
+        ],
+        "current_task": [
+          "Open or close hinged object (ex: hinged door, microwave, oven, book, dryer, toilet, box)",
+          "Do anything you like that takes multiple steps to complete."
+        ],
+        "robot_serial": [
+          "fr3-",
+          "fr3-295341-1326895"
+        ]
+      }
+    },
+    {
+      "uuid": "TRI+52ca9b6a+2023-10-24-14h-00m-42s",
+      "rows": [
+        52468,
+        57599
+      ],
+      "conflict_fields": [
+        "success",
+        "current_task"
+      ],
+      "values": {
+        "success": [
+          "False",
+          "True"
+        ],
+        "current_task": [
+          "Use cloth to clean something (ex: table, window, mirror, plate)",
+          "Move lid on or off of container (ex: pot, cup, pill bottle)"
+        ]
+      }
+    },
+    {
+      "uuid": "TRI+52ca9b6a+2023-11-07-14h-29m-08s",
+      "rows": [
+        52882,
+        60122
+      ],
+      "conflict_fields": [
+        "scene_id",
+        "success",
+        "current_task",
+        "robot_serial"
+      ],
+      "values": {
+        "scene_id": [
+          "7106190124",
+          "2816503994"
+        ],
+        "success": [
+          "False",
+          "True"
+        ],
+        "current_task": [
+          "Fold, spread out, or clump object (ex: cloth, charging cord, clothes)",
+          "Hang or unhang object (ex: towel on hook, clothes over chair)"
+        ],
+        "robot_serial": [
+          "fr3-",
+          "fr3-295341-1326895"
+        ]
+      }
+    },
+    {
+      "uuid": "TRI+52ca9b6a+2023-10-18-16h-16m-51s",
+      "rows": [
+        52982,
+        56715
+      ],
+      "conflict_fields": [
+        "success"
+      ],
+      "values": {
+        "success": [
+          "False",
+          "True"
+        ]
+      }
+    },
+    {
+      "uuid": "TRI+52ca9b6a+2023-11-06-17h-39m-05s",
+      "rows": [
+        53074,
+        60039
+      ],
+      "conflict_fields": [
+        "success"
+      ],
+      "values": {
+        "success": [
+          "False",
+          "True"
+        ]
+      }
+    },
+    {
+      "uuid": "TRI+52ca9b6a+2023-11-29-11h-34m-12s",
+      "rows": [
+        53349,
+        62815
+      ],
+      "conflict_fields": [
+        "scene_id",
+        "success",
+        "current_task",
+        "robot_serial"
+      ],
+      "values": {
+        "scene_id": [
+          "2575006127",
+          "3691023914"
+        ],
+        "success": [
+          "False",
+          "True"
+        ],
+        "current_task": [
+          "Fold, spread out, or clump object (ex: cloth, charging cord, clothes)",
+          "Move object into or out of container (ex: drawer, clothes hamper, plate, trashcan, washer)"
+        ],
+        "robot_serial": [
+          "fr3-",
+          "fr3-295341-1326895"
+        ]
+      }
+    },
+    {
+      "uuid": "WEIRD+30c3da59+2024-01-08-17h-59m-55s",
+      "rows": [
+        73132,
+        74209
+      ],
+      "conflict_fields": [
+        "success",
+        "current_task"
+      ],
+      "values": {
+        "success": [
+          "False",
+          "True"
+        ],
+        "current_task": [
+          "Use object to pick up something (ex: spoon + almonds, spatula + bread, fork + banana)",
+          "Move lid on or off of container (ex: pot, cup, pill bottle)"
+        ]
+      }
+    }
+  ],
+  "scene_removed_exact": [
+    {
+      "uuid": "IRIS+ef107c48+2023-04-07-13h-40m-32s",
+      "removed_row": 27408,
+      "kept_row": 27364,
+      "conflict_fields": []
+    },
+    {
+      "uuid": "IRIS+ef107c48+2023-04-07-13h-26m-16s",
+      "removed_row": 27415,
+      "kept_row": 27405,
+      "conflict_fields": []
+    },
+    {
+      "uuid": "IRIS+ef107c48+2023-04-07-13h-40m-49s",
+      "removed_row": 27422,
+      "kept_row": 27399,
+      "conflict_fields": []
+    },
+    {
+      "uuid": "IRIS+ef107c48+2023-04-07-12h-51m-02s",
+      "removed_row": 27424,
+      "kept_row": 27394,
+      "conflict_fields": []
+    },
+    {
+      "uuid": "IRIS+ef107c48+2023-04-07-13h-37m-35s",
+      "removed_row": 27432,
+      "kept_row": 27407,
+      "conflict_fields": []
+    },
+    {
+      "uuid": "IRIS+ef107c48+2023-04-07-13h-41m-49s",
+      "removed_row": 27437,
+      "kept_row": 27195,
+      "conflict_fields": []
+    },
+    {
+      "uuid": "IRIS+ef107c48+2023-04-07-13h-24m-53s",
+      "removed_row": 27460,
+      "kept_row": 27421,
+      "conflict_fields": []
+    },
+    {
+      "uuid": "IRIS+ef107c48+2023-04-07-13h-31m-28s",
+      "removed_row": 27464,
+      "kept_row": 27378,
+      "conflict_fields": []
+    },
+    {
+      "uuid": "IRIS+ef107c48+2023-04-07-13h-40m-13s",
+      "removed_row": 27474,
+      "kept_row": 27459,
+      "conflict_fields": []
+    },
+    {
+      "uuid": "IRIS+ef107c48+2023-04-07-13h-25m-39s",
+      "removed_row": 27477,
+      "kept_row": 27146,
+      "conflict_fields": []
+    },
+    {
+      "uuid": "IRIS+ef107c48+2023-04-07-13h-52m-47s",
+      "removed_row": 27479,
+      "kept_row": 27461,
+      "conflict_fields": []
+    },
+    {
+      "uuid": "IRIS+ef107c48+2023-04-07-13h-28m-18s",
+      "removed_row": 27480,
+      "kept_row": 27439,
+      "conflict_fields": []
+    },
+    {
+      "uuid": "IRIS+ef107c48+2023-04-07-13h-29m-41s",
+      "removed_row": 27482,
+      "kept_row": 27453,
+      "conflict_fields": []
+    },
+    {
+      "uuid": "IRIS+ef107c48+2023-04-07-13h-23m-53s",
+      "removed_row": 27484,
+      "kept_row": 27413,
+      "conflict_fields": []
+    },
+    {
+      "uuid": "IRIS+ef107c48+2023-04-07-13h-25m-59s",
+      "removed_row": 27488,
+      "kept_row": 27187,
+      "conflict_fields": []
+    },
+    {
+      "uuid": "IRIS+ef107c48+2023-04-07-13h-35m-09s",
+      "removed_row": 27492,
+      "kept_row": 27429,
+      "conflict_fields": []
+    },
+    {
+      "uuid": "IRIS+ef107c48+2023-04-07-13h-48m-45s",
+      "removed_row": 27493,
+      "kept_row": 27445,
+      "conflict_fields": []
+    },
+    {
+      "uuid": "IRIS+ef107c48+2023-04-07-13h-32m-05s",
+      "removed_row": 27494,
+      "kept_row": 27403,
+      "conflict_fields": []
+    },
+    {
+      "uuid": "IRIS+ef107c48+2023-04-07-13h-34m-13s",
+      "removed_row": 27498,
+      "kept_row": 27489,
+      "conflict_fields": []
+    },
+    {
+      "uuid": "IRIS+ef107c48+2023-04-07-13h-32m-40s",
+      "removed_row": 27499,
+      "kept_row": 27425,
+      "conflict_fields": []
+    },
+    {
+      "uuid": "IRIS+ef107c48+2023-04-07-13h-28m-01s",
+      "removed_row": 27500,
+      "kept_row": 27431,
+      "conflict_fields": []
+    },
+    {
+      "uuid": "IRIS+ef107c48+2023-04-07-13h-52m-14s",
+      "removed_row": 27510,
+      "kept_row": 27475,
+      "conflict_fields": []
+    },
+    {
+      "uuid": "IRIS+ef107c48+2023-04-07-13h-52m-30s",
+      "removed_row": 27511,
+      "kept_row": 27426,
+      "conflict_fields": []
+    },
+    {
+      "uuid": "IRIS+ef107c48+2023-04-07-13h-37m-55s",
+      "removed_row": 27519,
+      "kept_row": 27483,
+      "conflict_fields": []
+    },
+    {
+      "uuid": "IRIS+ef107c48+2023-04-07-13h-48m-29s",
+      "removed_row": 27522,
+      "kept_row": 27446,
+      "conflict_fields": []
+    },
+    {
+      "uuid": "IRIS+ef107c48+2023-04-07-13h-26m-32s",
+      "removed_row": 27524,
+      "kept_row": 27138,
+      "conflict_fields": []
+    },
+    {
+      "uuid": "IRIS+ef107c48+2023-04-07-13h-42m-08s",
+      "removed_row": 27525,
+      "kept_row": 27470,
+      "conflict_fields": []
+    },
+    {
+      "uuid": "IRIS+ef107c48+2023-04-07-13h-30m-39s",
+      "removed_row": 27526,
+      "kept_row": 27513,
+      "conflict_fields": []
+    },
+    {
+      "uuid": "IRIS+ef107c48+2023-04-07-13h-34m-38s",
+      "removed_row": 27536,
+      "kept_row": 27438,
+      "conflict_fields": []
+    },
+    {
+      "uuid": "IRIS+ef107c48+2023-04-07-13h-54m-17s",
+      "removed_row": 27537,
+      "kept_row": 27518,
+      "conflict_fields": []
+    },
+    {
+      "uuid": "IRIS+ef107c48+2023-04-07-13h-53m-45s",
+      "removed_row": 27538,
+      "kept_row": 27451,
+      "conflict_fields": []
+    },
+    {
+      "uuid": "IRIS+ef107c48+2023-04-07-13h-48m-00s",
+      "removed_row": 27549,
+      "kept_row": 27419,
+      "conflict_fields": []
+    },
+    {
+      "uuid": "IRIS+ef107c48+2023-04-07-13h-43m-59s",
+      "removed_row": 27551,
+      "kept_row": 27497,
+      "conflict_fields": []
+    },
+    {
+      "uuid": "IRIS+ef107c48+2023-04-07-13h-23m-33s",
+      "removed_row": 27553,
+      "kept_row": 27392,
+      "conflict_fields": []
+    },
+    {
+      "uuid": "IRIS+ef107c48+2023-04-07-14h-00m-48s",
+      "removed_row": 27578,
+      "kept_row": 27543,
+      "conflict_fields": []
+    },
+    {
+      "uuid": "IRIS+ef107c48+2023-04-07-13h-55m-01s",
+      "removed_row": 27580,
+      "kept_row": 27491,
+      "conflict_fields": []
+    },
+    {
+      "uuid": "IRIS+ef107c48+2023-04-07-13h-55m-32s",
+      "removed_row": 27613,
+      "kept_row": 27478,
+      "conflict_fields": []
+    },
+    {
+      "uuid": "IRIS+ef107c48+2023-04-07-13h-54m-01s",
+      "removed_row": 27631,
+      "kept_row": 27393,
+      "conflict_fields": []
+    },
+    {
+      "uuid": "IRIS+ef107c48+2023-04-07-13h-51m-11s",
+      "removed_row": 27663,
+      "kept_row": 27503,
+      "conflict_fields": []
+    },
+    {
+      "uuid": "IRIS+ef107c48+2023-04-07-13h-53m-04s",
+      "removed_row": 27680,
+      "kept_row": 27555,
+      "conflict_fields": []
+    },
+    {
+      "uuid": "IRIS+ef107c48+2023-04-07-13h-31m-06s",
+      "removed_row": 27903,
+      "kept_row": 27556,
+      "conflict_fields": []
+    },
+    {
+      "uuid": "IRIS+ef107c48+2023-04-07-13h-47m-38s",
+      "removed_row": 27937,
+      "kept_row": 27458,
+      "conflict_fields": []
+    },
+    {
+      "uuid": "IRIS+ef107c48+2023-04-07-13h-41m-24s",
+      "removed_row": 27989,
+      "kept_row": 27505,
+      "conflict_fields": []
+    },
+    {
+      "uuid": "IRIS+ef107c48+2023-04-07-14h-02m-21s",
+      "removed_row": 28003,
+      "kept_row": 27559,
+      "conflict_fields": []
+    },
+    {
+      "uuid": "IRIS+ef107c48+2023-04-07-14h-04m-47s",
+      "removed_row": 28011,
+      "kept_row": 27564,
+      "conflict_fields": []
+    },
+    {
+      "uuid": "IRIS+ef107c48+2023-04-07-13h-50m-35s",
+      "removed_row": 28056,
+      "kept_row": 27490,
+      "conflict_fields": []
+    },
+    {
+      "uuid": "IRIS+ef107c48+2023-04-07-13h-32m-23s",
+      "removed_row": 28069,
+      "kept_row": 27465,
+      "conflict_fields": []
+    },
+    {
+      "uuid": "IRIS+ef107c48+2023-04-07-13h-43m-38s",
+      "removed_row": 28083,
+      "kept_row": 27455,
+      "conflict_fields": []
+    },
+    {
+      "uuid": "IRIS+ef107c48+2023-04-07-13h-28m-33s",
+      "removed_row": 28146,
+      "kept_row": 27396,
+      "conflict_fields": []
+    },
+    {
+      "uuid": "IRIS+ef107c48+2023-04-07-13h-24m-31s",
+      "removed_row": 28156,
+      "kept_row": 27423,
+      "conflict_fields": []
+    },
+    {
+      "uuid": "IRIS+ef107c48+2023-04-07-13h-29m-09s",
+      "removed_row": 28204,
+      "kept_row": 27416,
+      "conflict_fields": []
+    },
+    {
+      "uuid": "IRIS+ef107c48+2023-04-07-13h-49m-06s",
+      "removed_row": 28206,
+      "kept_row": 27168,
+      "conflict_fields": []
+    },
+    {
+      "uuid": "IRIS+ef107c48+2023-04-07-13h-53m-25s",
+      "removed_row": 28233,
+      "kept_row": 27420,
+      "conflict_fields": []
+    },
+    {
+      "uuid": "IRIS+ef107c48+2023-04-07-13h-56m-22s",
+      "removed_row": 28240,
+      "kept_row": 27457,
+      "conflict_fields": []
+    },
+    {
+      "uuid": "IRIS+ef107c48+2023-04-07-13h-49m-26s",
+      "removed_row": 28266,
+      "kept_row": 27512,
+      "conflict_fields": []
+    },
+    {
+      "uuid": "IRIS+ef107c48+2023-04-07-13h-54m-42s",
+      "removed_row": 28537,
+      "kept_row": 27527,
+      "conflict_fields": []
+    },
+    {
+      "uuid": "IRIS+ef107c48+2023-04-07-13h-41m-05s",
+      "removed_row": 28600,
+      "kept_row": 27990,
+      "conflict_fields": []
+    }
+  ],
+  "scene_removed_conflict": [
+    {
+      "uuid": "AUTOLab+44bb9c36+2023-11-25-10h-11m-14s",
+      "removed_row": 8115,
+      "kept_row": 2230,
+      "conflict_fields": [
+        "success"
+      ]
+    },
+    {
+      "uuid": "AUTOLab+44bb9c36+2023-11-28-11h-17m-25s",
+      "removed_row": 8504,
+      "kept_row": 2410,
+      "conflict_fields": [
+        "success"
+      ]
+    },
+    {
+      "uuid": "ILIAD+50aee79f+2023-08-15-23h-13m-19s",
+      "removed_row": 19830,
+      "kept_row": 18022,
+      "conflict_fields": [
+        "success"
+      ]
+    },
+    {
+      "uuid": "IPRL+41a1536a+2023-11-14-14h-07m-16s",
+      "removed_row": 24896,
+      "kept_row": 21483,
+      "conflict_fields": [
+        "success"
+      ]
+    },
+    {
+      "uuid": "RAD+c6cf6b42+2023-12-16-16h-18m-23s",
+      "removed_row": 34880,
+      "kept_row": 34033,
+      "conflict_fields": [
+        "success",
+        "current_task"
+      ]
+    },
+    {
+      "uuid": "RAD+c6cf6b42+2023-12-18-19h-18m-59s",
+      "removed_row": 35027,
+      "kept_row": 34217,
+      "conflict_fields": [
+        "success"
+      ]
+    },
+    {
+      "uuid": "RAD+c6cf6b42+2023-12-16-22h-33m-57s",
+      "removed_row": 35808,
+      "kept_row": 34059,
+      "conflict_fields": [
+        "success"
+      ]
+    },
+    {
+      "uuid": "RAIL+80edfcb1+2023-04-17-15h-45m-45s",
+      "removed_row": 38510,
+      "kept_row": 36041,
+      "conflict_fields": [
+        "success"
+      ]
+    },
+    {
+      "uuid": "RAIL+80edfcb1+2023-04-19-14h-23m-34s",
+      "removed_row": 38793,
+      "kept_row": 35444,
+      "conflict_fields": [
+        "success"
+      ]
+    },
+    {
+      "uuid": "RAIL+t3d58310+2023-05-19-15h-27m-46s",
+      "removed_row": 38844,
+      "kept_row": 35456,
+      "conflict_fields": [
+        "success"
+      ]
+    },
+    {
+      "uuid": "RAIL+d027f2ae+2023-05-30-15h-04m-00s",
+      "removed_row": 39268,
+      "kept_row": 35544,
+      "conflict_fields": [
+        "success",
+        "current_task"
+      ]
+    },
+    {
+      "uuid": "RAIL+d027f2ae+2023-06-05-17h-02m-06s",
+      "removed_row": 39451,
+      "kept_row": 35662,
+      "conflict_fields": [
+        "success"
+      ]
+    },
+    {
+      "uuid": "RAIL+d027f2ae+2023-06-22-14h-08m-56s",
+      "removed_row": 39808,
+      "kept_row": 36331,
+      "conflict_fields": [
+        "success"
+      ]
+    },
+    {
+      "uuid": "RAIL+80edfcb1+2023-06-29-12h-45m-35s",
+      "removed_row": 40167,
+      "kept_row": 36426,
+      "conflict_fields": [
+        "success",
+        "current_task"
+      ]
+    },
+    {
+      "uuid": "RAIL+80edfcb1+2023-06-29-12h-53m-29s",
+      "removed_row": 40185,
+      "kept_row": 36485,
+      "conflict_fields": [
+        "success",
+        "current_task"
+      ]
+    },
+    {
+      "uuid": "RAIL+80edfcb1+2023-07-05-18h-24m-04s",
+      "removed_row": 40509,
+      "kept_row": 36430,
+      "conflict_fields": [
+        "success"
+      ]
+    },
+    {
+      "uuid": "RAIL+80edfcb1+2023-07-05-18h-16m-17s",
+      "removed_row": 41068,
+      "kept_row": 36441,
+      "conflict_fields": [
+        "success",
+        "current_task"
+      ]
+    },
+    {
+      "uuid": "RAIL+d027f2ae+2023-08-07-14h-54m-29s",
+      "removed_row": 41581,
+      "kept_row": 36583,
+      "conflict_fields": [
+        "success"
+      ]
+    },
+    {
+      "uuid": "RAIL+d027f2ae+2023-08-07-14h-52m-26s",
+      "removed_row": 41683,
+      "kept_row": 36608,
+      "conflict_fields": [
+        "success",
+        "current_task"
+      ]
+    },
+    {
+      "uuid": "RAIL+d027f2ae+2023-08-10-17h-24m-18s",
+      "removed_row": 42070,
+      "kept_row": 36622,
+      "conflict_fields": [
+        "success",
+        "current_task"
+      ]
+    },
+    {
+      "uuid": "RAIL+d027f2ae+2023-10-16-10h-05m-08s",
+      "removed_row": 42864,
+      "kept_row": 37404,
+      "conflict_fields": [
+        "success",
+        "current_task"
+      ]
+    },
+    {
+      "uuid": "RAIL+36cc8ede+2023-11-01-15h-39m-21s",
+      "removed_row": 43284,
+      "kept_row": 37773,
+      "conflict_fields": [
+        "success"
+      ]
+    },
+    {
+      "uuid": "REAL+4dbb5646+2023-05-17-16h-16m-32s",
+      "removed_row": 45766,
+      "kept_row": 44347,
+      "conflict_fields": [
+        "success",
+        "current_task"
+      ]
+    },
+    {
+      "uuid": "REAL+de601749+2023-06-21-19h-52m-30s",
+      "removed_row": 47272,
+      "kept_row": 44447,
+      "conflict_fields": [
+        "scene_id",
+        "success"
+      ]
+    },
+    {
+      "uuid": "REAL+b04f2af4+2023-07-15-14h-20m-23s",
+      "removed_row": 48010,
+      "kept_row": 45494,
+      "conflict_fields": [
+        "success"
+      ]
+    },
+    {
+      "uuid": "REAL+4f8ca688+2023-08-15-14h-03m-21s",
+      "removed_row": 48147,
+      "kept_row": 45028,
+      "conflict_fields": [
+        "success",
+        "current_task"
+      ]
+    },
+    {
+      "uuid": "REAL+de601749+2023-12-14-13h-57m-01s",
+      "removed_row": 48650,
+      "kept_row": 46255,
+      "conflict_fields": [
+        "success"
+      ]
+    },
+    {
+      "uuid": "REAL+de601749+2023-12-18-16h-58m-29s",
+      "removed_row": 48756,
+      "kept_row": 45421,
+      "conflict_fields": [
+        "success"
+      ]
+    },
+    {
+      "uuid": "REAL+de601749+2023-12-18-17h-18m-38s",
+      "removed_row": 48774,
+      "kept_row": 45812,
+      "conflict_fields": [
+        "success"
+      ]
+    },
+    {
+      "uuid": "REAL+de601749+2023-12-18-17h-05m-05s",
+      "removed_row": 48928,
+      "kept_row": 45383,
+      "conflict_fields": [
+        "success",
+        "current_task"
+      ]
+    },
+    {
+      "uuid": "RPL+32cba90c+2023-11-30-22h-58m-37s",
+      "removed_row": 50846,
+      "kept_row": 49119,
+      "conflict_fields": [
+        "success"
+      ]
+    },
+    {
+      "uuid": "TRI+52ca9b6a+2023-10-18-16h-16m-51s",
+      "removed_row": 56715,
+      "kept_row": 52982,
+      "conflict_fields": [
+        "success"
+      ]
+    },
+    {
+      "uuid": "TRI+52ca9b6a+2023-10-18-17h-12m-54s",
+      "removed_row": 56772,
+      "kept_row": 51861,
+      "conflict_fields": [
+        "success",
+        "current_task"
+      ]
+    },
+    {
+      "uuid": "TRI+52ca9b6a+2023-10-18-15h-36m-05s",
+      "removed_row": 56864,
+      "kept_row": 51813,
+      "conflict_fields": [
+        "success",
+        "current_task"
+      ]
+    },
+    {
+      "uuid": "TRI+52ca9b6a+2023-10-23-13h-43m-21s",
+      "removed_row": 57069,
+      "kept_row": 52386,
+      "conflict_fields": [
+        "scene_id",
+        "success",
+        "current_task",
+        "robot_serial"
+      ]
+    },
+    {
+      "uuid": "TRI+52ca9b6a+2023-10-24-14h-00m-42s",
+      "removed_row": 57599,
+      "kept_row": 52468,
+      "conflict_fields": [
+        "success",
+        "current_task"
+      ]
+    },
+    {
+      "uuid": "TRI+52ca9b6a+2023-10-23-14h-07m-03s",
+      "removed_row": 58514,
+      "kept_row": 52308,
+      "conflict_fields": [
+        "scene_id",
+        "success",
+        "current_task",
+        "robot_serial"
+      ]
+    },
+    {
+      "uuid": "TRI+52ca9b6a+2023-11-06-17h-39m-05s",
+      "removed_row": 60039,
+      "kept_row": 53074,
+      "conflict_fields": [
+        "success"
+      ]
+    },
+    {
+      "uuid": "TRI+52ca9b6a+2023-11-07-14h-29m-08s",
+      "removed_row": 60122,
+      "kept_row": 52882,
+      "conflict_fields": [
+        "scene_id",
+        "success",
+        "current_task",
+        "robot_serial"
+      ]
+    },
+    {
+      "uuid": "TRI+52ca9b6a+2023-11-29-11h-34m-12s",
+      "removed_row": 62815,
+      "kept_row": 53349,
+      "conflict_fields": [
+        "scene_id",
+        "success",
+        "current_task",
+        "robot_serial"
+      ]
+    },
+    {
+      "uuid": "WEIRD+30c3da59+2024-01-08-17h-59m-55s",
+      "removed_row": 74209,
+      "kept_row": 73132,
+      "conflict_fields": [
+        "success",
+        "current_task"
+      ]
+    }
+  ],
+  "note": "Counts are row-universe specific: raw 74,896; scene-valid before dedup 73,511; after dedup 73,413. A same-UUID pair is a duplicate record candidate, not an independently re-encoded trajectory."
+}

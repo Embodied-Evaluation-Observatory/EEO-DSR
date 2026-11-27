@@ -15,13 +15,23 @@
     "size_table_sha256": "6ca4bf3b814c27910d00bec813b2063b356338c041295b8d3f48e84661ab2ae3",
     "size_table_source": "research/v0.6/variance-probe/2026-11-26-r2/droid_cell.csv.gz",
     "full_k_rho090": {
-      "rho_coverage_percentile": 0.85,
-      "rho_coverage_bca": 0.833,
-      "n_eff_coverage_percentile": 0.847,
+      "rho_coverage_percentile": 0.827,
+      "rho_coverage_bca": 0.813,
+      "n_eff_coverage_percentile": 0.82,
+      "fixed_percentile": 0.833,
+      "full_minus_fixed": -0.006666666666666667,
+      "mcnemar_exact_p": 0.5,
       "simulations": 300,
       "bootstrap_reps": 2000,
-      "m_occ_sd": 75.75,
-      "source": "research/v0.6/variance-probe/2026-11-26-cell-full-k/full-vs-fixed-rho090.json"
+      "m_occ_sd": 77.93749176245167,
+      "paired_design": true,
+      "source": "research/v0.6/variance-probe/2026-11-27-cell-paired/paired-rho090.json",
+      "paired_bootstrap_95_legacy_c0_artifact": [
+        -0.016666666666666666,
+        0.0
+      ],
+      "paired_bootstrap_95": null,
+      "paired_bootstrap_note": "Only 2 discordant pairs, both fixed; upper bound 0 is forced by c=0, not direction evidence. Use 2/300 and McNemar p=0.5."
     }
   },
   "n_eff_rule": "n_eff interval is an interval for true n_eff; never inherit the rho interval's nominal level",

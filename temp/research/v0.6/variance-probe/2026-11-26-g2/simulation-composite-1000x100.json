@@ -1,0 +1,140 @@
+{
+  "input": "research/v0.6/variance-probe/2026-11-26-r3-native-scene/droid_scene_composite.csv.gz",
+  "clusters": 2220,
+  "episodes": 73413,
+  "p_mean": 0.794940950512852,
+  "method": "vectorized beta-binomial at known rho; cluster sizes resampled from this corpus; ICC(1); cluster bootstrap percentile; Wilson interval on coverage",
+  "simulations_per_rho": 1000,
+  "bootstrap_reps": 100,
+  "grid": [
+    {
+      "rho_true": 0.0,
+      "simulations_requested": 1000,
+      "simulations_valid": 1000,
+      "simulations_failed": 0,
+      "bias_mean": -2.9767059655489195e-05,
+      "sd": 0.0008831330016862181,
+      "coverage_95": 0.938,
+      "coverage_successes": 938,
+      "coverage_wilson_95": [
+        0.9213116000993365,
+        0.9513360367389853
+      ],
+      "bootstrap_replicates_valid": 1000,
+      "negative_share": 0.515
+    },
+    {
+      "rho_true": 0.05,
+      "simulations_requested": 1000,
+      "simulations_valid": 1000,
+      "simulations_failed": 0,
+      "bias_mean": -0.00011172020444449177,
+      "sd": 0.003372331699314078,
+      "coverage_95": 0.917,
+      "coverage_successes": 917,
+      "coverage_wilson_95": [
+        0.8982631299588786,
+        0.9325452366200719
+      ],
+      "bootstrap_replicates_valid": 1000,
+      "negative_share": 0.0
+    },
+    {
+      "rho_true": 0.1,
+      "simulations_requested": 1000,
+      "simulations_valid": 1000,
+      "simulations_failed": 0,
+      "bias_mean": -5.727354907623938e-05,
+      "sd": 0.006110384665325869,
+      "coverage_95": 0.924,
+      "coverage_successes": 924,
+      "coverage_wilson_95": [
+        0.9059039930034635,
+        0.9388507969952776
+      ],
+      "bootstrap_replicates_valid": 1000,
+      "negative_share": 0.0
+    },
+    {
+      "rho_true": 0.2,
+      "simulations_requested": 1000,
+      "simulations_valid": 1000,
+      "simulations_failed": 0,
+      "bias_mean": 0.000576878299033079,
+      "sd": 0.01167195680367632,
+      "coverage_95": 0.912,
+      "coverage_successes": 912,
+      "coverage_wilson_95": [
+        0.892827366550245,
+        0.9280192690145693
+      ],
+      "bootstrap_replicates_valid": 1000,
+      "negative_share": 0.0
+    },
+    {
+      "rho_true": 0.3,
+      "simulations_requested": 1000,
+      "simulations_valid": 1000,
+      "simulations_failed": 0,
+      "bias_mean": -8.023747158825145e-05,
+      "sd": 0.014862322336119931,
+      "coverage_95": 0.921,
+      "coverage_successes": 921,
+      "coverage_wilson_95": [
+        0.9026247164327947,
+        0.9361530349574647
+      ],
+      "bootstrap_replicates_valid": 1000,
+      "negative_share": 0.0
+    },
+    {
+      "rho_true": 0.5,
+      "simulations_requested": 1000,
+      "simulations_valid": 1000,
+      "simulations_failed": 0,
+      "bias_mean": -0.0013578707225902487,
+      "sd": 0.01892955500510221,
+      "coverage_95": 0.927,
+      "coverage_successes": 927,
+      "coverage_wilson_95": [
+        0.9091906155334873,
+        0.9415412130737354
+      ],
+      "bootstrap_replicates_valid": 1000,
+      "negative_share": 0.0
+    },
+    {
+      "rho_true": 0.7,
+      "simulations_requested": 1000,
+      "simulations_valid": 1000,
+      "simulations_failed": 0,
+      "bias_mean": -0.0009524762284467414,
+      "sd": 0.01853854039921392,
+      "coverage_95": 0.938,
+      "coverage_successes": 938,
+      "coverage_wilson_95": [
+        0.9213116000993365,
+        0.9513360367389853
+      ],
+      "bootstrap_replicates_valid": 1000,
+      "negative_share": 0.0
+    },
+    {
+      "rho_true": 0.9,
+      "simulations_requested": 1000,
+      "simulations_valid": 1000,
+      "simulations_failed": 0,
+      "bias_mean": -0.00046892090041472656,
+      "sd": 0.013177032753321305,
+      "coverage_95": 0.91,
+      "coverage_successes": 910,
+      "coverage_wilson_95": [
+        0.8906578220441299,
+        0.92620412111503
+      ],
+      "bootstrap_replicates_valid": 1000,
+      "negative_share": 0.0
+    }
+  ],
+  "note": "Coverage is conditional on an estimable point and is itself estimated from a finite simulation count; report coverage_wilson_95, not only the point."
+}

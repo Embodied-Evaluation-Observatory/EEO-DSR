@@ -6,11 +6,13 @@ EEO-DSR 是数据集声明与标识层的独立核验器，和可复算的溯源
 
 它不回答“这份数据值多少钱”“能不能训出好模型”“合不合规”。
 
+**定位：送检前自检核验。** 让客户在把数据集送进考场之前，知道自己交的是什么：声明在哪些地方不可复算、样本在哪些轴上有结构性缺口、证据链是否完整。它不保证送检通过，也不替代任何外部认定；溯源包、行数账、卡片口径检查只针对“存在性与完整性”，ITR 只说明成功率估计的精度，不证明记录条数。
+
 六维中能用计数与哈希回答的部分，做到可追问；需要读内容、跑模型、判合规的部分，明确标为“有界可建”或“不涉及”。输出读数，不输出结论。
 
 标题保留“成功率精度层”：逐簇求和、单例分层、ρ-free 界、簇级 bootstrap、偏差/覆盖模拟、极端偏斜夹具是推断而非计数，且与 ρ 算在什么之上无关，是可复用资产。
 
-> 本文是 V0.6 定位修订，统计逻辑未改；已发布到 `main`。
+> 本文是 V0.6 定位修订，统计逻辑未改；公开基线是 `main@2ac1caf`。2026-11-27 的治理与统计修补只在本地 worktree，未 commit/push，不得称“已发布”。
 
 公开与界面治理规则、G1–G3 的标注格式和逐读数签发粒度，见 [`GOVERNANCE-ADDENDUM.md`](GOVERNANCE-ADDENDUM.md)。
 
@@ -32,14 +34,18 @@ raw → sync 筛选 → dedup 计数 → ITR / NEES
 
 当前 ITR 不是 NEES；NEES 补齐后仍是结局基底。
 
+**G2 的结论是负结果，不是“修到 0.95”。** 偏斜分布下 percentile 簇 bootstrap 欠覆盖是已测事实；`nominal_95_claim: not_permitted`，不强行用 BCa 或 studentized 造名义水平。区间方法实测覆盖照发（0.838–0.938），条件区间不发；方法论负结果单列。
+
 ## 三级交付
 
 ### 第 1 级：已跑通（可交付）
 
+Phase 1 的最小可签发集、每项“不能说什么”、以及尚未完成项，见 [`MINIMAL-SIGNABLE.md`](MINIMAL-SIGNABLE.md)。这里“可签发”不等于“已签发记录”。
+
 | 交付物 | 内容 | 边界 |
 |---|---|---|
 | 卡片口径明确性检查 | 两道顺序闸、四态 | 只查卡片文本可复算性；MISSING/AMBIGUOUS ≠ 数据差 |
-| 集中度与覆盖读数 | 变化簇的 building/task 分布、top10/top20、簇大小分布 | 描述性；不判“够不够分散”；cell 轴标 45/93 空 instruction |
+| 集中度与覆盖读数 | 变化簇的 building/task 分布、top10/top20、簇大小分布 | 描述性；不判“够不够分散”；镜像文本单元轴标 45/93 空 instruction |
 | 零失败界采样预算 | 10%→29、5%→59、1%→299 独立簇 | 采集设计工具；有失败样本不适用 |
 | 溯源包 | 七项齐全 | 缺任一项不得引用为可复算 |
 | 不可算说明书 | 原因、三个独立读数、关注方语言 | 合法输出，不是失败 |
@@ -48,7 +54,7 @@ raw → sync 筛选 → dedup 计数 → ITR / NEES
 
 核验他人增益声称的统计有效性（Archive 核可辨识性与多重比较；DSR 供独立试次数、跨 split 泄漏计数、零方差占比）。跨模块交付需 Archive 侧配合。
 
-首个 DROID 原生 scene 轴 ITR 已在本地研究目录跑通。ITR 点值与条件区间可按逐读数签发，但每条必须同时印实测覆盖率、轴口径、变化簇分布；详见 `GOVERNANCE-ADDENDUM.md`。
+首个 DROID ITR 点值已在本地研究目录读出（单源三轴：site、task_text、native；73,413 行），但条件区间未发布。点值可作研究读数，但每条必须印轴口径、行宇宙、变化簇分布；`nominal_95_claim: not_permitted`。详见 `research/v0.6/variance-probe/2026-11-26-r2/ITR-READOUT.md`。
 
 ## G1–G3：标注强制，不是统一发布闸
 
@@ -57,7 +63,7 @@ raw → sync 筛选 → dedup 计数 → ITR / NEES
 | 闸 | 现状 | 发行标注 |
 |---|---|---|
 | G1 簇键唯一性 | **已发现碰撞**：2,207 个 raw scene_id 中 9 个跨 >1 个 building、2 个跨 >1 个 robot_serial；这 9 个 id 覆盖 2,172 条 episode，占 73,413 的 2.96%。覆盖键仍是 `scene_id`，精度键改为 `scene_id｜building｜robot_serial`，重跑后 K=2,220。2,207 raw、2,220 复合键、2,080 论文 scene、564 语义去重不是一回事；564 的语义映射未复现 | 印轴口径，并印“564 语义去重未复现”；不得把 2,207 或 2,220 写成论文 scene 数 |
-| G2 覆盖率标定 | native composite 已跑 1,000 模拟 ×100 reps：覆盖率 0.910–0.938。cell 轴 B=25/100/500/2,000 各 1,000 模拟，B=2,000 覆盖率 0.838–0.936；另比了 percentile／basic／BC／BCa：percentile 在 8 个 ρ 中 7 个最好，ρ=0.90 仍只有 0.838，basic 0.739，BC 0.824，BCa 0.819。换区间名字不能修复。覆盖率网格另作研究注记，不是语料记录；`interval_calibration: measured_below_nominal`，`nominal_95_claim: not_permitted` | 区间照发，旁边印“名义 95%，实测覆盖 0.910–0.938（1,000×100，native 尺寸表，percentile）”；cell 印“0.838–0.936（1,000×B=2,000，cell 尺寸表，percentile）”；cell 全 K 对照 ρ=0.90 印“fixed 0.827／full 0.850／n_eff 0.847（300×2，B=2,000）”，仅该格。没有实测覆盖，不得附名义区间；不得写“95% 置信区间” |
+| G2 覆盖率标定 | native composite 已跑 1,000 模拟 ×100 reps：覆盖率 0.910–0.938。镜像文本单元轴（`building||language_instruction`，K=53,714）B=25/100/500/2,000 各 1,000 模拟，B=2,000 覆盖率 0.838–0.936；另比了 percentile／basic／BC／BCa：percentile 在 8 个 ρ 中 7 个最好，ρ=0.90 仍只有 0.838，basic 0.739，BC 0.824，BCa 0.819。换区间名字不能修复。覆盖率网格另作研究注记，不是语料记录；`interval_calibration: measured_below_nominal`，`nominal_95_claim: not_permitted` | 区间只作诊断，不写“95% 置信区间”；旁边印“名义 95% 未获准，实测覆盖 0.910–0.938（1,000×100，native 尺寸表，percentile）”；文本单元轴印“0.838–0.936（1,000×B=2,000，文本单元尺寸表，percentile）”；文本单元全 K 配对对照 ρ=0.90 印“fixed 0.833／full 0.827／n_eff 0.820（300，B=2,000，paired）”，仅该格；旧的 0.827／0.850 是非配对路径，不得再引用。没有实测覆盖，不得附名义区间；不得写“95% 置信区间” |
 | G3 行集一致 | 计数已对账：镜像 95,658、镜像 building 非缺失 93,994、raw metadata 74,896、raw scene 非缺失 73,413；差 20,762 是 95,658 与 74,896 的跨宇宙差额。镜像无 uuid、metadata 无 episode_index，精确交集仍无法构造 | 每个数后印所属行宇宙；不得跨宇宙直接相减，也不得把 raw scene 行当作镜像子集 |
 
 ### 第 2 级：有界可建
@@ -78,14 +84,14 @@ raw → sync 筛选 → dedup 计数 → ITR / NEES
 | 时钟模型 | 只有规格与观测件格式，没有实现代码 |
 | episode 指纹 / 簇级 bootstrap | bootstrap 已有研究脚本；指纹研究实现 `tools/feature_representation.py`，无真实特征矩阵 |
 | 数据集侧驱动 | 研究实现，未发布：episode→簇、逐簇 n_eff、零失败界、预算、ρ 下端封顶 |
-| ITR | 方法已跑通；DROID 原生 scene 读数可按逐读数签发，须印实测覆盖、轴口径、变化簇分布 |
+| ITR | 单源三轴点值已有；正式记录未签发；条件区间未发布；task_text 轴受 tie-break K=2,432 vs 2,418 未对账阻塞 |
 | NEES 端到端 | 尚不可算：D2/D5a 未实现 |
 | ICR | 路线保留，未建，带 F1–F3 与止损 |
-| Phase 0 | 卡片口径明确性检查待迁移；旧披露度普查结果在 `checks/dataset/2026-11-26/` |
+| Phase 0 | 20 张普查为旧三态口径，四态未重跑；RoboMIND/RH20T 2 张补充在另一目录，不合并 |
 
 `schema/examples/` 里的记录是合成校验夹具，不是发出的记录；本模块至今未发出任何记录。
 
-**现在能交付什么**：卡片口径明确性检查（四态）、集中度与覆盖读数、零失败界采样预算、溯源包、不可算说明书；ITR 点值＋条件区间可按逐读数签发，但须印实测覆盖率、轴口径、变化簇分布。
+**现在能交付什么**：卡片口径明确性检查（四态）、集中度与覆盖读数、零失败界采样预算、溯源包、不可算说明书；ITR 点值可作研究读数；区间方法在 G2 网格上实测覆盖 0.838–0.938，未达名义 0.95，故本文件不发条件区间；须印轴口径、行宇宙、变化簇分布。
 
 **现在不能交付什么**：任何真实语料的 NEES 读数（D2/D5a 未实现）、ICR 数值、模型增益/合规/评级结论。
 
@@ -269,6 +275,8 @@ NEES 说买到了多少独立证据；轨迹分散度说这些证据的形状有
 
 界面是装甲不是风格：无分数、无评级、无排行榜、无形容词；FAIL 格同时显示声明值与重算值；
 按字母或日期排，不按失败数排；聚合只写两个集合分布："m 份中 n 份至少一项 FAIL，k 份至少一项 MISSING"；每页顶部先整段印用途限定。
+预检分三层：层 0 是公开工具自检与样本预算，客户本地跑，EEO 不接触数据；层 1 是公开卡片普查，只查公开信息；层 2 是委托方不具名的样本预核验。层 2 的产出只有工具日志＋输入哈希，带 `pre_check_not_a_record` 标记，官方 schema 拒收；公开登记册只报 `n_prechecks` / `n_formal_entry` 聚合数，不具名、不报发现、不评级。预检不买排他或 embargo；进入正式核验时记录披露曾有预检及日期。详见 `entry/PRECHECK_LAYER.md`。
+
 中文只用"披露度普查 / 采购前数据体检 / 深度核验"三个名字。委托即公开、委托方具名；认证、评级、
 入表背书没有入口。
 
@@ -296,10 +304,16 @@ fork 防伪靠三层可验证性：用途限定必填且校验器拒收剥掉的
 | `schema/examples/record-example-multitask.json` | 多任务分层：层内中位数，不印裸总量 |
 | `schema/examples/sync-observation-example.json` | 观测件示例 |
 | `tools/validate_record.py` | 执行层：0 通过、1 不合法、2 用法；`--self-test` 跑证伪用例 |
-| `tools/run_all_checks.py` | 一次跑完自检、全部示例、观测件与 JSON Schema 交叉验证 |
+| `tools/run_all_checks.py` | 一次跑完自检、全部示例、观测件、预检登记册与 JSON Schema 交叉验证 |
 | `tools/cosine_threshold_smoke.py` | 余弦阈值 helper 的冒烟测试；不是去重检测器标定，不带门 |
 | `thresholds-declaration.md` | 一页阈值声明表，验收方自行声明阈值后重跑 |
 | `tools/self_test_manifest.md` | 规则与证伪用例的对照表：哪条规则由哪个用例守住 |
+| `MINIMAL-SIGNABLE.md` | Phase 1 最小可签发集、每项边界、尚未完成项 |
+| `research/v0.6/variance-probe/2026-11-26-r2/ITR-READOUT.md` | DROID ITR 点值、覆盖标签、不可写“95%” |
+| `research/v0.6/2026-11-27-recap/README.md` | 复盘落实清单：已落地/计划/不做 |
+| `research/v0.6/internal-experiments/README.md` | MLE/VST/studentized 内部实验队列（均未发布） |
+| `schema/REFERENCE-IMPLEMENTATION.md` | schema 作为参考实现候选的状态与变更节奏 |
+| `entry/PRECHECK_LAYER.md` | 层 0/1/2 预检规则；层 2 不是记录 |
 | `STATUS.md` | 当前存在什么、不存在什么、各版本状态与纠正政策 |
 | `RELEASE_GATE.md` | 发布门：冻结清单、预检记录、tag 不移、纠错发新版本 |
 | `tools/freeze_release.py` | 冻结一个版本的逐文件清单；已存在则拒绝 |

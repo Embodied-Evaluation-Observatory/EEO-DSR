@@ -1,0 +1,7 @@
+{
+  "register": "precheck-aggregate-only",
+  "entries": [],
+  "allowed_fields": ["period_start", "period_end", "n_prechecks", "n_formal_entry"],
+  "forbidden": ["organisation", "submitter", "dataset_id", "finding", "verdict", "log", "input_sha256"],
+  "note": "Empty until a period is reported. Only aggregate counts; no names, no findings. Not a rating."
+}

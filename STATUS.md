@@ -14,16 +14,25 @@
   `tools/feature_representation.py` plus `tools/reference_deviation.py`; a real DROID fingerprint
   sample (1,999 episodes, two declared state/action representations) and a hard-negative calibration
   at a research placeholder W.
-- V0.6 research (now in V0.6.3): `tools/dataset_driver.py` implements episode→cluster aggregation,
+- 2026-11-27 worktree (not committed): paired fixed/full comparison with paired 2×2 and continuous
+  width/endpoint comparison; energy-distance diagnostic with 0.9 subsampling intervals and pooled
+  nulls; bidirectional TRI↔Gates site deviation; 43 success-conflict label-consistency readout;
+  three equivalence classes; 20-card Phase 0 baseline (old three-state wording; four-state not rerun) plus a separate 2-card RoboMIND/RH20T supplement; local pre-check layer and aggregate register.
+  See `research/v0.6/2026-11-27-recap/`, `research/v0.6/reference-and-representation/2026-11-27-readout/`
+  and `MINIMAL-SIGNABLE.md`.
+- V0.6 research (now in V0.6.5): `tools/dataset_driver.py` implements episode→cluster aggregation,
   deff/n_eff, zero-failure bounds, cluster budget, and the rho-low cap, with an external known-answer
-  fixture. The corrected DROID probe is in `research/v0.6/variance-probe/2026-11-26-r2/`:
-  cell-axis n_eff interval `[53,714, 93,994]`, 93 clusters with within-cluster variation,
-  point ICC 0.766531; zero-variance share is a readout, not a veto. No NEES record is issued
-  without a cluster-bootstrap rho interval.
+  fixture. The corrected DROID single-source probe is in `research/v0.6/variance-probe/2026-11-26-g3-single-source/`:
+  three axes on 73,413 rows, site K=69 / n_eff=589.745, task_text K=2,418 / n_eff=6,053.998,
+  native K=2,220 / n_eff=5,953.539. The mirror `building||language_instruction` text-unit axis
+  (K=53,714; point ICC 0.766531) is not a task axis and is not published as one. No NEES record
+  is issued without a calibrated conditional interval; the current readout is point-only.
 - What does not exist: the production dedup detector (`episode-embedding-cosine-v1`), the clock model
-  implementation, a buyer reference distribution, a declared DROID train/test split for D5b, cluster-level
-  bootstrap, any real-corpus NEES reading,
-  label-consistency verification, and D1b (cards versus an index). None of these are promised.
+  implementation, a buyer reference distribution, a declared DROID train/test split for D5b, any
+  real-corpus NEES reading, D2 inter-annotator agreement, `near-take` equivalence-class definition,
+  D1b (cards versus an index), a 50–100-card Phase 0 expansion or public dashboard, a formal ITR
+  record, and reconciliation of the tie-break subset K=2,432 with the single-source task_text K=2,418. Cluster-level bootstrap exists as a research tool, but its nominal 95% coverage is not
+  established. None of these are promised.
 - Scale, stated plainly: one maintainer, a handful of releases, no external users yet. Treat the
   outputs as a working record, not as an authority.
 
@@ -40,7 +49,8 @@
   research placeholder, not a buyer threshold.
 - The real gate still waits for a declared buyer W, a fixture that can actually fail, at least 59
   pairs per class, and the record fields with fixture/result hashes. The production detector is not
-  implemented.
+  implemented. At W=0.90 the 2% copy FNR is 96/150 for summary and 60/150 for traj16; `0/150` and
+  `2/246` are Clopper–Pearson upper bounds, not working points.
 
 ## Releases
 

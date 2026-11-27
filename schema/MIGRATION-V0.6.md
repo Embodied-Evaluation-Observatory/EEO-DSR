@@ -20,10 +20,11 @@
   "bootstrap_reps": 1000,
   "n_eff_interval_relative_width": 0.15020930150202536,
   "bootstrap_seed": 20261126,
-  "status": "unreviewed_local_only_no_push"
+  "status": "unreviewed_draft_in_repo"
 }
 ```
 
+- `status` 是记录状态，不是可见性声明。`unreviewed_draft_in_repo` 只表示“已入公开仓库、未审”，不得写成“未推送”或“仅本地”。
 - `readout_type` 取值：`ITR`／`NEES`／`ICR`。
 - 若使用 `readout_type: ITR` 而保留旧 `chain.nees` 字段，旧字段必须为 `null`；机器忽略旧字段里的任何值。
 - `interval_reading` 只能挂在 `rho_conditional_range`，不得挂在 `rho_free_interval`。二者分列，不互相替代。

@@ -1,0 +1,64 @@
+{
+  "input": "research/v0.6/variance-probe/2026-11-26-r2/droid_cell.csv.gz",
+  "rho_true": 0.9,
+  "simulations_valid": 300,
+  "bootstrap_reps": 2000,
+  "seed": 20261130,
+  "design": "paired on one full-K simulated corpus per simulation; percentile intervals only",
+  "point_bias": {
+    "mean": 0.0012326711516706611,
+    "sd": 0.035382869269789355,
+    "note": "identical for both modes by construction; not a method difference"
+  },
+  "metrics": [
+    {
+      "metric": "interval_width",
+      "fixed_mean": 0.10424780979269166,
+      "fixed_sd": 0.058255468700096645,
+      "full_mean": 0.10442950514942306,
+      "full_sd": 0.05810389515266513,
+      "difference_mean": 0.00018169535673138762,
+      "difference_median": 0.0002379412858057317,
+      "difference_hodges_lehmann": 0.0001670431333465061,
+      "difference_median_paired_bootstrap_95": [
+        -0.00013650402114316336,
+        0.000565187023336966
+      ],
+      "wilcoxon_signed_rank_p": 0.3484211278223349,
+      "variation_ok": true
+    },
+    {
+      "metric": "lower_endpoint",
+      "fixed_mean": 0.8400878820084751,
+      "fixed_sd": 0.06508702188472537,
+      "full_mean": 0.8398769304506635,
+      "full_sd": 0.06498247080824894,
+      "difference_mean": -0.00021095155781141148,
+      "difference_median": -0.00020475651117191074,
+      "difference_hodges_lehmann": -0.00018400867264706244,
+      "difference_median_paired_bootstrap_95": [
+        -0.0005390607295192029,
+        0.00014702213352468796
+      ],
+      "wilcoxon_signed_rank_p": 0.24560218705967518,
+      "variation_ok": true
+    },
+    {
+      "metric": "upper_endpoint",
+      "fixed_mean": 0.9443356918011667,
+      "fixed_sd": 0.015286123895440441,
+      "full_mean": 0.9443064356000866,
+      "full_sd": 0.015195072298858662,
+      "difference_mean": -2.925620108002384e-05,
+      "difference_median": -1.139335146410625e-05,
+      "difference_hodges_lehmann": -1.4062693473704257e-05,
+      "difference_median_paired_bootstrap_95": [
+        -0.00013269337531468528,
+        8.793911454652026e-05
+      ],
+      "wilcoxon_signed_rank_p": 0.7999848801811571,
+      "variation_ok": true
+    }
+  ],
+  "note": "Continuous paired comparison; widths/endpoints are percentile intervals. If a metric has near-zero variation, the test has little power."
+}

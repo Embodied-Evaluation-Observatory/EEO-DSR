@@ -29,6 +29,19 @@ def main():
     if st.returncode != 0:
         failures.append("self-test")
 
+    pre = subprocess.run([sys.executable, os.path.join(ROOT, "tools", "precheck_local.py"),
+                          "--self-test"], capture_output=True, text=True)
+    print(pre.stdout.strip() if pre.stdout else "precheck self-test: no output")
+    if pre.returncode != 0:
+        failures.append("precheck-self-test")
+
+    preg = subprocess.run([sys.executable, os.path.join(ROOT, "tools", "validate_precheck_register.py"),
+                          os.path.join(ROOT, "entry", "precheck-register.json")],
+                         capture_output=True, text=True)
+    print(preg.stdout.strip() if preg.stdout else "precheck-register: no output")
+    if preg.returncode != 0:
+        failures.append("precheck-register")
+
     for f in sorted(glob.glob(os.path.join(ROOT, "schema", "examples", "record-example*.json"))):
         r = run([f])
         name = os.path.basename(f)

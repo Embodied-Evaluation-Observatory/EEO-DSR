@@ -1,0 +1,183 @@
+{
+  "input": "research/v0.6/variance-probe/2026-11-26-r2/droid_cell.csv.gz",
+  "clusters_total": 53714,
+  "episodes": 93994,
+  "multi_clusters": 6602,
+  "p_mean": 0.8222971679043343,
+  "method": "fixed-size cluster bootstrap on the multi-cluster subpopulation; point sample Multinomial(M,1/M) over multi clusters; bootstrap Multinomial(M_occ,1/M_occ) over occurrences; nested B prefixes; ICC(1) from bootstrap counts; intervals: percentile, basic, normal, bias-corrected (BC), BCa with 400-point jackknife acceleration; Wilson interval on coverage",
+  "simulations_per_rho": 1000,
+  "bootstrap_reps": [
+    25,
+    100,
+    500,
+    2000
+  ],
+  "grid": [
+    {
+      "rho_true": 0.3,
+      "simulations_requested": 1000,
+      "simulations_valid": 1000,
+      "simulations_failed": 0,
+      "bias_mean": 0.0026365467638978513,
+      "sd": 0.03918994094989155,
+      "negative_share": 0.0,
+      "coverage_by_B": {
+        "25": {
+          "percentile": {
+            "coverage_95": 0.854,
+            "coverage_successes": 854,
+            "coverage_wilson_95": [
+              0.8307594766742207,
+              0.8745310791266149
+            ],
+            "mean_interval_width": 0.11208565520652404
+          },
+          "basic": {
+            "coverage_95": 0.81,
+            "coverage_successes": 810,
+            "coverage_wilson_95": [
+              0.7845161905486661,
+              0.8331111323277719
+            ],
+            "mean_interval_width": 0.11208565520652404
+          },
+          "bc": {
+            "coverage_95": 0.823,
+            "coverage_successes": 823,
+            "coverage_wilson_95": [
+              0.7981208142834733,
+              0.8454070092297183
+            ],
+            "mean_interval_width": 0.10721287033886549
+          },
+          "bca": {
+            "coverage_95": 0.812,
+            "coverage_successes": 812,
+            "coverage_wilson_95": [
+              0.7866063248258259,
+              0.8350056904562666
+            ],
+            "mean_interval_width": 0.1064693344857102
+          }
+        },
+        "100": {
+          "percentile": {
+            "coverage_95": 0.908,
+            "coverage_successes": 908,
+            "coverage_wilson_95": [
+              0.8884908764642334,
+              0.9243863742892722
+            ],
+            "mean_interval_width": 0.123813305850673
+          },
+          "basic": {
+            "coverage_95": 0.871,
+            "coverage_successes": 871,
+            "coverage_wilson_95": [
+              0.8487955562840396,
+              0.8903648849648588
+            ],
+            "mean_interval_width": 0.123813305850673
+          },
+          "bc": {
+            "coverage_95": 0.893,
+            "coverage_successes": 893,
+            "coverage_wilson_95": [
+              0.872314633806399,
+              0.9106774239046982
+            ],
+            "mean_interval_width": 0.1237795051680384
+          },
+          "bca": {
+            "coverage_95": 0.872,
+            "coverage_successes": 872,
+            "coverage_wilson_95": [
+              0.8498599807293441,
+              0.8912928067223815
+            ],
+            "mean_interval_width": 0.12450802930963883
+          }
+        },
+        "500": {
+          "percentile": {
+            "coverage_95": 0.921,
+            "coverage_successes": 921,
+            "coverage_wilson_95": [
+              0.9026247164327947,
+              0.9361530349574647
+            ],
+            "mean_interval_width": 0.12757680649786388
+          },
+          "basic": {
+            "coverage_95": 0.882,
+            "coverage_successes": 882,
+            "coverage_wilson_95": [
+              0.8605274931519409,
+              0.9005487563280568
+            ],
+            "mean_interval_width": 0.12757680649786385
+          },
+          "bc": {
+            "coverage_95": 0.912,
+            "coverage_successes": 912,
+            "coverage_wilson_95": [
+              0.892827366550245,
+              0.9280192690145693
+            ],
+            "mean_interval_width": 0.12836595922531535
+          },
+          "bca": {
+            "coverage_95": 0.901,
+            "coverage_successes": 901,
+            "coverage_wilson_95": [
+              0.8809259831949872,
+              0.9180048441387278
+            ],
+            "mean_interval_width": 0.13118611503282016
+          }
+        },
+        "2000": {
+          "percentile": {
+            "coverage_95": 0.928,
+            "coverage_successes": 928,
+            "coverage_wilson_95": [
+              0.9102878591617453,
+              0.9424363156483045
+            ],
+            "mean_interval_width": 0.12835926889910865
+          },
+          "basic": {
+            "coverage_95": 0.896,
+            "coverage_successes": 896,
+            "coverage_wilson_95": [
+              0.8755398308973383,
+              0.9134292654222405
+            ],
+            "mean_interval_width": 0.12835926889910865
+          },
+          "bc": {
+            "coverage_95": 0.916,
+            "coverage_successes": 916,
+            "coverage_wilson_95": [
+              0.8971745741872942,
+              0.931641446188829
+            ],
+            "mean_interval_width": 0.12921845668984833
+          },
+          "bca": {
+            "coverage_95": 0.899,
+            "coverage_successes": 899,
+            "coverage_wilson_95": [
+              0.8787698568381758,
+              0.9161762780898847
+            ],
+            "mean_interval_width": 0.13314808895771688
+          }
+        }
+      },
+      "bootstrap_replicates_valid_max_B": 2000,
+      "bca_acceleration_mean": 0.003329279808812241
+    }
+  ],
+  "note": "Coverage is conditional on an estimable point and estimated from a finite simulation count. Nested prefixes mean B=25/100/500 use the first B of the same B=2000 stream. This is a fixed-size bootstrap of the multi-cluster subpopulation, not a full K-cluster bootstrap; singletons are excluded from ICC(1), so their omission changes the selection-count law but not the estimator."
+}

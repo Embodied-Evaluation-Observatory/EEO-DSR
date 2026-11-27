@@ -1,0 +1,13 @@
+{
+  "status": "not_issued",
+  "reason": "buyer_reference_distribution_absent",
+  "detail": "reference_deviation.py requires a buyer-provided reference group. No buyer group is available in the workspace; an internal DROID split is not a buyer reference distribution and is not reported as one.",
+  "self_test": {
+    "identical_mean_shift": 0.0,
+    "shifted_mean_shift": 0.10286782142797728,
+    "identical_energy": 0.0,
+    "shifted_energy": 0.004287933277682621,
+    "note": "synthetic self-test only"
+  },
+  "matrix_notice": "reference_deviation accepts fingerprints or projections; projections are scale-bearing and should not be compared to fingerprints' energy distance without a declared common normalization."
+}

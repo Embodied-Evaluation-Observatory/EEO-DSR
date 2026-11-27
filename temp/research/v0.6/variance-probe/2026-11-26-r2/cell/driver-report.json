@@ -1,0 +1,94 @@
+{
+  "cannot_cluster": 1664,
+  "claim_scope": "success_rate_precision_at_task_unit_cluster_not_training_information",
+  "cluster_budget": {
+    "formula": "ceil(ln(alpha) / ln(1 - target)), alpha=0.05",
+    "note": "zero-failure budget; with observed failures use a failure-rate interval, not this table",
+    "status": "reference_only",
+    "targets": {
+      "0.01": 299,
+      "0.05": 59,
+      "0.1": 29
+    }
+  },
+  "cluster_key": "scene_id",
+  "effective_n_success_rate": {
+    "claim_scope": "success_rate_precision_at_task_unit_cluster_not_training_information",
+    "deff_effective": 1.713530566023092,
+    "mbar_deff": 1.5748199614803378,
+    "mbar_n_eff": 59685.55282449254,
+    "mbar_overstatement": 0.08808029357995029,
+    "method": "per_cluster_sum",
+    "multi_contribution": 7741.996691841513,
+    "n_clusters": 53714,
+    "n_dedup": 93994,
+    "n_eff": 54853.996691841516,
+    "rho": 0.7665312664090086,
+    "rho_used": 0.7665312664090086,
+    "singleton_contribution": 47112.0
+  },
+  "excluded_missing_scene": 0,
+  "icc_point": {
+    "estimator": "outcome_icc",
+    "m0": 7.031182769924557,
+    "msb": 1.2992837145563159,
+    "msw": 0.05394580460687428,
+    "p_bar": 0.6439145087666909,
+    "rho": 0.7665312664090086,
+    "status": "computed"
+  },
+  "information_status": "point_estimate_without_interval",
+  "input": "droid_cell.csv.gz",
+  "label": "",
+  "n_eff_interval": {
+    "high": 93994.0,
+    "low": 53714.0,
+    "lower_share_of_dedup": 0.5714620082132902,
+    "method": "per_cluster_sum; singletons exact; rho in [0,1]",
+    "relative_width": 0.4285379917867098,
+    "singleton_contribution": 47112.0,
+    "width": 40280.0
+  },
+  "nees_record": {
+    "note": "effective N is for success-rate precision, not training information; a record waits for a bootstrap interval.",
+    "reason": "no_cluster_bootstrap_rho_interval",
+    "status": "not_issued"
+  },
+  "rho_low_cap": {
+    "bound": null,
+    "reason": "rho_low_not_available",
+    "status": "unestimable"
+  },
+  "rows_input": 93994,
+  "rows_used": 93994,
+  "source_rows": 95658,
+  "summary": {
+    "clusters": 53714,
+    "constant_clusters": 6509,
+    "constant_episodes": 27815,
+    "denominator": "all clusters; singletons contribute exactly 1",
+    "episodes": 93994,
+    "multi_clusters": 6602,
+    "multi_episodes": 46882,
+    "neff_interval_high": 93994,
+    "neff_interval_low": 53714,
+    "neff_interval_relative_width": 0.4285379917867098,
+    "neff_interval_width": 40280,
+    "singleton_episodes": 47112,
+    "singleton_exact_contribution": 47112,
+    "singletons": 47112,
+    "variable_clusters": 93,
+    "variable_episodes": 19067,
+    "zero_variance_clusters_all": 53621,
+    "zero_variance_clusters_estimable": 6509,
+    "zero_variance_share": 0.9859133595880036,
+    "zero_variance_share_all": 0.9982686078117436,
+    "zero_variance_share_estimable": 0.9859133595880036
+  },
+  "unclusterable_share": 0.017395304104204562,
+  "zero_failure_bounds": {
+    "failures": 16703,
+    "reason": "observed_failures",
+    "status": "not_applicable"
+  }
+}

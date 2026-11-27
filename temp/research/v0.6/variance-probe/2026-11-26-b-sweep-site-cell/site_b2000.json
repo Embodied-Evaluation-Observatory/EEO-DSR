@@ -1,0 +1,49 @@
+{
+  "label": "single_source_site",
+  "input": "research/v0.6/variance-probe/2026-11-26-g3-single-source/site_corpus.csv.gz",
+  "input_sha256": {
+    "rows_input": 73413,
+    "rows_used": 73413,
+    "excluded_missing_scene": 0
+  },
+  "source_rows": 73413,
+  "cannot_cluster": 0,
+  "rows_used": 73413,
+  "clusters": 69,
+  "method": "cluster bootstrap; resample K clusters with replacement; ICC(1) per replicate",
+  "replicates_requested": 2000,
+  "replicates_valid": 2000,
+  "point": {
+    "rho_unclipped": 0.10461333686070409,
+    "rho_zero_clipped": 0.10461333686070409,
+    "msb": 18.02838784590597,
+    "msw": 0.1466936222943692,
+    "m0": 1043.3283240529224,
+    "p_bar": 0.794938157249496
+  },
+  "interval_95": {
+    "low": 0.06432029563772564,
+    "high": 0.14706373212938995,
+    "method": "percentile"
+  },
+  "n_eff_interval": {
+    "low": 424.7444709476397,
+    "high": 920.0099946894566,
+    "method": "per replicate n_eff at its rho, then percentile",
+    "relative_width": 0.7365887772042875
+  },
+  "distribution": {
+    "min": 0.0430993221252059,
+    "p025": 0.06432029563772564,
+    "median": 0.10116212520952228,
+    "p975": 0.14706373212938995,
+    "max": 0.18651710782109096,
+    "negative_share": 0.0,
+    "below_zero_clipped_to_zero": 0
+  },
+  "nees_record": {
+    "status": "not_issued",
+    "reason": "bootstrap interval is a diagnostic; record needs the full gate"
+  },
+  "note": "The interval is for the ICC on this axis, not for training information."
+}

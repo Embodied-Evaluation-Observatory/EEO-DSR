@@ -1,0 +1,76 @@
+{
+  "date": "2026-11-27",
+  "universe": "raw metadata duplicate UUIDs, 74,896 rows / 74,795 unique",
+  "conflict_groups": 43,
+  "all_conflicts_involve_success": true,
+  "success_only_groups": 23,
+  "field_combination_counts": {
+    "success": 23,
+    "success + current_task": 15,
+    "scene_id + success + current_task + robot_serial": 4,
+    "scene_id + success": 1
+  },
+  "success_value_patterns": [
+    [
+      "False",
+      "True"
+    ]
+  ],
+  "same_episode_two_record_consistency": {
+    "groups_with_different_success": 43,
+    "groups_with_same_success_but_other_conflict": 0,
+    "note": "This is agreement between two records for the same episode; it is not two annotators labeling the same episode. It must not be called D2 inter-annotator agreement."
+  },
+  "tie_break": {
+    "first": {
+      "rule": "first",
+      "episodes": 73413,
+      "clusters": 2432,
+      "unique_uuid": 74795,
+      "chosen_uuid": 74795,
+      "rho": 0.19173694376106076,
+      "rho_status": "computed",
+      "rho_bootstrap_95": [
+        0.16358683089825715,
+        0.21783533051524667
+      ],
+      "bootstrap_reps": 200,
+      "n_eff": 6082.826286005701,
+      "zero_variance_share": 0.6052631578947368
+    },
+    "last": {
+      "rule": "last",
+      "episodes": 73413,
+      "clusters": 2432,
+      "unique_uuid": 74795,
+      "chosen_uuid": 74795,
+      "rho": 0.19154764286695505,
+      "rho_status": "computed",
+      "rho_bootstrap_95": [
+        0.16373135589112442,
+        0.2155633995073916
+      ],
+      "bootstrap_reps": 200,
+      "n_eff": 6086.620560196973,
+      "zero_variance_share": 0.6052631578947368
+    },
+    "drop": {
+      "rule": "drop",
+      "episodes": 73372,
+      "clusters": 2432,
+      "unique_uuid": 74795,
+      "chosen_uuid": 74752,
+      "rho": 0.19181963652459383,
+      "rho_status": "computed",
+      "rho_bootstrap_95": [
+        0.1660606039656981,
+        0.21779165706261283
+      ],
+      "bootstrap_reps": 200,
+      "n_eff": 6080.980885927949,
+      "zero_variance_share": 0.6056743421052632
+    }
+  },
+  "tie_break_note": "The raw-metadata subset has 73,413 rows and 2,432 building||current_task clusters; it is not the 93,994-episode corpus. The three rho values differ by <0.0003 and their bootstrap intervals overlap. The published rho must not be replaced by these subset values.",
+  "status": "label_consistency_observation_not_annotation_quality"
+}

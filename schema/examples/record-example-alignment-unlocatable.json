@@ -213,7 +213,11 @@
       "leakage_rate": 0.0123,
       "n_distinct_est": 244,
       "calibration": null,
-      "calibration_status": "not_established"
+      "calibration_status": "not_established",
+      "tie_break": {
+        "rule": "first",
+        "note": "synthetic fixture; not a real corpus reading"
+      }
     },
     "chain": {
       "sync_filtered": 250,

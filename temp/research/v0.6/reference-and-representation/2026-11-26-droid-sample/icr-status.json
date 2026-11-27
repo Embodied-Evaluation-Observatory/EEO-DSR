@@ -1,0 +1,6 @@
+{
+  "status": "not_issued",
+  "reason": "interval_construction_not_fixed",
+  "detail": "ICR needs an interval; the fingerprint tool now keeps pre-L2 projections for dispersion, but no ICR interval is constructed or calibrated. Do not issue an ICR point as an interval reading.",
+  "matrix_notice": "ICR must use projections (pre-L2), not fingerprints; the two matrices share feature extraction and SVD basis but not the final normalization."
+}

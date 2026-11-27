@@ -1039,6 +1039,35 @@
                 "established"
               ],
               "description": "Whether a real detector calibration exists. not_established means no detector and no gate; calibration must then be null."
+            },
+            "tie_break": {
+              "type": "object",
+              "additionalProperties": false,
+              "description": "Declared rule for resolving multiple records of the same episode with conflicting fields, especially success. Required when a record reports a success-based rho and duplicate audit found conflicts.",
+              "required": [
+                "rule"
+              ],
+              "properties": {
+                "rule": {
+                  "enum": [
+                    "first",
+                    "last",
+                    "drop_group",
+                    "not_applicable"
+                  ]
+                },
+                "note": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "sensitivity_evidence": {
+                  "type": [
+                    "string",
+                    "null"
+                  ],
+                  "description": "Path or id of the three-rule sensitivity evidence; null only when rule is not_applicable."
+                }
+              }
             }
           },
           "allOf": [
@@ -1731,6 +1760,28 @@
             "supplier",
             "independent"
           ]
+        },
+        "prior_prechecks": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "date",
+              "tool"
+            ],
+            "properties": {
+              "date": {
+                "type": "string",
+                "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$"
+              },
+              "tool": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          }
         }
       }
     },
@@ -1960,5 +2011,10 @@
         }
       }
     }
+  },
+  "not": {
+    "required": [
+      "pre_check_not_a_record"
+    ]
   }
 }

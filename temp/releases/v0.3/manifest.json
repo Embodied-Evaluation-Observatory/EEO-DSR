@@ -1,0 +1,185 @@
+{
+  "module": "EEO-DSR",
+  "release": "v0.3",
+  "tag": "v0.3",
+  "method_version": "EEO-DSR-V0.3",
+  "frozen_at_utc": "2026-11-25T14:43:54+00:00",
+  "files": [
+    {
+      "file": ".github/workflows/reproduce.yml",
+      "bytes": 437,
+      "sha256": "b868a2362c3230ee12c50de49a8f2572d80cd7a9f0f40576a10a6dc25e7859bd"
+    },
+    {
+      "file": "CITATION.md",
+      "bytes": 697,
+      "sha256": "882d3c0fd90c678e49aaa37c3e4b95cb8e1a2ecc0fe0cae7df1954a1643c65d4"
+    },
+    {
+      "file": "COMMIT_MESSAGE.txt",
+      "bytes": 2906,
+      "sha256": "e5b432f766bf253e5d1113679cfdfe1031570f41c29f345d52712c920b128e6a"
+    },
+    {
+      "file": "ENTRY.md",
+      "bytes": 4026,
+      "sha256": "7b41944cc0fd368c5d77be40d014b80f07901f8eaf61313fe3eedbbf25649669"
+    },
+    {
+      "file": "LICENSE",
+      "bytes": 1323,
+      "sha256": "fa9ba9c4a50fd023a189841e8e4518d0e545b8cce386cc3a9edaa217116d8470"
+    },
+    {
+      "file": "METHOD.md",
+      "bytes": 44191,
+      "sha256": "f23b19adce9fb0b78ff9ee7523ac2ea417cf35e97a55e4cbd36af7cd44459592"
+    },
+    {
+      "file": "README.md",
+      "bytes": 22255,
+      "sha256": "d7b8bacab1ec36ff4ed137853082f4389c1ac21a978195071d3bf3c153bce7b8"
+    },
+    {
+      "file": "RELEASE.md",
+      "bytes": 4343,
+      "sha256": "d65b3bb1d397a948328a1ed84e73cf2f97c125dfd95d4843200b42d89d9404d2"
+    },
+    {
+      "file": "RELEASE_GATE.md",
+      "bytes": 2996,
+      "sha256": "8acc978c144aa8bc78ef3ab94c3f2e1d855c0a182134849b973dc99f86d02bb7"
+    },
+    {
+      "file": "STATUS.md",
+      "bytes": 3161,
+      "sha256": "6ff213cb6bfacf4214205c9cb3215c0d88e2f22623c19bba2a355b307d21b3bc"
+    },
+    {
+      "file": "checks/README.md",
+      "bytes": 4639,
+      "sha256": "5000746109633361d3e4e6fbac141c01b020cf6630f3233d3f1206c579a30629"
+    },
+    {
+      "file": "checks/dataset/2026-11-25/README.md",
+      "bytes": 2774,
+      "sha256": "100dba6297eec942a121c43f34f8f0d7dc80d42931e65373344b032eab0cbce6"
+    },
+    {
+      "file": "checks/dataset/2026-11-25/cards.csv",
+      "bytes": 5687,
+      "sha256": "c9d2ed05a2401d9c3ece86f9bee8b8656b16e627e5bdd41fbb614bfbcd605eb5"
+    },
+    {
+      "file": "checks/dataset/2026-11-25/index.html",
+      "bytes": 8565,
+      "sha256": "e26a1f280c85c9500d73de8d644299f53c0fdf728eeefd4c6861e952277658ad"
+    },
+    {
+      "file": "checks/dataset/2026-11-25/summary.json",
+      "bytes": 530,
+      "sha256": "bdf80d01e799e17371d83350f1c2b28ab47678f3670017aaa6183163e46fbc8f"
+    },
+    {
+      "file": "checks/phase0_screen.py",
+      "bytes": 8558,
+      "sha256": "c35d090c4272b370e46d0932763a7a9c91ae4fda33b5609928fc2662bd49b92e"
+    },
+    {
+      "file": "entry/DATA_TERMS.md",
+      "bytes": 750,
+      "sha256": "94478a224bb097bdb8171087a14da7285dde41aebc46267face47555d6050cc1"
+    },
+    {
+      "file": "entry/sampling-frame.md",
+      "bytes": 781,
+      "sha256": "59b7dc91245213f338c4a7eef7f838750237675e674c9dd24ea617a76fd38b04"
+    },
+    {
+      "file": "schema/examples/record-example-alignment-segment.json",
+      "bytes": 12051,
+      "sha256": "e73ba53231fa7cab563d38d27d84d16a3bd1e51aad1c266f23317242041ea915"
+    },
+    {
+      "file": "schema/examples/record-example-alignment-unlocatable.json",
+      "bytes": 12545,
+      "sha256": "3e7cb31cded50afb837cae2f60c12c1dac0960d74bb96f0f6cc6534f0c5039ee"
+    },
+    {
+      "file": "schema/examples/record-example-default-package.json",
+      "bytes": 12462,
+      "sha256": "ac0931637bb1962b9a081ef1733c5e9020f9881b7a4f6c40104039ea6a145c59"
+    },
+    {
+      "file": "schema/examples/record-example-degraded.json",
+      "bytes": 12399,
+      "sha256": "813afe9514c097aa7ba491a683df4ea500bc8bc769821badf09d8d04504242da"
+    },
+    {
+      "file": "schema/examples/record-example-multitask.json",
+      "bytes": 12657,
+      "sha256": "79ff9aef1edfe8120f4b7609511064348cbdaa3ada0b15826a76d26633bfcb37"
+    },
+    {
+      "file": "schema/examples/record-example-unestimable.json",
+      "bytes": 12241,
+      "sha256": "ca85c5f342aa83e6d5d5595cbd15be814fc40b151239e1e62045b1eaf5f5317a"
+    },
+    {
+      "file": "schema/examples/record-example.json",
+      "bytes": 12003,
+      "sha256": "41d499b67381dac1b289884d37da88cd2b8fbde1a80d6a94013a283cf8c1770d"
+    },
+    {
+      "file": "schema/examples/sync-observation-example.json",
+      "bytes": 1764,
+      "sha256": "4710272ae2b69e8c3b2ab7b58aa91536283d5a0605927693283bdf21f54ffebc"
+    },
+    {
+      "file": "schema/record.schema.json",
+      "bytes": 53784,
+      "sha256": "114e490b872ea5331f0aa62474d245fec9ef74057cd3821c9666f71ebadd97cd"
+    },
+    {
+      "file": "schema/sync-observation.schema.json",
+      "bytes": 4860,
+      "sha256": "fd43d17c697bca44f722ce4317447ab38791871a9566bea8a01eec27d2f626c5"
+    },
+    {
+      "file": "thresholds-declaration.md",
+      "bytes": 1487,
+      "sha256": "f00e14bbae290b214b66e7add5809bd3c76d69aaf8b2650518c31bb944c6e039"
+    },
+    {
+      "file": "tools/cosine_threshold_smoke.py",
+      "bytes": 3820,
+      "sha256": "1c28fc6ac403c3090f6242024f9e94404e65ef818b692f6e4832aba35804fd47"
+    },
+    {
+      "file": "tools/freeze_release.py",
+      "bytes": 2645,
+      "sha256": "dc009adc9394cbe2f261712b0ef9467668458ea99c4773412e6c7b68d04ae4b3"
+    },
+    {
+      "file": "tools/release_preflight.py",
+      "bytes": 3894,
+      "sha256": "2efa202fbf931fbb50d048571d30d3fc5bd3c2f9bfc883b4789ca6775f1d29fd"
+    },
+    {
+      "file": "tools/run_all_checks.py",
+      "bytes": 2108,
+      "sha256": "c5067c5cae5fba9d3ac27201d6124d3a8614843843469ba1379f9ed9b20b6c5d"
+    },
+    {
+      "file": "tools/self_test_manifest.md",
+      "bytes": 10068,
+      "sha256": "dcaf7379364eaace9b34babaf67dfd667868d4300fa0a4e298796a01c3339b0f"
+    },
+    {
+      "file": "tools/validate_record.py",
+      "bytes": 116304,
+      "sha256": "3514ea0c67b51e10dffe093f4ff8ab6ce1b5dd628b0a8f72075c3e835c211c2e"
+    }
+  ],
+  "policy": "This manifest is committed before the tag. The tag is annotated and is never moved; corrections are new versions."
+}

@@ -1,0 +1,67 @@
+{
+  "input": "research/v0.6/variance-probe/2026-11-26-r2/droid_cell.csv.gz",
+  "clusters_total": 53714,
+  "episodes": 93994,
+  "multi_clusters": 6602,
+  "p_mean": 0.8222971679043343,
+  "method": "fixed-size cluster bootstrap on the multi-cluster subpopulation; point sample Multinomial(M,1/M) over multi clusters; bootstrap Multinomial(M_occ,1/M_occ) over occurrences; nested B prefixes; ICC(1) from bootstrap counts via sufficient statistics; percentile interval; Wilson interval on coverage",
+  "simulations_per_rho": 1000,
+  "bootstrap_reps": [
+    25,
+    100,
+    500,
+    2000
+  ],
+  "grid": [
+    {
+      "rho_true": 0.2,
+      "simulations_requested": 1000,
+      "simulations_valid": 1000,
+      "simulations_failed": 0,
+      "bias_mean": 0.0005038645441383105,
+      "sd": 0.026996693789889538,
+      "negative_share": 0.0,
+      "coverage_by_B": {
+        "25": {
+          "coverage_95": 0.877,
+          "coverage_successes": 877,
+          "coverage_wilson_95": [
+            0.8551883398130525,
+            0.8959261786528091
+          ],
+          "mean_interval_width": 0.08153342487621282
+        },
+        "100": {
+          "coverage_95": 0.916,
+          "coverage_successes": 916,
+          "coverage_wilson_95": [
+            0.8971745741872942,
+            0.931641446188829
+          ],
+          "mean_interval_width": 0.0894848280072651
+        },
+        "500": {
+          "coverage_95": 0.929,
+          "coverage_successes": 929,
+          "coverage_wilson_95": [
+            0.9113859810064908,
+            0.9433305400063863
+          ],
+          "mean_interval_width": 0.09223411898472685
+        },
+        "2000": {
+          "coverage_95": 0.934,
+          "coverage_successes": 934,
+          "coverage_wilson_95": [
+            0.9168903772338006,
+            0.9477878747932127
+          ],
+          "mean_interval_width": 0.0929258543195854
+        }
+      },
+      "bootstrap_replicates_valid_max_B": 2000
+    }
+  ],
+  "note": "Coverage is conditional on an estimable point and estimated from a finite simulation count. Nested prefixes mean B=25/100/500 use the first B of the same B=2000 stream. This is a fixed-size bootstrap of the multi-cluster subpopulation, not a full K-cluster bootstrap; singletons are excluded from ICC(1), so their omission changes the selection-count law but not the estimator.",
+  "bootstrap_design": "fixed-size multinomial over the 6,602 multi clusters; singletons omitted"
+}

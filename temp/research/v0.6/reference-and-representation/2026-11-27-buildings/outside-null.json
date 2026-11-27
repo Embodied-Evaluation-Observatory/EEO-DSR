@@ -1,0 +1,24 @@
+{
+  "summary": {
+    "pooled_n": 332,
+    "reference_n": 183,
+    "target_n": 149,
+    "null_outside_mean": 0.4849664429530202,
+    "null_outside_95": [
+      0.38926174496644295,
+      0.5838926174496645
+    ],
+    "reps": 500
+  },
+  "traj16": {
+    "pooled_n": 332,
+    "reference_n": 183,
+    "target_n": 149,
+    "null_outside_mean": 0.4868724832214765,
+    "null_outside_95": [
+      0.3959731543624161,
+      0.5807046979865771
+    ],
+    "reps": 500
+  }
+}

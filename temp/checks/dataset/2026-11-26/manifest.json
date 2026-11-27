@@ -1,0 +1,699 @@
+{
+  "module": "EEO-DSR",
+  "phase": "Phase 0 disclosure census",
+  "date": "2026-11-26",
+  "retrieval_date": "2026-11-26",
+  "source": "checks/cards-source.csv",
+  "source_sha256": "3773caaca2152286a5e0f29d1e66b1b42781e2480d7030d54c2f42bed004a8be",
+  "tool": "tools/screen_cards.py",
+  "tool_sha256": "a5ea8a6f4d3fef727dd12b94925b7ba4519089996cfaa5064347f95908760bcc",
+  "cards": [
+    {
+      "dataset_id": "bridge-data-project",
+      "url": "https://rail-berkeley.github.io/bridgedata/",
+      "version": null,
+      "card_last_modified": "2023-09-22",
+      "page_file": "pages/bridge-data-project.md",
+      "page_sha256": "9be7a758ab24782955a6fa4145bbed80527671939e4f40dff70e22ee9b69c580",
+      "card_sha256": "1a0c95c76df1ee90473eed4a59007534a998d3d89e235ee3bff03fc3ac5ae9b4",
+      "structured": {
+        "dataset_id": "bridge-data-project",
+        "fps": null,
+        "license": null,
+        "per_scene_episodes": null,
+        "retrieval_date": "2026-11-26",
+        "scene_count": null,
+        "total_episodes": null,
+        "total_frames": null,
+        "total_tasks": null,
+        "total_videos": null,
+        "version": null
+      },
+      "checks": {
+        "S1": "MISSING",
+        "S2": "MISSING",
+        "S3": "MISSING",
+        "S4": "MISSING",
+        "S5": "MISSING",
+        "S6": "MISSING"
+      }
+    },
+    {
+      "dataset_id": "calvin",
+      "url": "https://raw.githubusercontent.com/mees/calvin/main/README.md",
+      "version": null,
+      "card_last_modified": "not available",
+      "page_file": "pages/calvin.md",
+      "page_sha256": "ade3f2d224f5f299be858681ab117524b6457e371963718518718529b2fd12f2",
+      "card_sha256": "47be0a4b032302a7c6e8bd558e0895fb861bbe47825250dbc2fca4f63037182f",
+      "structured": {
+        "dataset_id": "calvin",
+        "fps": null,
+        "license": null,
+        "per_scene_episodes": null,
+        "retrieval_date": "2026-11-26",
+        "scene_count": null,
+        "total_episodes": null,
+        "total_frames": null,
+        "total_tasks": null,
+        "total_videos": null,
+        "version": null
+      },
+      "checks": {
+        "S1": "MISSING",
+        "S2": "MISSING",
+        "S3": "MISSING",
+        "S4": "MISSING",
+        "S5": "MISSING",
+        "S6": "MISSING"
+      }
+    },
+    {
+      "dataset_id": "droid-project",
+      "url": "https://droid-dataset.github.io/",
+      "version": null,
+      "card_last_modified": "2025-06-16",
+      "page_file": "pages/droid-project.md",
+      "page_sha256": "48e7283e8fa77441818ac74f833e7b2529b78ba750cd3808750fc63a45e84b20",
+      "card_sha256": "36e71610faa9b010a7d0871bfdfb7394e840e8ba381379d8b17dbc2344b853c9",
+      "structured": {
+        "dataset_id": "droid-project",
+        "fps": null,
+        "license": null,
+        "per_scene_episodes": null,
+        "retrieval_date": "2026-11-26",
+        "scene_count": null,
+        "total_episodes": null,
+        "total_frames": null,
+        "total_tasks": null,
+        "total_videos": null,
+        "version": null
+      },
+      "checks": {
+        "S1": "MISSING",
+        "S2": "MISSING",
+        "S3": "MISSING",
+        "S4": "MISSING",
+        "S5": "MISSING",
+        "S6": "MISSING"
+      }
+    },
+    {
+      "dataset_id": "lerobot/aloha_mobile_cabinet",
+      "url": "https://huggingface.co/datasets/lerobot/aloha_mobile_cabinet/raw/main/README.md",
+      "version": "v3.0",
+      "card_last_modified": "not available",
+      "page_file": "pages/lerobot__aloha_mobile_cabinet.md",
+      "page_sha256": "e10aecfc8b0ca9c62a3879b8e8e35d7b5b81ecabca0352bdf27a6e38ff6e788e",
+      "card_sha256": "1081cb561268e8ee07573604dca9cd7ddfd1b44ce9371733ad7eb6b8a4922511",
+      "structured": {
+        "dataset_id": "lerobot/aloha_mobile_cabinet",
+        "fps": 50.0,
+        "license": "apache-2.0",
+        "per_scene_episodes": null,
+        "retrieval_date": "2026-11-26",
+        "scene_count": null,
+        "total_episodes": 85,
+        "total_frames": 127500,
+        "total_tasks": 1,
+        "total_videos": null,
+        "version": "v3.0"
+      },
+      "checks": {
+        "S1": "MISSING",
+        "S2": "MISSING",
+        "S3": "MISSING",
+        "S4": "PASS",
+        "S5": "MISSING",
+        "S6": "MISSING"
+      }
+    },
+    {
+      "dataset_id": "lerobot/berkeley_cable_routing",
+      "url": "https://huggingface.co/datasets/lerobot/berkeley_cable_routing/raw/main/README.md",
+      "version": "v3.0",
+      "card_last_modified": "not available",
+      "page_file": "pages/lerobot__berkeley_cable_routing.md",
+      "page_sha256": "5e7c238aba09654b57af7300cca85570c4cb21f161684023671321913a207f8e",
+      "card_sha256": "3076d90943d2ce2c5cdd68a6cf21e705f2dfbd256f2d0b9d844e9b705781a318",
+      "structured": {
+        "dataset_id": "lerobot/berkeley_cable_routing",
+        "fps": 10.0,
+        "license": "apache-2.0",
+        "per_scene_episodes": null,
+        "retrieval_date": "2026-11-26",
+        "scene_count": null,
+        "total_episodes": 1647,
+        "total_frames": 42328,
+        "total_tasks": 1,
+        "total_videos": null,
+        "version": "v3.0"
+      },
+      "checks": {
+        "S1": "MISSING",
+        "S2": "MISSING",
+        "S3": "MISSING",
+        "S4": "PASS",
+        "S5": "MISSING",
+        "S6": "MISSING"
+      }
+    },
+    {
+      "dataset_id": "lerobot/berkeley_gnm_sac_son",
+      "url": "https://huggingface.co/datasets/lerobot/berkeley_gnm_sac_son/raw/main/README.md",
+      "version": "v3.0",
+      "card_last_modified": "not available",
+      "page_file": "pages/lerobot__berkeley_gnm_sac_son.md",
+      "page_sha256": "2464148b306ebe9b1c1597e7c09a283d5ab3e86bc9a6313b91db2d17b7ff8416",
+      "card_sha256": "4c4cbbc27419d95ca85936bcbff596afd22d81c6350597e24506c0b964bb5c98",
+      "structured": {
+        "dataset_id": "lerobot/berkeley_gnm_sac_son",
+        "fps": 10.0,
+        "license": "apache-2.0",
+        "per_scene_episodes": null,
+        "retrieval_date": "2026-11-26",
+        "scene_count": null,
+        "total_episodes": 2955,
+        "total_frames": 241059,
+        "total_tasks": 1,
+        "total_videos": null,
+        "version": "v3.0"
+      },
+      "checks": {
+        "S1": "MISSING",
+        "S2": "MISSING",
+        "S3": "MISSING",
+        "S4": "PASS",
+        "S5": "MISSING",
+        "S6": "MISSING"
+      }
+    },
+    {
+      "dataset_id": "lerobot/jaco_play",
+      "url": "https://huggingface.co/datasets/lerobot/jaco_play/raw/main/README.md",
+      "version": "v2.0",
+      "card_last_modified": "not available",
+      "page_file": "pages/lerobot__jaco_play.md",
+      "page_sha256": "320ce6e05ea213e021869d50df73d80c5fbecbc61692a90b1fac51cddfe1ef6e",
+      "card_sha256": "91dd8aa6e2e95530a0ffa96612037caade1dc568ff372779a65aec299190b828",
+      "structured": {
+        "dataset_id": "lerobot/jaco_play",
+        "fps": 10.0,
+        "license": "cc-by-4.0",
+        "per_scene_episodes": null,
+        "retrieval_date": "2026-11-26",
+        "scene_count": null,
+        "total_episodes": 1085,
+        "total_frames": 77965,
+        "total_tasks": 89,
+        "total_videos": 2170,
+        "version": "v2.0"
+      },
+      "checks": {
+        "S1": "MISSING",
+        "S2": "MISSING",
+        "S3": "MISSING",
+        "S4": "PASS",
+        "S5": "MISSING",
+        "S6": "MISSING"
+      }
+    },
+    {
+      "dataset_id": "lerobot/libero",
+      "url": "https://huggingface.co/datasets/lerobot/libero/raw/main/README.md",
+      "version": "v3.0",
+      "card_last_modified": "not available",
+      "page_file": "pages/lerobot__libero.md",
+      "page_sha256": "5a76b1cdc8b0012a048eea96bce7e0a4367537aa3c1acac3a19aae722c1debe6",
+      "card_sha256": "2754613074d693227a1e9cae9046da8f1f5d87d5a3e9e807843a44ff324aaa46",
+      "structured": {
+        "dataset_id": "lerobot/libero",
+        "fps": 10.0,
+        "license": "apache-2.0",
+        "per_scene_episodes": null,
+        "retrieval_date": "2026-11-26",
+        "scene_count": null,
+        "total_episodes": 1693,
+        "total_frames": 273465,
+        "total_tasks": 40,
+        "total_videos": null,
+        "version": "v3.0"
+      },
+      "checks": {
+        "S1": "MISSING",
+        "S2": "MISSING",
+        "S3": "MISSING",
+        "S4": "PASS",
+        "S5": "MISSING",
+        "S6": "MISSING"
+      }
+    },
+    {
+      "dataset_id": "lerobot/nyu_rot_dataset",
+      "url": "https://huggingface.co/datasets/lerobot/nyu_rot_dataset/raw/main/README.md",
+      "version": "v2.0",
+      "card_last_modified": "not available",
+      "page_file": "pages/lerobot__nyu_rot_dataset.md",
+      "page_sha256": "979b2259449eef49ea2e593f20951fde5aa8e8f636a7c08dacfed5101dcf5554",
+      "card_sha256": "67767f2b6f3398ca4ffa8706530e65307c0ccd1dc138ef41104638bc9fd0542e",
+      "structured": {
+        "dataset_id": "lerobot/nyu_rot_dataset",
+        "fps": 5.0,
+        "license": "mit",
+        "per_scene_episodes": null,
+        "retrieval_date": "2026-11-26",
+        "scene_count": null,
+        "total_episodes": 14,
+        "total_frames": 440,
+        "total_tasks": 12,
+        "total_videos": 14,
+        "version": "v2.0"
+      },
+      "checks": {
+        "S1": "MISSING",
+        "S2": "MISSING",
+        "S3": "MISSING",
+        "S4": "PASS",
+        "S5": "MISSING",
+        "S6": "MISSING"
+      }
+    },
+    {
+      "dataset_id": "lerobot/pusht",
+      "url": "https://huggingface.co/datasets/lerobot/pusht/raw/main/README.md",
+      "version": "v2.0",
+      "card_last_modified": "not available",
+      "page_file": "pages/lerobot__pusht.md",
+      "page_sha256": "246e94b68f204bfcd05bb32e23631c3316b8de6152d7a85e693d4455540ef72f",
+      "card_sha256": "9d568624fe865e98a7683c2f98057406fa342ccb0295659885e4bd4577fe20db",
+      "structured": {
+        "dataset_id": "lerobot/pusht",
+        "fps": 10.0,
+        "license": "mit",
+        "per_scene_episodes": null,
+        "retrieval_date": "2026-11-26",
+        "scene_count": null,
+        "total_episodes": 206,
+        "total_frames": 25650,
+        "total_tasks": 1,
+        "total_videos": 206,
+        "version": "v2.0"
+      },
+      "checks": {
+        "S1": "MISSING",
+        "S2": "MISSING",
+        "S3": "MISSING",
+        "S4": "PASS",
+        "S5": "MISSING",
+        "S6": "MISSING"
+      }
+    },
+    {
+      "dataset_id": "lerobot/roboturk",
+      "url": "https://huggingface.co/datasets/lerobot/roboturk/raw/main/README.md",
+      "version": "v3.0",
+      "card_last_modified": "not available",
+      "page_file": "pages/lerobot__roboturk.md",
+      "page_sha256": "f37e4f6262f49c7e2068e6d51abd22761765d881ab2442b3942297d92aa42c3a",
+      "card_sha256": "324da70d0ebab1231165edd82d99c47fa28ac609cc75578a5983e7fb69ceae01",
+      "structured": {
+        "dataset_id": "lerobot/roboturk",
+        "fps": 10.0,
+        "license": "apache-2.0",
+        "per_scene_episodes": null,
+        "retrieval_date": "2026-11-26",
+        "scene_count": null,
+        "total_episodes": 1995,
+        "total_frames": 187507,
+        "total_tasks": 3,
+        "total_videos": null,
+        "version": "v3.0"
+      },
+      "checks": {
+        "S1": "MISSING",
+        "S2": "MISSING",
+        "S3": "MISSING",
+        "S4": "PASS",
+        "S5": "MISSING",
+        "S6": "MISSING"
+      }
+    },
+    {
+      "dataset_id": "lerobot/stanford_hydra_dataset",
+      "url": "https://huggingface.co/datasets/lerobot/stanford_hydra_dataset/raw/main/README.md",
+      "version": "v2.0",
+      "card_last_modified": "not available",
+      "page_file": "pages/lerobot__stanford_hydra_dataset.md",
+      "page_sha256": "fb71c6f20843000c236b68afb849670fb02e221c12e184c0f46ddca14e2e16fb",
+      "card_sha256": "12f7a91b860ac6d46ca7e12c9d21236145f5c7170db7ace392b893a14bc75250",
+      "structured": {
+        "dataset_id": "lerobot/stanford_hydra_dataset",
+        "fps": 10.0,
+        "license": "mit",
+        "per_scene_episodes": null,
+        "retrieval_date": "2026-11-26",
+        "scene_count": null,
+        "total_episodes": 570,
+        "total_frames": 358234,
+        "total_tasks": 3,
+        "total_videos": 1140,
+        "version": "v2.0"
+      },
+      "checks": {
+        "S1": "MISSING",
+        "S2": "MISSING",
+        "S3": "MISSING",
+        "S4": "PASS",
+        "S5": "MISSING",
+        "S6": "MISSING"
+      }
+    },
+    {
+      "dataset_id": "lerobot/svla_so101_pickplace",
+      "url": "https://huggingface.co/datasets/lerobot/svla_so101_pickplace/raw/main/README.md",
+      "version": "v2.1",
+      "card_last_modified": "not available",
+      "page_file": "pages/lerobot__svla_so101_pickplace.md",
+      "page_sha256": "74a5ac3cf6de11b315eb4d01b1ce0e6250782fa809183f76b56aaa3d26a63d76",
+      "card_sha256": "9eea18df07a897e91dd994fbb82e322d2dc651b1e3f69e303e8648770e6e30fb",
+      "structured": {
+        "dataset_id": "lerobot/svla_so101_pickplace",
+        "fps": 30.0,
+        "license": "apache-2.0",
+        "per_scene_episodes": null,
+        "retrieval_date": "2026-11-26",
+        "scene_count": null,
+        "total_episodes": 50,
+        "total_frames": 11939,
+        "total_tasks": 1,
+        "total_videos": 100,
+        "version": "v2.1"
+      },
+      "checks": {
+        "S1": "MISSING",
+        "S2": "MISSING",
+        "S3": "MISSING",
+        "S4": "PASS",
+        "S5": "MISSING",
+        "S6": "MISSING"
+      }
+    },
+    {
+      "dataset_id": "lerobot/taco_play",
+      "url": "https://huggingface.co/datasets/lerobot/taco_play/raw/main/README.md",
+      "version": "v2.0",
+      "card_last_modified": "not available",
+      "page_file": "pages/lerobot__taco_play.md",
+      "page_sha256": "38f678c2a6722d764283c6822cfa7f3904706e93e7340058e84352479d87e678",
+      "card_sha256": "0e3a7d72162f1daa2f4bdcacde1d65b51b000cfbe5aa2e690e1e05e621a8ea19",
+      "structured": {
+        "dataset_id": "lerobot/taco_play",
+        "fps": 15.0,
+        "license": "cc-by-4.0",
+        "per_scene_episodes": null,
+        "retrieval_date": "2026-11-26",
+        "scene_count": null,
+        "total_episodes": 3603,
+        "total_frames": 237798,
+        "total_tasks": 406,
+        "total_videos": 7206,
+        "version": "v2.0"
+      },
+      "checks": {
+        "S1": "MISSING",
+        "S2": "MISSING",
+        "S3": "MISSING",
+        "S4": "PASS",
+        "S5": "MISSING",
+        "S6": "MISSING"
+      }
+    },
+    {
+      "dataset_id": "lerobot/xarm_lift_medium",
+      "url": "https://huggingface.co/datasets/lerobot/xarm_lift_medium/raw/main/README.md",
+      "version": "v2.0",
+      "card_last_modified": "not available",
+      "page_file": "pages/lerobot__xarm_lift_medium.md",
+      "page_sha256": "0650cf886bcb149939b686bdd38f0ba5f683076888808481c6b33257f117eb79",
+      "card_sha256": "86ab2d839def26dd1dc8468743d556b4a9cfdad0b70dc1a082d56033a5478cd0",
+      "structured": {
+        "dataset_id": "lerobot/xarm_lift_medium",
+        "fps": 15.0,
+        "license": "mit",
+        "per_scene_episodes": null,
+        "retrieval_date": "2026-11-26",
+        "scene_count": null,
+        "total_episodes": 800,
+        "total_frames": 20000,
+        "total_tasks": 1,
+        "total_videos": 800,
+        "version": "v2.0"
+      },
+      "checks": {
+        "S1": "MISSING",
+        "S2": "MISSING",
+        "S3": "MISSING",
+        "S4": "PASS",
+        "S5": "MISSING",
+        "S6": "MISSING"
+      }
+    },
+    {
+      "dataset_id": "libero-project",
+      "url": "https://libero-project.github.io/intro.html",
+      "version": null,
+      "card_last_modified": "2023-10-16",
+      "page_file": "pages/libero-project.md",
+      "page_sha256": "98ab6d9317aa3115f17b35fc54cfd6c209b0387f82741baf6a600a0f54d38faf",
+      "card_sha256": "0b781e25867e98db9a1b3ad43e8a2b7b2cb6f6903280cd3f4b4f0f735512134a",
+      "structured": {
+        "dataset_id": "libero-project",
+        "fps": null,
+        "license": null,
+        "per_scene_episodes": null,
+        "retrieval_date": "2026-11-26",
+        "scene_count": null,
+        "total_episodes": null,
+        "total_frames": null,
+        "total_tasks": null,
+        "total_videos": null,
+        "version": null
+      },
+      "checks": {
+        "S1": "MISSING",
+        "S2": "MISSING",
+        "S3": "MISSING",
+        "S4": "MISSING",
+        "S5": "MISSING",
+        "S6": "MISSING"
+      }
+    },
+    {
+      "dataset_id": "maniskill",
+      "url": "https://raw.githubusercontent.com/haosulab/ManiSkill/main/README.md",
+      "version": null,
+      "card_last_modified": "not available",
+      "page_file": "pages/maniskill.md",
+      "page_sha256": "304da9c2fdf69bf8944e1293a5c1bf146c434b2e6acd7604a46b3cfbfdfac10f",
+      "card_sha256": "5746a953627b2f2ca530f65bb831bfae65142ada5f347530a92fd5f19cc3b801",
+      "structured": {
+        "dataset_id": "maniskill",
+        "fps": null,
+        "license": null,
+        "per_scene_episodes": null,
+        "retrieval_date": "2026-11-26",
+        "scene_count": null,
+        "total_episodes": null,
+        "total_frames": null,
+        "total_tasks": null,
+        "total_videos": null,
+        "version": null
+      },
+      "checks": {
+        "S1": "MISSING",
+        "S2": "MISSING",
+        "S3": "MISSING",
+        "S4": "MISSING",
+        "S5": "MISSING",
+        "S6": "MISSING"
+      }
+    },
+    {
+      "dataset_id": "openx-project",
+      "url": "https://robotics-transformer-x.github.io/",
+      "version": null,
+      "card_last_modified": "2025-05-15",
+      "page_file": "pages/openx-project.md",
+      "page_sha256": "cfc69260794ec363d14bf899ac9ec38013c09727215a52a037add457aeb4b02b",
+      "card_sha256": "58c22b4894b81f13c878307b3fc72cd9357afc0cc3e22fe6b8d48d9df62a7475",
+      "structured": {
+        "dataset_id": "openx-project",
+        "fps": null,
+        "license": null,
+        "per_scene_episodes": null,
+        "retrieval_date": "2026-11-26",
+        "scene_count": null,
+        "total_episodes": null,
+        "total_frames": null,
+        "total_tasks": null,
+        "total_videos": null,
+        "version": null
+      },
+      "checks": {
+        "S1": "MISSING",
+        "S2": "MISSING",
+        "S3": "MISSING",
+        "S4": "MISSING",
+        "S5": "MISSING",
+        "S6": "MISSING"
+      }
+    },
+    {
+      "dataset_id": "robocasa",
+      "url": "https://raw.githubusercontent.com/robocasa/robocasa/main/README.md",
+      "version": null,
+      "card_last_modified": "not available",
+      "page_file": "pages/robocasa.md",
+      "page_sha256": "e8a421497dbe714ad912dae9d98c0f0cb6d17685f9a4be5537193419f75abea8",
+      "card_sha256": "9b253d9e89b03c89fc638ced5c5268c608d10ec9344f9c2fd291102f5ed208f7",
+      "structured": {
+        "dataset_id": "robocasa",
+        "fps": null,
+        "license": null,
+        "per_scene_episodes": null,
+        "retrieval_date": "2026-11-26",
+        "scene_count": null,
+        "total_episodes": null,
+        "total_frames": null,
+        "total_tasks": null,
+        "total_videos": null,
+        "version": null
+      },
+      "checks": {
+        "S1": "MISSING",
+        "S2": "MISSING",
+        "S3": "MISSING",
+        "S4": "MISSING",
+        "S5": "MISSING",
+        "S6": "MISSING"
+      }
+    },
+    {
+      "dataset_id": "robomimic",
+      "url": "https://raw.githubusercontent.com/ARISE-Initiative/robomimic/master/README.md",
+      "version": null,
+      "card_last_modified": "not available",
+      "page_file": "pages/robomimic.md",
+      "page_sha256": "edb7d231bfcfec74559cec7e2c950b32317f1488d8898b27798ac7b155f5aec9",
+      "card_sha256": "701cd8131c19a6cf41be29a9f86a68a5531cbecc6a1e1b5c8b2ba5629f186a9f",
+      "structured": {
+        "dataset_id": "robomimic",
+        "fps": null,
+        "license": null,
+        "per_scene_episodes": null,
+        "retrieval_date": "2026-11-26",
+        "scene_count": null,
+        "total_episodes": null,
+        "total_frames": null,
+        "total_tasks": null,
+        "total_videos": null,
+        "version": null
+      },
+      "checks": {
+        "S1": "MISSING",
+        "S2": "MISSING",
+        "S3": "MISSING",
+        "S4": "MISSING",
+        "S5": "MISSING",
+        "S6": "MISSING"
+      }
+    }
+  ],
+  "outputs": {
+    "cards.csv": "c47ab1a9e70f53dbbc4af1132d67aec99f7148d0cfb8b6a27103a562b1ad9c64",
+    "index.html": "d7baaf91e8ce5812f3325f1f94e40be38e8db7403e4fe4b0bcf12aa591527f07",
+    "README.md": "9334e95ea8d2a5a25e4a1e57d2a3aec85ff8bc360c843c54185d5a0f70a448d7"
+  },
+  "summary": {
+    "cards": 20,
+    "at_least_one_fail": 0,
+    "at_least_one_missing": 20,
+    "both_fail_and_missing": 0,
+    "neither": 0,
+    "by_check": {
+      "S1": {
+        "PASS": 0,
+        "FAIL": 0,
+        "MISSING": 20
+      },
+      "S2": {
+        "PASS": 0,
+        "FAIL": 0,
+        "MISSING": 20
+      },
+      "S3": {
+        "PASS": 0,
+        "FAIL": 0,
+        "MISSING": 20
+      },
+      "S4": {
+        "PASS": 12,
+        "FAIL": 0,
+        "MISSING": 8
+      },
+      "S5": {
+        "PASS": 0,
+        "FAIL": 0,
+        "MISSING": 20
+      },
+      "S6": {
+        "PASS": 0,
+        "FAIL": 0,
+        "MISSING": 20
+      }
+    },
+    "judgeability": {
+      "S1": {
+        "judgeable": 0,
+        "rate": 0.0,
+        "verdict": "不可判",
+        "discriminating": false
+      },
+      "S2": {
+        "judgeable": 0,
+        "rate": 0.0,
+        "verdict": "不可判",
+        "discriminating": false
+      },
+      "S3": {
+        "judgeable": 0,
+        "rate": 0.0,
+        "verdict": "不可判",
+        "discriminating": false
+      },
+      "S4": {
+        "judgeable": 12,
+        "rate": 0.6,
+        "verdict": "无可区分信号",
+        "discriminating": false
+      },
+      "S5": {
+        "judgeable": 0,
+        "rate": 0.0,
+        "verdict": "不可判",
+        "discriminating": false
+      },
+      "S6": {
+        "judgeable": 0,
+        "rate": 0.0,
+        "verdict": "不可判",
+        "discriminating": false
+      }
+    },
+    "homogeneous_rows": false,
+    "status_combinations": 2,
+    "hard_sentence": "本集合 0 项 FAIL 不代表卡片自洽；S1 在 20 张卡上全部不可判。",
+    "sentence": "本集合 20 张卡片中 0 张至少一项 FAIL，20 张至少一项 MISSING；两项都有的 0 张。"
+  },
+  "note": "Fields are parsed automatically from the pinned page bytes; no manual transcription."
+}

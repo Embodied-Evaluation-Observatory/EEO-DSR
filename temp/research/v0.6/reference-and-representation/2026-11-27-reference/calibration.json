@@ -1,0 +1,20 @@
+{
+  "fixture": "injected_shift_known_answer",
+  "synthetic": true,
+  "eeo_synthetic": true,
+  "seed": 20261129,
+  "reference_n": 200,
+  "target_n": 120,
+  "dims": 8,
+  "shift": "reference[:120] + Normal(0, 0.05), then row L2 normalize",
+  "identical": {
+    "mean_shift_l2": 0.0,
+    "energy_distance": 0.0
+  },
+  "shifted": {
+    "mean_shift_l2": 0.10286782142797728,
+    "energy_distance": 0.004287933277682621
+  },
+  "purpose": "proves the comparator responds to a known injected shift; not a real buyer reading",
+  "bootstrap_reps": 50
+}

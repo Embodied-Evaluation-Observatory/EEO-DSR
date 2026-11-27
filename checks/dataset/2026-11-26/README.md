@@ -1,5 +1,7 @@
 # Phase 0 披露度普查 2026-11-26
 
+**口径：V0.5 旧三态（PASS／FAIL／MISSING），不是四态；四态迁移后未重跑。** 本页数字只能按旧三态读，不得当作当前 `PASS／FAIL／MISSING／AMBIGUOUS` 结论。
+
 本集合 0 项 FAIL 不代表卡片自洽；S1 在 20 张卡上全部不可判。
 
 本集合 20 张卡片中 0 张至少一项 FAIL，20 张至少一项 MISSING；两项都有的 0 张。
@@ -51,3 +53,6 @@ S2 只有在卡片声明 `frames_per_episode` 或 `seconds_per_episode` 且与�
 - `robomimic`：https://raw.githubusercontent.com/ARISE-Initiative/robomimic/master/README.md  page `edb7d231bfcfec74559cec7e2c950b32317f1488d8898b27798ac7b155f5aec9`  card `701cd8131c19a6cf41be29a9f86a68a5531cbecc6a1e1b5c8b2ba5629f186a9f`
 
 本页只报告披露与算术，不构成核验结论，不说明语料可用性。
+---
+
+**范围**：这是 20 张普查的旧三态基线，不是行业结论。`checks/dataset/2026-11-26-r2-robomind-rh20t/` 另补 2 张（RoboMIND/RH20T），两个目录分开报，不合并成“20 张”或“22 张普查”。扩到 50–100 张、做公开 Dashboard 是 Phase 1 计划，尚未执行；0 FAIL 不是“通过”，20 张 MISSING 也不能替单卡评级。

@@ -1,0 +1,13 @@
+{
+  "reference_building": "Gates",
+  "target_building": "TRI",
+  "reference_n": 149,
+  "target_n": 183,
+  "dims": 32,
+  "basis_fit_side": "reference",
+  "basis_sha256": "0c488a59db459b49cfb5f24a063dee9b33ad2df4b19ee0f001be040a8234ad56",
+  "matrix_for_deviation": "fingerprints",
+  "note": "Same-corpus site-to-site distribution deviation. This is not a buyer deployment reference and not an acceptance decision.",
+  "claim_scope": "basis_fit_direction_dependent",
+  "swap_side_note": "Read with the opposite-direction pair; single-side readout is not publishable alone."
+}

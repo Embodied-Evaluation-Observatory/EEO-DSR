@@ -1,0 +1,285 @@
+{
+ "gate": "G1 cluster key uniqueness",
+ "status": "partially_closed_semantic_dedup_not_reproduced",
+ "source": "work/publicdata/droid_raw_meta.csv (74,896 rows; 74,795 unique uuid; scene_id=-1 excluded)",
+ "raw_scene_values": 2207,
+ "paper_scene_ids": 2080,
+ "semantic_unique_scenes": 564,
+ "collisions_raw": {
+  "scene_ids_with_multiple_building": 9,
+  "scene_ids_with_multiple_robot_serial": 2,
+  "scene_ids_with_multiple_normalized_building_or_robot": 9,
+  "examples": {
+   "4823049285": [
+    "BAIR",
+    "KAIST",
+    "Gates",
+    "Penn Levine 457",
+    "Bayes - RAD Lab",
+    "Bayes - Lab 1"
+   ],
+   "4465064685": [
+    "Gates",
+    "BAIR"
+   ],
+   "3827924651": [
+    "Mila Staff Kitchen",
+    "Glen's office"
+   ],
+   "4173062021": [
+    "780 Shary",
+    "780 Shary Ave"
+   ]
+  }
+ },
+ "decision": "scene_id alone is not unique across sites; composite key scene_id|building|robot_serial required for the native-scene axis.",
+ "composite_rerun": {
+  "clusters": 2220,
+  "episodes": 73413,
+  "singletons": 217,
+  "variable_clusters": 1045,
+  "zero_variance_share": 0.4782825761357963,
+  "rho_point": 0.28452378847464543,
+  "n_eff_point": 5953.53928108529,
+  "deff": 12.330984400025207,
+  "rho_conditional_95": [
+   0.2581172759193779,
+   0.3139812599844443
+  ],
+  "n_eff_conditional_95": [
+   5519.340377449994,
+   6428.406390940078
+  ],
+  "n_eff_conditional_relative_width": 0.15217363258739017,
+  "bootstrap_reps": 1000,
+  "artifacts": [
+   "driver-report.json",
+   "bootstrap.json"
+  ]
+ },
+ "unclosed": "564 semantic unique scenes not reproduced; raw 2,207 and composite 2,220 are not the paper 2,080 or 564. Do not cite as the paper scene count.",
+ "nees_record": "not_issued",
+ "keys": {
+  "coverage_key": "scene_id",
+  "coverage_clusters": 2207,
+  "precision_key": "scene_id|building|robot_serial",
+  "precision_clusters": 2220
+ },
+ "coverage": {
+  "collision_ids": 9,
+  "collision_episodes": 2172,
+  "corpus_episodes": 73413,
+  "share_of_corpus": 0.029586
+ },
+ "per_id_split_table": [
+  {
+   "scene_id": 3827924651,
+   "episodes": 272,
+   "share_of_corpus": 0.003705,
+   "buildings": 2,
+   "robot_serial_values": 1,
+   "splits": 2,
+   "split_table": [
+    {
+     "building": "Glen's office",
+     "robot_serial": "FR3-295341-1326783",
+     "episodes": 124
+    },
+    {
+     "building": "Mila Staff Kitchen",
+     "robot_serial": "FR3-295341-1326783",
+     "episodes": 148
+    }
+   ]
+  },
+  {
+   "scene_id": 4173062021,
+   "episodes": 47,
+   "share_of_corpus": 0.00064,
+   "buildings": 2,
+   "robot_serial_values": 1,
+   "splits": 2,
+   "split_table": [
+    {
+     "building": "780 Shary",
+     "robot_serial": "fr3-295341-1326895",
+     "episodes": 28
+    },
+    {
+     "building": "780 Shary Ave",
+     "robot_serial": "fr3-295341-1326895",
+     "episodes": 19
+    }
+   ]
+  },
+  {
+   "scene_id": 4465064685,
+   "episodes": 272,
+   "share_of_corpus": 0.003705,
+   "buildings": 2,
+   "robot_serial_values": 2,
+   "splits": 2,
+   "split_table": [
+    {
+     "building": "BAIR",
+     "robot_serial": "290102-1324143",
+     "episodes": 264
+    },
+    {
+     "building": "Gates",
+     "robot_serial": "295341-1325480",
+     "episodes": 8
+    }
+   ]
+  },
+  {
+   "scene_id": 4823049285,
+   "episodes": 778,
+   "share_of_corpus": 0.010598,
+   "buildings": 6,
+   "robot_serial_values": 5,
+   "splits": 6,
+   "split_table": [
+    {
+     "building": "BAIR",
+     "robot_serial": "FR3-295341-1326595",
+     "episodes": 47
+    },
+    {
+     "building": "Bayes - Lab 1",
+     "robot_serial": "panda-295341-1325422",
+     "episodes": 15
+    },
+    {
+     "building": "Bayes - RAD Lab",
+     "robot_serial": "panda-295341-1325422",
+     "episodes": 92
+    },
+    {
+     "building": "Gates",
+     "robot_serial": "panda-295341-1326372",
+     "episodes": 15
+    },
+    {
+     "building": "KAIST",
+     "robot_serial": "panda-295341-1325882",
+     "episodes": 516
+    },
+    {
+     "building": "Penn Levine 457",
+     "robot_serial": "fr3-295341-1326691",
+     "episodes": 93
+    }
+   ]
+  },
+  {
+   "scene_id": 5539130832,
+   "episodes": 284,
+   "share_of_corpus": 0.003869,
+   "buildings": 2,
+   "robot_serial_values": 1,
+   "splits": 2,
+   "split_table": [
+    {
+     "building": "Autolab",
+     "robot_serial": "FR3-295341-1326595",
+     "episodes": 82
+    },
+    {
+     "building": "BAIR",
+     "robot_serial": "FR3-295341-1326595",
+     "episodes": 202
+    }
+   ]
+  },
+  {
+   "scene_id": 7224020122,
+   "episodes": 40,
+   "share_of_corpus": 0.000545,
+   "buildings": 2,
+   "robot_serial_values": 1,
+   "splits": 2,
+   "split_table": [
+    {
+     "building": "Bayes - Kitchen 1",
+     "robot_serial": "panda-295341-1325422",
+     "episodes": 21
+    },
+    {
+     "building": "Bayes - Lab 1",
+     "robot_serial": "panda-295341-1325422",
+     "episodes": 19
+    }
+   ]
+  },
+  {
+   "scene_id": 8372815467,
+   "episodes": 69,
+   "share_of_corpus": 0.00094,
+   "buildings": 2,
+   "robot_serial_values": 1,
+   "splits": 2,
+   "split_table": [
+    {
+     "building": "AHG",
+     "robot_serial": "295341-1324688",
+     "episodes": 4
+    },
+    {
+     "building": "AHG_lab",
+     "robot_serial": "295341-1324688",
+     "episodes": 65
+    }
+   ]
+  },
+  {
+   "scene_id": 8444908630,
+   "episodes": 38,
+   "share_of_corpus": 0.000518,
+   "buildings": 2,
+   "robot_serial_values": 1,
+   "splits": 2,
+   "split_table": [
+    {
+     "building": "Autolab",
+     "robot_serial": "FR3-295341-1326595",
+     "episodes": 1
+    },
+    {
+     "building": "BAIR",
+     "robot_serial": "FR3-295341-1326595",
+     "episodes": 37
+    }
+   ]
+  },
+  {
+   "scene_id": 8969941950,
+   "episodes": 372,
+   "share_of_corpus": 0.005067,
+   "buildings": 2,
+   "robot_serial_values": 1,
+   "splits": 2,
+   "split_table": [
+    {
+     "building": "Glen's office",
+     "robot_serial": "FR3-295341-1326783",
+     "episodes": 321
+    },
+    {
+     "building": "Mila staff kitchen",
+     "robot_serial": "FR3-295341-1326783",
+     "episodes": 51
+    }
+   ]
+  }
+ ],
+ "precision_claim_scope": "success_rate_precision_at_composite_scene_key_not_training_information",
+ "note_5_953": "n_eff=5,953.54 is internal research only; not external material.",
+ "coverage_claim_scope": "scene_coverage_at_raw_scene_id_not_success_rate_precision",
+ "excluded_scene_id_coverage": {
+  "scene_id_minus_one_rows": 1382,
+  "raw_metadata_rows": 74896,
+  "share": 0.018452,
+  "note": "excluded from the native scene axis; not the same as the 9 cross-building collisions"
+ }
+}

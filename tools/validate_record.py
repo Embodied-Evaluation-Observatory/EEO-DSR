@@ -164,6 +164,8 @@ def check(rec):
 
     if not isinstance(rec, dict):
         return ["record is not an object"]
+    if "pre_check_not_a_record" in rec:
+        return ["pre_check_not_a_record is a local pre-check marker, not a record; official schema rejects it"]
 
     for k in TOP_LEVEL:
         if k not in rec and k != "objections":
@@ -633,6 +635,18 @@ def check(rec):
         de = {}
     need(de.get("executed") is False,
          "neev.dedup.executed must be false: EEO estimates duplicates, it does not clean the corpus")
+    tb = de.get("tie_break")
+    ndup = de.get("n_duplicate_copies")
+    if is_int(ndup) and ndup > 0 and tb is None:
+        errs.append("neev.dedup.tie_break is required when n_duplicate_copies > 0: declare first/last/drop_group/not_applicable")
+    if tb is not None:
+        if not isinstance(tb, dict):
+            errs.append("neev.dedup.tie_break must be an object")
+        else:
+            if tb.get("rule") not in ("first", "last", "drop_group", "not_applicable"):
+                errs.append("neev.dedup.tie_break.rule must be one of first/last/drop_group/not_applicable")
+            if tb.get("rule") != "not_applicable" and not tb.get("sensitivity_evidence") and not tb.get("note"):
+                errs.append("neev.dedup.tie_break needs sensitivity_evidence or note when a rule is applied")
     mt = de.get("metric") or {}
     METRICS = ("embedding_cosine", "perceptual_hash", "exact_byte")
     need(isinstance(mt, dict) and isinstance(mt.get("id"), str) and mt.get("id"),

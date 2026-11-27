@@ -1,0 +1,190 @@
+{
+  "module": "EEO-DSR",
+  "phase": "Phase 0 card-clarity check",
+  "date": "2026-11-26",
+  "retrieval_date": "2026-11-26",
+  "source": "checks/cards-source-2026-11-26-r2.csv",
+  "scope": "supplement: robomind + rh20t only; not the 20-card census",
+  "transcription": "manual from pinned page bytes",
+  "cards": [
+    {
+      "dataset_id": "rh20t",
+      "url": "https://rh20t.github.io/",
+      "version": "not declared",
+      "card_last_modified": "2025-08-11",
+      "page_file": "pages/rh20t.html",
+      "page_sha256": "fdf50f33b3ad379232530e4216e4d1343e446cecb30c0ab58ffc5fb73b3e256a",
+      "card_sha256": "cab037f94bd38c9e05a6b0c5a6405e1615b0f0237cd43db7591d011486cc4120",
+      "structured": {
+        "dataset_id": "rh20t",
+        "version": "not declared",
+        "total_text": "over 110,000",
+        "tasks_declared": {
+          "rlbench": 48,
+          "metaworld": 29,
+          "self_proposed": 70
+        },
+        "license": "split: CC BY-SA 4.0 scenes 0001-0005; CC BY-NC 4.0 scenes 0006-0010",
+        "scene_id": true,
+        "checksum": false,
+        "retrieval_date": "2026-11-26"
+      },
+      "checks": {
+        "S1": "MISSING",
+        "S2": "MISSING",
+        "S3": "MISSING",
+        "S4": "PASS",
+        "S5": "MISSING",
+        "S6": "PASS"
+      }
+    },
+    {
+      "dataset_id": "robomind",
+      "url": "https://huggingface.co/datasets/x-humanoid-robomind/RoboMIND/resolve/main/README.md",
+      "version": "V2.0; 1.1/1.2",
+      "card_last_modified": "not available",
+      "page_file": "pages/robomind.md",
+      "page_sha256": "84f510133a9b3ba372a41e45dcc9637a7a1e17c1e7c0df1e2c2e80361376c271",
+      "card_sha256": "1d982bd44434d09e301b5d3d14d0d397a90e5f32f1ba36de3d2f43c0a3856641",
+      "structured": {
+        "dataset_id": "robomind",
+        "version": "V2.0; 1.1/1.2",
+        "total_text": "107k",
+        "per_embodiment": {
+          "franka": 52926,
+          "tien_kung": 19152,
+          "agilex": 10629,
+          "ur5e": 25170
+        },
+        "tasks": 479,
+        "objects": 96,
+        "license": "apache-2.0",
+        "scene_id": false,
+        "checksum": false,
+        "retrieval_date": "2026-11-26"
+      },
+      "checks": {
+        "S1": "AMBIGUOUS",
+        "S2": "MISSING",
+        "S3": "MISSING",
+        "S4": "PASS",
+        "S5": "MISSING",
+        "S6": "MISSING"
+      }
+    }
+  ],
+  "outputs": {
+    "cards.csv": "7994a187cca4abfc06360d3bdb89210079e5b9a52aa8191ca6adb950b05566e6",
+    "index.html": "568df84f72aa002a0165b5730655dd9222b49d2d03eff191a69dec7c84ed8957",
+    "README.md": "1d2ab2b50b0d16107ce56cc4125e3bc1212d94f36fe4c1ff89d30900304934f6"
+  },
+  "summary": {
+    "cards": 2,
+    "by_check": {
+      "S1": {
+        "PASS": 0,
+        "FAIL": 0,
+        "MISSING": 1,
+        "AMBIGUOUS": 1
+      },
+      "S2": {
+        "PASS": 0,
+        "FAIL": 0,
+        "MISSING": 2,
+        "AMBIGUOUS": 0
+      },
+      "S3": {
+        "PASS": 0,
+        "FAIL": 0,
+        "MISSING": 2,
+        "AMBIGUOUS": 0
+      },
+      "S4": {
+        "PASS": 2,
+        "FAIL": 0,
+        "MISSING": 0,
+        "AMBIGUOUS": 0
+      },
+      "S5": {
+        "PASS": 0,
+        "FAIL": 0,
+        "MISSING": 2,
+        "AMBIGUOUS": 0
+      },
+      "S6": {
+        "PASS": 1,
+        "FAIL": 0,
+        "MISSING": 1,
+        "AMBIGUOUS": 0
+      }
+    },
+    "decision_rate": {
+      "S1": {
+        "numerator": 1,
+        "denominator": 2,
+        "rate": 0.5
+      },
+      "S2": {
+        "numerator": 0,
+        "denominator": 2,
+        "rate": 0.0
+      },
+      "S3": {
+        "numerator": 0,
+        "denominator": 2,
+        "rate": 0.0
+      },
+      "S4": {
+        "numerator": 2,
+        "denominator": 2,
+        "rate": 1.0
+      },
+      "S5": {
+        "numerator": 0,
+        "denominator": 2,
+        "rate": 0.0
+      },
+      "S6": {
+        "numerator": 1,
+        "denominator": 2,
+        "rate": 0.5
+      }
+    },
+    "unique_recompute_rate": {
+      "S1": {
+        "numerator": 0,
+        "denominator": 2,
+        "rate": 0.0
+      },
+      "S2": {
+        "numerator": 0,
+        "denominator": 2,
+        "rate": 0.0
+      },
+      "S3": {
+        "numerator": 0,
+        "denominator": 2,
+        "rate": 0.0
+      },
+      "S4": {
+        "numerator": 2,
+        "denominator": 2,
+        "rate": 1.0
+      },
+      "S5": {
+        "numerator": 0,
+        "denominator": 2,
+        "rate": 0.0
+      },
+      "S6": {
+        "numerator": 1,
+        "denominator": 2,
+        "rate": 0.5
+      }
+    },
+    "note": "Two rates are collection-level distributions; AMBIGUOUS counts in decision rate, not in unique-recompute rate."
+  },
+  "note": "Manual transcription from pinned pages; not an automatic parser. Two-card supplement, not a 22-card census.",
+  "source_sha256": "dbb59e7bf3c13820d804a8858b92c3a5cfca7eaa881a7bea1c1263944514ecc8",
+  "tool": "manual transcription; no parser"
+}
