@@ -12,9 +12,7 @@ EEO-DSR 是数据集声明与标识层的独立核验器，和可复算的溯源
 
 标题保留“成功率精度层”：逐簇求和、单例分层、ρ-free 界、簇级 bootstrap、偏差/覆盖模拟、极端偏斜夹具是推断而非计数，且与 ρ 算在什么之上无关，是可复用资产。
 
-> 本文是 V0.6 定位修订，统计逻辑未改；公开基线是 `main@2ac1caf`。2026-11-27 的治理与统计修补只在本地 worktree，未 commit/push，不得称“已发布”。
-
-公开与界面治理规则、G1–G3 的标注格式和逐读数签发粒度，见 [`GOVERNANCE-ADDENDUM.md`](GOVERNANCE-ADDENDUM.md)。
+> 本文是 V0.6 定位修订，统计逻辑未改；公开基线是 `main@2ac1caf`。2026-11-27 的治理与统计修补，相关文件（repair.zip、temp/）已从公开仓库移除；当前 main 不包含这两个目标，且已加入 .gitignore。”公开与界面治理规则、G1–G3 的标注格式和逐读数签发粒度，见 [`GOVERNANCE-ADDENDUM.md`](GOVERNANCE-ADDENDUM.md)。
 
 ## 三种读数必须分开
 
