@@ -1,6 +1,0 @@
-{
-  "status": "not_computable",
-  "reason": "split_undeclared",
-  "detail": "DROID raw metadata has scene_id, building, task and episode id, but no declared train/test split label. D5b counts cross-split duplicate leakage; without a declared split there is no legitimate denominator or pair universe. Do not substitute a scene or date proxy without labelling it as a proxy.",
-  "candidate_pairs": "D5a duplicate candidates are available from the fingerprint sample; they are not D5b leakage counts."
-}
